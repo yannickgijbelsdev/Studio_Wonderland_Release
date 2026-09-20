@@ -63,7 +63,7 @@ function PortalTile({ image, cta, onClick, alt }) {
     <button
       onClick={onClick}
       data-cursor="hover"
-      className="group relative h-[62vh] w-full overflow-hidden rounded-t-full rounded-b-[2rem] ring-1 ring-white/30 md:h-[82vh]"
+      className="group relative h-[62vh] w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/30 md:h-[80vh]"
     >
       <img src={image} alt={alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 transition-opacity duration-500 group-hover:opacity-70" />
@@ -103,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* KIES JOUW WERELD — magical arch section, glitter, buttons only */}
-      <section id="belevenissen" className="relative z-10 -mt-[14vh] overflow-hidden rounded-t-[50%_5rem] bg-gradient-to-b from-wonder-pink via-wonder-pinkdeep to-wonder-plum px-6 pb-28 pt-32 md:px-10 md:pb-36 md:pt-40">
+      <section id="belevenissen" className="relative z-10 -mt-[7vh] overflow-hidden rounded-[50%_50%_0_0_/_4rem_4rem_0_0] bg-gradient-to-b from-wonder-pink via-wonder-pinkdeep to-wonder-plum px-6 pb-28 pt-32 md:rounded-[50%_50%_0_0_/_7rem_7rem_0_0] md:px-10 md:pb-36 md:pt-44">
         <Sparkles count={90} />
         <div className="relative mx-auto max-w-[1400px]">
           <div className="mb-14 text-center">
@@ -117,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* STUDIO WONDERLAND INTRO */}
-      <section className="relative overflow-hidden bg-wonder-bg px-6 py-24 md:px-10 md:py-36">
+      <section className="relative z-10 -mt-[5vh] overflow-hidden rounded-[50%_50%_0_0_/_4rem_4rem_0_0] bg-wonder-bg px-6 pb-24 pt-28 md:rounded-[50%_50%_0_0_/_7rem_7rem_0_0] md:px-10 md:pb-36 md:pt-40">
         <Sparkles count={26} className="opacity-50" />
         <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 md:grid-cols-2">
           <div>
@@ -136,10 +136,10 @@ export default function Home() {
             </div>
           </div>
           <div className="relative">
-            <div data-img className="relative aspect-[4/5] overflow-hidden rounded-t-full rounded-b-[2rem]">
+            <div data-img className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
               <img src={IMG.showAudience} alt="Beleving" className="h-full w-full object-cover" />
             </div>
-            <div data-parallax="0.15" className="absolute -bottom-10 -left-8 hidden w-44 overflow-hidden rounded-t-full rounded-b-2xl border-4 border-wonder-bg shadow-xl md:block">
+            <div data-parallax="0.15" className="absolute -bottom-10 -left-8 hidden w-44 overflow-hidden rounded-2xl border-4 border-wonder-bg shadow-xl md:block">
               <img src={IMG.xmasSanta} alt="Winter" className="h-60 w-full object-cover" />
             </div>
           </div>

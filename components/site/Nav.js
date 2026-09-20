@@ -25,44 +25,32 @@ export default function Nav() {
 
   const go = (r, a) => { setOpen(false); navigate(r, a) }
 
-  const dark = route === 'show' || route === 'xmas'
-  const heroIsDark = route === 'home' || route === 'show' || route === 'xmas'
-  const lightText = scrolled ? dark : heroIsDark
-  const showScrim = !scrolled && heroIsDark
-  const headerBg = scrolled
-    ? (dark ? 'glass border-b border-white/10 py-3' : 'bg-wonder-bg/85 backdrop-blur-md border-b border-wonder-gold/15 py-3')
-    : 'py-6'
-  const shadow = lightText ? '[text-shadow:_0_1px_16px_rgba(0,0,0,0.55)]' : ''
-  const linkBase = lightText ? `text-white/90 hover:text-white ${shadow}` : 'text-wonder-ink/75 hover:text-wonder-ink'
-  const iconColor = lightText ? 'text-white' : 'text-wonder-ink'
-
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-[80] transition-all duration-500 ${headerBg}`}>
-        {showScrim && <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b from-black/55 via-black/25 to-transparent" />}
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 md:px-10">
+      <header className="fixed inset-x-0 top-0 z-[80] px-4 pt-4 md:px-6 md:pt-5">
+        <div className={`mx-auto flex items-center justify-between rounded-full bg-white/95 px-5 py-2.5 shadow-xl shadow-black/10 backdrop-blur-md transition-all duration-500 md:px-7 md:py-3 ${scrolled ? 'max-w-[1120px]' : 'max-w-[1320px]'}`}>
           <button onClick={() => go('home')} data-cursor="hover" className="flex items-center">
-            <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className={`h-8 w-auto md:h-10 ${lightText ? 'drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]' : ''}`} />
+            <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-8 w-auto md:h-9" />
           </button>
 
-          <nav className="hidden items-center gap-9 md:flex">
+          <nav className="hidden items-center gap-8 md:flex">
             {links.map((l) => (
               <button
                 key={l.label}
                 onClick={() => go(l.r, l.a)}
                 data-cursor="hover"
-                className={`group relative text-sm font-medium tracking-wide transition-colors ${route === l.r ? `text-wonder-goldlight ${lightText ? shadow : ''}` : linkBase}`}
+                className={`group relative text-sm font-medium tracking-wide transition-colors ${route === l.r ? 'text-wonder-pinkdeep' : 'text-wonder-ink/75 hover:text-wonder-ink'}`}
               >
                 {l.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-current transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-wonder-pinkdeep transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
-            <Magnetic as="button" onClick={() => go('contact')} className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${lightText ? 'bg-white/95 text-wonder-pinkdeep hover:bg-white' : 'border border-wonder-gold/60 text-wonder-gold hover:bg-wonder-gold hover:text-white'}`}>
+            <Magnetic as="button" onClick={() => go('contact')} className="rounded-full bg-wonder-pinkdeep px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-wonder-plum">
               Boek een beleving
             </Magnetic>
           </nav>
 
-          <button onClick={() => setOpen(true)} data-cursor="hover" className={`md:hidden ${iconColor}`}>
+          <button onClick={() => setOpen(true)} data-cursor="hover" className="text-wonder-ink md:hidden">
             <Menu className="h-7 w-7" />
           </button>
         </div>
@@ -80,7 +68,7 @@ export default function Nav() {
               {l.label}
             </button>
           ))}
-          <button onClick={() => go('contact')} className="mt-8 rounded-full bg-wonder-gold py-4 text-center font-medium text-white">Boek een beleving</button>
+          <button onClick={() => go('contact')} className="mt-8 rounded-full bg-wonder-pinkdeep py-4 text-center font-medium text-white">Boek een beleving</button>
         </nav>
       </div>
     </>
