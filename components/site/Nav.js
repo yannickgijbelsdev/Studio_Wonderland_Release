@@ -29,9 +29,8 @@ export default function Nav() {
     <>
       <header className={`fixed inset-x-0 top-0 z-[80] transition-all duration-500 ${scrolled ? 'glass border-b border-white/10 py-3' : 'py-6'}`}>
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 md:px-10">
-          <button onClick={() => go('home')} data-cursor="hover" className="group flex flex-col leading-none">
-            <span className="font-display text-lg font-600 tracking-tight text-wonder-cream md:text-xl">Studio Wonderland</span>
-            <span className="mt-0.5 text-[9px] uppercase tracking-[0.4em] text-wonder-gold/80">Live belevingen</span>
+          <button onClick={() => go('home')} data-cursor="hover" className="flex items-center">
+            <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-8 w-auto md:h-10" />
           </button>
 
           <nav className="hidden items-center gap-9 md:flex">
@@ -60,7 +59,7 @@ export default function Nav() {
       {/* Mobile overlay */}
       <div className={`fixed inset-0 z-[90] flex flex-col bg-wonder-bg transition-all duration-500 md:hidden ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="flex items-center justify-between px-6 py-6">
-          <span className="font-display text-lg text-wonder-cream">Studio Wonderland</span>
+          <span className="font-display text-lg text-wonder-cream"><img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-7 w-auto" /></span>
           <button onClick={() => setOpen(false)} className="text-wonder-cream"><X className="h-7 w-7" /></button>
         </div>
         <nav className="flex flex-1 flex-col justify-center gap-2 px-8">

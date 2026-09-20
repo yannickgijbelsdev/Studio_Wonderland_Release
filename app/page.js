@@ -89,7 +89,7 @@ function App() {
           <div key={i} className="pt-panel h-full flex-1 origin-bottom scale-y-0 bg-gradient-to-b from-wonder-bg to-[#1a1206]" />
         ))}
         <div className="pt-brand absolute inset-0 flex items-center justify-center opacity-0">
-          <span className="font-display text-2xl tracking-[0.3em] text-gradient-gold">STUDIO WONDERLAND</span>
+          <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-14 w-auto md:h-20" />
         </div>
       </div>
 
