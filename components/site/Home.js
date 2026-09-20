@@ -52,7 +52,18 @@ export default function Home() {
     <div ref={scope}>
       {/* HERO */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
-        <img src={IMG.heroWonder} alt="Studio Wonderland" className="hero-img absolute inset-0 h-full w-full object-cover" />
+        <video
+          className="hero-img absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={IMG.heroWonder}
+        >
+          <source src={IMG.heroVideo} type="video/mp4" />
+          <source src={IMG.heroVideoAlt} type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-wonder-bg" />
         <div className="hero-overlay absolute inset-0 bg-wonder-bg opacity-0" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
