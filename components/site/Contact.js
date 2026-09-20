@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { useSectionAnimations } from '@/lib/site/anim'
-import { Eyebrow, Magnetic } from './ui'
+import { Eyebrow, Magnetic, TitleReveal } from './ui'
 
 export default function Contact() {
   const scope = useRef(null)
@@ -44,10 +44,7 @@ export default function Contact() {
       <div className="mx-auto grid max-w-[1200px] gap-14 pb-28 md:grid-cols-2">
         <div>
           <Eyebrow className="text-wonder-gold">Contact</Eyebrow>
-          <h1 className="mt-5 font-display text-5xl leading-[1.02] text-wonder-ink md:text-7xl">
-            <span className="block overflow-hidden"><span data-reveal className="block">Laten we</span></span>
-            <span className="block overflow-hidden"><span data-reveal className="block text-gradient-gold">samen dromen</span></span>
-          </h1>
+          <TitleReveal lines={["Laten we", "samen dromen"]} className="mt-5 text-5xl text-wonder-ink md:text-7xl [&>span:last-child>span]:text-gradient-gold" />
           <p data-fade className="mt-6 max-w-md text-wonder-muted">Vragen over een belevenis, een boeking of samenwerking? We horen graag van je.</p>
           <a href="mailto:info@studiowonderland.eu" data-cursor="hover" data-fade className="mt-10 flex items-center gap-4 rounded-2xl border border-wonder-gold/25 bg-wonder-panel p-6 transition-colors hover:border-wonder-gold/60">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-wonder-gold/15 text-wonder-gold"><Mail className="h-6 w-6" /></span>

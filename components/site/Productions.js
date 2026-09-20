@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Play, Images } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { useSectionAnimations } from '@/lib/site/anim'
-import { Eyebrow } from './ui'
+import { Eyebrow, TitleReveal } from './ui'
 
 export default function Productions() {
   const scope = useRef(null)
@@ -24,10 +24,7 @@ export default function Productions() {
     <div ref={scope} className="min-h-screen px-6 pt-32 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         <Eyebrow className="text-wonder-gold">Eerder te beleven</Eyebrow>
-        <h1 className="mt-5 max-w-3xl font-display text-5xl leading-[1.02] text-wonder-ink md:text-7xl">
-          <span className="block overflow-hidden"><span data-reveal className="block">Herinneringen aan</span></span>
-          <span className="block overflow-hidden"><span data-reveal className="block text-gradient-gold">eerdere producties</span></span>
-        </h1>
+        <TitleReveal lines={["Herinneringen aan", "eerdere producties"]} className="mt-5 max-w-3xl text-5xl text-wonder-ink md:text-7xl [&>span:last-child>span]:text-gradient-gold" />
         <p data-fade className="mt-6 max-w-xl text-wonder-muted">Blader door foto's, video's en herinneringen van voorgaande belevenissen van Studio Wonderland.</p>
 
         {loading ? (

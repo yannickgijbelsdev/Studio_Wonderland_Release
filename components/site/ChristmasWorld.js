@@ -4,7 +4,7 @@ import { ArrowLeft, Home as HomeIcon, Users, Sparkles, MapPin } from 'lucide-rea
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
-import { Magnetic, Eyebrow } from './ui'
+import { Magnetic, Eyebrow, Star } from './ui'
 
 function Snow() {
   const flakes = useMemo(() => Array.from({ length: 40 }).map((_, i) => {
@@ -61,9 +61,9 @@ export default function ChristmasWorld() {
         <Snow />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
           <span className="x-hero-line text-xs uppercase tracking-[0.5em] text-xmas-gold">Winterwereld · 2026</span>
-          <h1 className="mt-5 font-display text-[13vw] font-500 leading-[0.85] text-white md:text-[8vw]">
-            <span className="block overflow-hidden"><span className="x-hero-line block">Huis van de</span></span>
-            <span className="block overflow-hidden"><span className="x-hero-line block text-xmas-gold">Kerstman 2026</span></span>
+          <h1 className="mt-5 font-display text-[13vw] leading-[0.94] text-white md:text-[8vw]">
+            <span className="block overflow-hidden pb-[0.1em]"><span className="x-hero-line block"><Star className="mr-3 inline-block h-[0.5em] w-[0.5em] -translate-y-[0.08em] align-middle text-xmas-gold" />Huis van de</span></span>
+            <span className="block overflow-hidden pb-[0.1em]"><span className="x-hero-line block text-xmas-gold">Kerstman 2026</span></span>
           </h1>
           <p className="x-hero-line mt-6 max-w-xl text-lg text-white/85">Stap binnen in de magische wereld van de Kerstman.</p>
           <Magnetic as="button" onClick={() => navigate('contact')} className="x-hero-line mt-8 rounded-full bg-xmas-red px-8 py-4 font-semibold text-white">Blijf op de hoogte</Magnetic>

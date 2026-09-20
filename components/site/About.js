@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import { useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
-import { Eyebrow, Magnetic } from './ui'
+import { Eyebrow, Magnetic, TitleReveal } from './ui'
 import { useSite } from './ctx'
 
 export default function About() {
@@ -13,10 +13,7 @@ export default function About() {
     <div ref={scope} className="min-h-screen px-6 pt-32 md:px-10">
       <div className="mx-auto max-w-[1100px]">
         <Eyebrow className="text-wonder-gold">Over ons</Eyebrow>
-        <h1 className="mt-5 max-w-4xl font-display text-5xl leading-[1.02] text-wonder-ink md:text-7xl">
-          <span className="block overflow-hidden"><span data-reveal className="block">De studio achter</span></span>
-          <span className="block overflow-hidden"><span data-reveal className="block text-gradient-gold">de verwondering</span></span>
-        </h1>
+        <TitleReveal lines={["De studio achter", "de verwondering"]} className="mt-5 max-w-4xl text-5xl text-wonder-ink md:text-7xl [&>span:last-child>span]:text-gradient-gold" />
 
         <div data-img className="mt-12 aspect-[16/8] overflow-hidden rounded-3xl">
           <img src={IMG.showAudience} alt="Studio Wonderland" className="h-full w-full object-cover" />

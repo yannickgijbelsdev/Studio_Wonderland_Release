@@ -4,7 +4,7 @@ import { ArrowLeft, Volume2 } from 'lucide-react'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
-import { Magnetic, Eyebrow } from './ui'
+import { Magnetic, Eyebrow, Star } from './ui'
 
 function Applausmeter() {
   const [level, setLevel] = useState(0)
@@ -78,9 +78,9 @@ export default function ShowWorld() {
         <div className="absolute inset-0 bg-gradient-to-t from-show-bg via-show-bg/50 to-black/40" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
           <span className="show-hero-line text-xs uppercase tracking-[0.5em] text-show-gold">Liveshow · Tournee 2025</span>
-          <h1 className="mt-5 font-display text-[13vw] font-500 leading-[0.85] text-white md:text-[8vw]">
-            <span className="block overflow-hidden"><span className="show-hero-line block">De Grote</span></span>
-            <span className="block overflow-hidden"><span className="show-hero-line block text-show-gold">Sinterklaasshow</span></span>
+          <h1 className="mt-5 font-display text-[13vw] leading-[0.94] text-white md:text-[8vw]">
+            <span className="block overflow-hidden pb-[0.1em]"><span className="show-hero-line block"><Star className="mr-3 inline-block h-[0.5em] w-[0.5em] -translate-y-[0.08em] align-middle text-show-gold" />De Grote</span></span>
+            <span className="block overflow-hidden pb-[0.1em]"><span className="show-hero-line block text-show-gold">Sinterklaasshow</span></span>
           </h1>
           <p className="show-hero-line mt-6 max-w-xl text-lg text-white/85">Een spectaculaire liveshow vol muziek, humor, dans en magie.</p>
           <Magnetic as="button" onClick={() => navigate('contact')} className="show-hero-line mt-8 rounded-full bg-show-red px-8 py-4 font-semibold text-white">Reserveer tickets</Magnetic>
