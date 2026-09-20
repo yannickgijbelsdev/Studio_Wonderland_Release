@@ -17,17 +17,22 @@ module.exports = {
       },
       extend: {
         fontFamily: {
-          display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          display: ['Genty', 'Fraunces', 'ui-serif', 'serif'],
+          sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         },
         colors: {
           wonder: {
             bg: '#FCE7EE',
+            blush: '#FBDCE7',
+            rose: '#F6C9D8',
             panel: '#F8D5E0',
+            pinklt: '#F4B8CB',
+            pink: '#E098A8',
+            pinkdeep: '#C04868',
+            plum: '#7D2540',
             cream: '#FFF6F9',
             ink: '#3B1622',
             muted: '#9A6576',
-            pink: '#E098A8',
             gold: '#C04868',
             goldlight: '#E098A8',
           },
@@ -84,14 +89,12 @@ module.exports = {
           'accordion-up': { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },
           shine: { '0%': { backgroundPosition: '200% center' }, '100%': { backgroundPosition: '-200% center' } },
           floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-          pulseGlow: { '0%,100%': { opacity: '0.4' }, '50%': { opacity: '1' } },
         },
         animation: {
           'accordion-down': 'accordion-down 0.2s ease-out',
           'accordion-up': 'accordion-up 0.2s ease-out',
           shine: 'shine 6s linear infinite',
           floaty: 'floaty 6s ease-in-out infinite',
-          pulseGlow: 'pulseGlow 3s ease-in-out infinite',
         }
       }
     },

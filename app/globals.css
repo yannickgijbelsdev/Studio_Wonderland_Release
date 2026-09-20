@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'Genty';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/Genty.woff2') format('woff2'), url('/fonts/Genty.woff') format('woff');
+}
 
 @tailwind base;
 @tailwind components;
@@ -46,7 +54,7 @@
   * { @apply border-border; }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
@@ -66,7 +74,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Fraunces', serif; }
+  .font-display { font-family: 'Genty', 'Fraunces', serif; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .text-gradient-gold {
@@ -120,6 +128,20 @@ html.lenis, html.lenis body { height: auto; }
   filter: blur(0.4px);
   animation-name: snowfall;
   animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Sparkle / glitter */
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.sparkle {
+  position: absolute;
+  border-radius: 9999px;
+  box-shadow: 0 0 6px rgba(255,255,255,0.85);
+  animation-name: twinkle;
+  animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
