@@ -4,12 +4,12 @@ import { useSite } from './ctx'
 export default function Footer() {
   const { navigate } = useSite()
   return (
-    <footer className="relative border-t border-white/10 bg-wonder-bg px-6 py-16 text-wonder-cream md:px-10">
+    <footer className="relative border-t border-wonder-gold/20 bg-wonder-bg px-6 py-16 text-wonder-ink md:px-10">
       <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-16 w-auto md:h-20" />
           <p className="mt-4 max-w-md text-wonder-muted">Wij maken werelden waar families samen in kunnen stappen. Bijzondere livebelevingen voor jong en oud.</p>
-          <a href="mailto:info@studiowonderland.eu" data-cursor="hover" className="mt-6 inline-block text-wonder-gold underline-offset-4 hover:underline">info@studiowonderland.eu</a>
+          <a href="mailto:info@studiowonderland.eu" data-cursor="hover" className="mt-6 inline-block font-medium text-wonder-gold underline-offset-4 hover:underline">info@studiowonderland.eu</a>
         </div>
         <div>
           <h4 className="text-xs uppercase tracking-[0.3em] text-wonder-muted">Belevenissen</h4>
@@ -24,11 +24,11 @@ export default function Footer() {
           <ul className="mt-4 space-y-3">
             <li><button onClick={() => navigate('about')} data-cursor="hover" className="hover:text-wonder-gold">Over ons</button></li>
             <li><button onClick={() => navigate('contact')} data-cursor="hover" className="hover:text-wonder-gold">Contact</button></li>
-            <li><button onClick={() => navigate('admin')} data-cursor="hover" className="text-wonder-muted/70 hover:text-wonder-gold">Beheer</button></li>
+            <li><button onClick={() => navigate('admin')} data-cursor="hover" className="text-wonder-muted hover:text-wonder-gold">Beheer</button></li>
           </ul>
         </div>
       </div>
-      <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-wonder-muted md:flex-row">
+      <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted md:flex-row">
         <span>&copy; {new Date().getFullYear()} Studio Wonderland. Alle rechten voorbehouden.</span>
         <span>Wij maken werelden waar families samen in kunnen stappen.</span>
       </div>

@@ -22,12 +22,14 @@ module.exports = {
         },
         colors: {
           wonder: {
-            bg: '#0A0A0B',
-            panel: '#111114',
-            cream: '#F3EFE6',
-            muted: '#9A9488',
-            gold: '#C9A24B',
-            goldlight: '#E7C879',
+            bg: '#FCE7EE',
+            panel: '#F8D5E0',
+            cream: '#FFF6F9',
+            ink: '#3B1622',
+            muted: '#9A6576',
+            pink: '#E098A8',
+            gold: '#C04868',
+            goldlight: '#E098A8',
           },
           show: {
             bg: '#140306',

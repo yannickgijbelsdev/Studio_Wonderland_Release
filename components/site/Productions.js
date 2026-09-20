@@ -24,7 +24,7 @@ export default function Productions() {
     <div ref={scope} className="min-h-screen px-6 pt-32 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         <Eyebrow className="text-wonder-gold">Eerder te beleven</Eyebrow>
-        <h1 className="mt-5 max-w-3xl font-display text-5xl leading-[1.02] text-wonder-cream md:text-7xl">
+        <h1 className="mt-5 max-w-3xl font-display text-5xl leading-[1.02] text-wonder-ink md:text-7xl">
           <span className="block overflow-hidden"><span data-reveal className="block">Herinneringen aan</span></span>
           <span className="block overflow-hidden"><span data-reveal className="block text-gradient-gold">eerdere producties</span></span>
         </h1>
@@ -32,20 +32,20 @@ export default function Productions() {
 
         {loading ? (
           <div className="grid gap-6 py-16 md:grid-cols-3">
-            {[0, 1, 2].map((i) => <div key={i} className="aspect-[4/5] animate-pulse rounded-2xl bg-white/5" />)}
+            {[0, 1, 2].map((i) => <div key={i} className="aspect-[4/5] animate-pulse rounded-2xl bg-wonder-panel" />)}
           </div>
         ) : (
           <div className="grid gap-6 py-16 md:grid-cols-2 lg:grid-cols-3">
             {items.map((p) => (
-              <button key={p.id} data-fade data-cursor="hover" onClick={() => setActive(p)} className="group relative overflow-hidden rounded-2xl border border-white/10 text-left">
+              <button key={p.id} data-fade data-cursor="hover" onClick={() => setActive(p)} className="group relative overflow-hidden rounded-2xl border border-wonder-gold/20 text-left">
                 <div className="aspect-[4/5] overflow-hidden">
                   <img src={p.cover} alt={p.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 w-full p-6">
-                  <span className="text-xs uppercase tracking-[0.3em] text-wonder-gold">{p.year}</span>
-                  <h3 className="mt-1 font-display text-2xl text-wonder-cream">{p.title}</h3>
-                  <span className="mt-3 inline-flex items-center gap-2 text-xs text-wonder-cream/70">
+                  <span className="text-xs uppercase tracking-[0.3em] text-wonder-goldlight">{p.year}</span>
+                  <h3 className="mt-1 font-display text-2xl text-white">{p.title}</h3>
+                  <span className="mt-3 inline-flex items-center gap-2 text-xs text-white/70">
                     <Images className="h-4 w-4" /> {(p.gallery?.length || 0)} foto's
                     {p.videos?.length ? <><Play className="ml-2 h-4 w-4" /> {p.videos.length} video's</> : null}
                   </span>
@@ -57,12 +57,12 @@ export default function Productions() {
       </div>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto border-white/10 bg-wonder-panel text-wonder-cream">
+        <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto border-wonder-gold/20 bg-wonder-panel text-wonder-ink">
           {active && (
             <div data-native-cursor>
-              <DialogTitle className="font-display text-3xl text-wonder-cream">{active.title}</DialogTitle>
+              <DialogTitle className="font-display text-3xl text-wonder-ink">{active.title}</DialogTitle>
               <p className="mt-1 text-sm uppercase tracking-[0.3em] text-wonder-gold">{active.year}</p>
-              <p className="mt-4 text-wonder-cream/80">{active.description}</p>
+              <p className="mt-4 text-wonder-ink/80">{active.description}</p>
               {active.videos?.length > 0 && (
                 <div className="mt-6 grid gap-4">
                   {active.videos.map((v, i) => (

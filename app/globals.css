@@ -6,26 +6,26 @@
 
 @layer base {
   :root {
-    --background: 20 14% 5%;
-    --foreground: 40 30% 92%;
-    --card: 20 14% 7%;
-    --card-foreground: 40 30% 92%;
-    --popover: 20 14% 7%;
-    --popover-foreground: 40 30% 92%;
-    --primary: 40 55% 54%;
-    --primary-foreground: 20 14% 5%;
-    --secondary: 20 10% 14%;
-    --secondary-foreground: 40 30% 92%;
-    --muted: 20 10% 14%;
-    --muted-foreground: 40 8% 62%;
-    --accent: 40 55% 54%;
-    --accent-foreground: 20 14% 5%;
+    --background: 338 71% 95%;
+    --foreground: 340 46% 16%;
+    --card: 338 55% 92%;
+    --card-foreground: 340 46% 16%;
+    --popover: 338 60% 96%;
+    --popover-foreground: 340 46% 16%;
+    --primary: 342 47% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 338 45% 90%;
+    --secondary-foreground: 340 46% 16%;
+    --muted: 338 38% 90%;
+    --muted-foreground: 340 18% 45%;
+    --accent: 344 60% 74%;
+    --accent-foreground: 340 46% 16%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 40 30% 92%;
-    --border: 40 12% 20%;
-    --input: 40 12% 20%;
-    --ring: 40 55% 54%;
-    --chart-1: 12 76% 61%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 340 35% 82%;
+    --input: 340 35% 82%;
+    --ring: 342 47% 52%;
+    --chart-1: 344 60% 68%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
@@ -50,7 +50,7 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-  ::selection { background: #C9A24B; color: #0A0A0B; }
+  ::selection { background: #E098A8; color: #3B1622; }
 }
 
 /* Lenis smooth scroll */
@@ -70,7 +70,7 @@ html.lenis, html.lenis body { height: auto; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .text-gradient-gold {
-    background: linear-gradient(100deg, #E7C879 0%, #C9A24B 30%, #F6E7B8 55%, #C9A24B 80%);
+    background: linear-gradient(100deg, #F4B8CB 0%, #E098A8 32%, #C04868 66%, #E098A8 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;

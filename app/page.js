@@ -16,11 +16,11 @@ import Contact from '@/components/site/Contact'
 import Admin from '@/components/site/Admin'
 
 const WORLD_CLASS = {
-  home: 'bg-wonder-bg text-wonder-cream',
-  productions: 'bg-wonder-bg text-wonder-cream',
-  about: 'bg-wonder-bg text-wonder-cream',
-  contact: 'bg-wonder-bg text-wonder-cream',
-  admin: 'bg-wonder-bg text-wonder-cream',
+  home: 'bg-wonder-bg text-wonder-ink',
+  productions: 'bg-wonder-bg text-wonder-ink',
+  about: 'bg-wonder-bg text-wonder-ink',
+  contact: 'bg-wonder-bg text-wonder-ink',
+  admin: 'bg-wonder-bg text-wonder-ink',
   show: 'bg-show-bg text-show-cream',
   xmas: 'bg-xmas-bg text-xmas-cream',
 }
@@ -86,14 +86,14 @@ function App() {
       {/* Page transition panels */}
       <div className="pointer-events-none fixed inset-0 z-[100] flex">
         {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} className="pt-panel h-full flex-1 origin-bottom scale-y-0 bg-gradient-to-b from-wonder-bg to-[#1a1206]" />
+          <div key={i} className="pt-panel h-full flex-1 origin-bottom scale-y-0 bg-gradient-to-b from-wonder-ink to-wonder-gold" />
         ))}
         <div className="pt-brand absolute inset-0 flex items-center justify-center opacity-0">
           <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-14 w-auto md:h-20" />
         </div>
       </div>
 
-      <Toaster position="top-center" theme="dark" />
+      <Toaster position="top-center" theme="light" />
     </SiteContext.Provider>
   )
 }
