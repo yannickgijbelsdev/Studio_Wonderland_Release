@@ -103,13 +103,14 @@ export function PageHeader({ eyebrow, lines, starClass = 'text-[#F8E7B0] drop-sh
 
 // Masonry-style photo grid with an interactive lightbox. Reused across worlds.
 export function PhotoGallery({ images = [], accent = 'text-white', ringClass = 'ring-white/20' }) {
+  const items = images.map((im) => (typeof im === 'string' ? { src: im } : im)).filter((im) => im && im.src)
   const [idx, setIdx] = useState(null)
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
   const open = idx !== null
   const close = useCallback(() => setIdx(null), [])
-  const prev = useCallback(() => setIdx((i) => (i === null ? i : (i - 1 + images.length) % images.length)), [images.length])
-  const next = useCallback(() => setIdx((i) => (i === null ? i : (i + 1) % images.length)), [images.length])
+  const prev = useCallback(() => setIdx((i) => (i === null ? i : (i - 1 + items.length) % items.length)), [items.length])
+  const next = useCallback(() => setIdx((i) => (i === null ? i : (i + 1) % items.length)), [items.length])
 
   useEffect(() => {
     if (!open) return
@@ -126,17 +127,21 @@ export function PhotoGallery({ images = [], accent = 'text-white', ringClass = '
   return (
     <>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {images.map((src, i) => (
-          <button
-            key={i}
-            data-img
-            onClick={() => setIdx(i)}
-            data-cursor="hover"
-            className={`group relative block aspect-square w-full overflow-hidden rounded-2xl ring-1 ${ringClass} focus:outline-none`}
-          >
-            <img src={src} alt="Foto" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-            <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/15" />
-          </button>
+        {items.map((it, i) => (
+          <figure key={i} className="m-0">
+            <button
+              data-img
+              onClick={() => setIdx(i)}
+              data-cursor="hover"
+              className={`group relative block aspect-square w-full overflow-hidden rounded-2xl ring-1 ${ringClass} focus:outline-none`}
+            >
+              <img src={it.src} alt="Foto" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+              <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/15" />
+            </button>
+            {it.caption && (
+              <figcaption className={`mt-1.5 text-xs ${accent} opacity-60 [&_a]:underline [&_p]:m-0`} dangerouslySetInnerHTML={{ __html: it.caption }} />
+            )}
+          </figure>
         ))}
       </div>
 
@@ -152,12 +157,12 @@ export function PhotoGallery({ images = [], accent = 'text-white', ringClass = '
             <ChevronRight className="h-7 w-7" />
           </button>
           <img
-            src={images[idx]}
+            src={items[idx]?.src}
             alt="Foto groot"
             onClick={(e) => e.stopPropagation()}
             className="max-h-[86vh] max-w-[92vw] rounded-lg object-contain shadow-2xl"
           />
-          <span className={`absolute bottom-5 left-1/2 -translate-x-1/2 text-sm ${accent} opacity-70`}>{idx + 1} / {images.length}</span>
+          <span className={`absolute bottom-5 left-1/2 -translate-x-1/2 text-sm ${accent} opacity-70`}>{idx + 1} / {items.length}</span>
         </div>,
         document.body
       )}

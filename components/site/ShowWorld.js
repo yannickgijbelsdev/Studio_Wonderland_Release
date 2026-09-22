@@ -88,7 +88,8 @@ export default function ShowWorld() {
   const heroVid = useRef(null)
   const { navigate } = useSite()
   const [galleryPhotos, setGalleryPhotos] = useState([])
-  useSectionAnimations(scope, [galleryPhotos.length])
+  const [stars, setStars] = useState([])
+  useSectionAnimations(scope, [galleryPhotos.length, stars.length])
 
   // Foto's uit de Clara/koodh galerij (categorie "galerij"); valt terug op de
   // vaste foto's wanneer de galerij nog leeg is.
@@ -98,8 +99,33 @@ export default function ShowWorld() {
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (!mounted || !data) return
-        const imgs = (data.items || []).map((i) => i.image_url).filter(Boolean)
+        const imgs = (data.items || [])
+          .map((i) => ({ src: i.image_url, caption: i.image_caption_html }))
+          .filter((i) => i.src)
         if (imgs.length) setGalleryPhotos(imgs)
+      })
+      .catch(() => {})
+    return () => { mounted = false }
+  }, [])
+
+  // Sterren van de show (categorie "sterren-van-de-show"): titel, body en foto.
+  // De body zit enkel in het detail-endpoint, dus die halen we per item op.
+  useEffect(() => {
+    let mounted = true
+    fetch('/api/news?category=sterren-van-de-show')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(async (data) => {
+        const items = (data && data.items) || []
+        if (!items.length) return
+        const detailed = await Promise.all(
+          items.map((it) =>
+            fetch(`/api/news/${it.id}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+          )
+        )
+        const list = detailed
+          .filter(Boolean)
+          .map((a) => ({ title: a.title, body: a.body || '', image: a.image_url, caption: a.image_caption_html }))
+        if (mounted && list.length) setStars(list)
       })
       .catch(() => {})
     return () => { mounted = false }
@@ -186,17 +212,45 @@ export default function ShowWorld() {
             <Eyebrow className="text-show-gold [&]:justify-center">Wie is wie</Eyebrow>
             <TitleReveal lines={["De sterren van de show"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            {CHARACTERS.map((c, idx) => (
-              <div key={idx} data-fade className="group relative overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-show-gold/45 md:p-8">
-                <span className="absolute left-0 top-7 h-10 w-1 rounded-r bg-show-gold/70" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-show-red">{c.role}</span>
-                <h4 className="mt-1.5 font-display text-2xl leading-tight text-show-cream">{c.name}</h4>
-                <p className="mt-3 text-sm leading-relaxed text-show-cream/70">{c.desc}</p>
+          {stars.length > 0 ? (
+            <div className="space-y-8">
+              {stars.map((s, idx) => (
+                <div key={idx} data-fade className="overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 transition-all duration-300 hover:border-show-gold/40 md:grid md:grid-cols-[minmax(0,340px)_1fr]">
+                  {s.image && (
+                    <figure className="m-0">
+                      <div className="aspect-[4/3] w-full overflow-hidden md:h-full">
+                        <img src={s.image} alt={s.title} className="h-full w-full object-cover" />
+                      </div>
+                      {s.caption && (
+                        <figcaption className="px-5 pt-2 text-xs text-show-cream/45 [&_p]:m-0" dangerouslySetInnerHTML={{ __html: s.caption }} />
+                      )}
+                    </figure>
+                  )}
+                  <div className="p-7 md:p-9">
+                    <h4 className="font-display text-2xl leading-tight text-show-cream md:text-3xl">{s.title}</h4>
+                    <div
+                      className="clara-body mt-4 space-y-3 text-sm leading-relaxed text-show-cream/75 [&_a]:text-show-gold [&_a]:underline [&_.clara-image-credit]:hidden [&_figure]:my-4 [&_figcaption]:mt-1.5 [&_figcaption]:text-xs [&_figcaption]:text-show-cream/45 [&_img]:rounded-xl"
+                      dangerouslySetInnerHTML={{ __html: s.body }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="grid gap-6 md:grid-cols-2">
+                {CHARACTERS.map((c, idx) => (
+                  <div key={idx} data-fade className="group relative overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-show-gold/45 md:p-8">
+                    <span className="absolute left-0 top-7 h-10 w-1 rounded-r bg-show-gold/70" />
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-show-red">{c.role}</span>
+                    <h4 className="mt-1.5 font-display text-2xl leading-tight text-show-cream">{c.name}</h4>
+                    <p className="mt-3 text-sm leading-relaxed text-show-cream/70">{c.desc}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-show-cream/40">Portretten volgen binnenkort</p>
+              <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-show-cream/40">Portretten volgen binnenkort</p>
+            </>
+          )}
         </div>
       </section>
 
