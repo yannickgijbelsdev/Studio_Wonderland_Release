@@ -22,7 +22,7 @@ function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
         <>
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
             <div
-              className="relative w-[150%] -rotate-[7deg]"
+              className="relative w-[200%] -rotate-[7deg]"
               style={{ transform: 'translateZ(0) rotate(-7deg)', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
             >
               <div className="relative bg-gradient-to-b from-[#FBEECB] via-[#E9C766] to-[#C99A26] py-[18px] text-center shadow-[0_16px_36px_-10px_rgba(0,0,0,0.65)]">
@@ -88,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* STUDIO WONDERLAND INTRO */}
-      <section className="relative z-10 bg-wonder-bg px-6 pb-24 pt-24 md:px-10 md:pb-36 md:pt-32">
+      <section id="over-ons" className="relative z-10 bg-wonder-bg px-6 pb-24 pt-24 md:px-10 md:pb-36 md:pt-32">
         <ArchDivider color="fill-wonder-bg" />
         <Sparkles count={26} className="opacity-50" />
         <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 md:grid-cols-2">

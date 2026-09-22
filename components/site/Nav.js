@@ -159,8 +159,7 @@ function MainNav() {
   const links = [
     { label: 'Belevenissen', r: 'home', a: 'belevenissen' },
     { label: 'Eerder te beleven', r: 'productions' },
-    { label: 'Over ons', r: 'about' },
-    { label: 'Contact', r: 'contact' },
+    { label: 'Over ons', r: 'home', a: 'over-ons' },
   ]
 
   const go = (r, a) => { setOpen(false); navigate(r, a) }
@@ -185,7 +184,7 @@ function MainNav() {
               </button>
             ))}
             <Magnetic as="button" onClick={() => go('contact')} className="rounded-full bg-wonder-pinkdeep px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-wonder-plum">
-              Boek een beleving
+              Contact
             </Magnetic>
           </nav>
 
@@ -207,7 +206,7 @@ function MainNav() {
               {l.label}
             </button>
           ))}
-          <button onClick={() => go('contact')} className="mt-8 rounded-full bg-wonder-pinkdeep py-4 text-center font-medium text-white">Boek een beleving</button>
+          <button onClick={() => go('contact')} className="mt-8 rounded-full bg-wonder-pinkdeep py-4 text-center font-medium text-white">Contact</button>
         </nav>
       </div>
     </>
