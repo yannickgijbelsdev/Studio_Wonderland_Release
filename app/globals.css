@@ -68,9 +68,9 @@ html.lenis, html.lenis body { height: auto; }
 
 /* Custom cursor: hide native on precise pointers */
 @media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
-  a, button, [data-cursor] { cursor: none; }
-  input, textarea, [data-native-cursor], [data-native-cursor] * { cursor: auto !important; }
+  html, body { cursor: none; }
+  *, *::before, *::after { cursor: none !important; }
+  input, textarea, select, [contenteditable="true"], [data-native-cursor], [data-native-cursor] * { cursor: auto !important; }
 }
 
 @layer utilities {
