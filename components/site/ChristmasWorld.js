@@ -172,6 +172,18 @@ export default function ChristmasWorld() {
         <Snow />
         <div className="relative mx-auto max-w-[900px]">
           <div className="text-center">
+            <div className="mb-10 flex justify-center">
+              <div className="golden-ticket relative flex items-center gap-4 overflow-hidden rounded-2xl border border-xmas-gold/60 bg-gradient-to-br from-[#FFF6DE] via-[#F0D48A] to-[#C9971F] px-7 py-5 text-xmas-bg">
+                <span className="shine" />
+                <span className="absolute -left-2.5 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-xmas-green" />
+                <span className="absolute -right-2.5 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-xmas-green" />
+                <Ticket className="h-9 w-9 shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]" />
+                <div className="border-l-2 border-dashed border-xmas-bg/40 pl-4 text-left">
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.35em]">Golden Ticket</span>
+                  <span className="block font-display text-xl leading-tight">Huis van de Kerstman</span>
+                </div>
+              </div>
+            </div>
             <Eyebrow className="text-xmas-gold [&]:justify-center">Golden Ticket</Eyebrow>
             <TitleReveal lines={["Het Golden Ticket"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
             <p data-fade className="mx-auto mt-6 max-w-[720px] text-xmas-cream/85">Sommige uitnodigingen van de Kerstman zijn nét dat tikkeltje magischer… Met het Golden Ticket beleef je de magische reis naar het Huis van de Kerstman op een heel bijzondere manier. En dan gebeurt er iets bijzonders: want de Kerstman weet dat jullie komen, en hij heeft speciaal voor jullie tijd vrijgemaakt.</p>

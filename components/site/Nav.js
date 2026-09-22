@@ -28,10 +28,10 @@ const WORLDS = {
     textHover: 'hover:text-xmas-gold',
     active: 'text-xmas-gold',
     divider: 'border-xmas-gold/20',
-    cta: 'bg-xmas-red text-white hover:bg-white hover:text-xmas-green',
+    cta: 'bg-xmas-gold text-xmas-bg hover:bg-white shadow-[0_0_18px_rgba(248,231,176,0.5)]',
     overlay: 'bg-xmas-bg',
-    ctaLabel: 'Tickets & info',
-    ticketAnchor: 'tickets',
+    ctaLabel: 'Golden Ticket',
+    ticketAnchor: 'golden',
   },
 }
 

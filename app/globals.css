@@ -148,3 +148,25 @@ html.lenis, html.lenis body { height: auto; }
 /* Marquee */
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .marquee-track { display: inline-flex; white-space: nowrap; animation: marquee 24s linear infinite; }
+
+
+/* Glowing golden ticket (Huis van de Kerstman) */
+@keyframes ticketGlow {
+  0%, 100% { box-shadow: 0 0 18px rgba(248,231,176,0.45), 0 0 40px rgba(233,196,106,0.28); }
+  50% { box-shadow: 0 0 34px rgba(248,231,176,0.9), 0 0 78px rgba(233,196,106,0.6); }
+}
+@keyframes ticketFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(-2deg); }
+}
+@keyframes ticketShine {
+  0% { transform: translateX(-140%) skewX(-20deg); }
+  55%, 100% { transform: translateX(260%) skewX(-20deg); }
+}
+.golden-ticket { animation: ticketGlow 2.4s ease-in-out infinite, ticketFloat 5s ease-in-out infinite; }
+.golden-ticket .shine {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.75), transparent);
+  animation: ticketShine 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
