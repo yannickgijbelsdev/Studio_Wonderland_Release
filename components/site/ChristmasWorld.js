@@ -125,7 +125,7 @@ export default function ChristmasWorld() {
             <Eyebrow className="text-xmas-gold">Praktische info</Eyebrow>
             <TitleReveal lines={["Veelgestelde vragen"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
-          <Accordion type="single" collapsible data-native-cursor className="w-full">
+          <Accordion type="single" collapsible className="w-full">
             {FAQ.map((f, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-xmas-gold/20">
                 <AccordionTrigger className="text-left text-xmas-cream hover:text-xmas-gold">{f.q}</AccordionTrigger>

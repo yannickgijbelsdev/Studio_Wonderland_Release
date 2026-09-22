@@ -192,7 +192,7 @@ export default function ShowWorld() {
             <Eyebrow className="text-show-gold [&]:justify-center">Praktisch</Eyebrow>
             <TitleReveal lines={["Veelgestelde vragen"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
-          <Accordion type="single" collapsible data-native-cursor className="w-full space-y-3">
+          <Accordion type="single" collapsible className="w-full space-y-3">
             {FAQ.map((f, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="overflow-hidden rounded-2xl border border-show-gold/15 bg-black/20 px-5 transition-colors data-[state=open]:border-show-gold/45 data-[state=open]:bg-black/30">
                 <AccordionTrigger className="py-5 text-left text-base font-medium text-show-cream hover:text-show-gold hover:no-underline md:text-lg">{f.q}</AccordionTrigger>
