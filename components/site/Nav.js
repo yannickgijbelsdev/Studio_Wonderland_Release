@@ -39,10 +39,9 @@ export default function Nav() {
                 key={l.label}
                 onClick={() => go(l.r, l.a)}
                 data-cursor="hover"
-                className={`group relative text-sm font-medium tracking-wide transition-colors ${route === l.r ? 'text-wonder-pinkdeep' : 'text-wonder-ink/75 hover:text-wonder-ink'}`}
+                className={`text-sm font-medium tracking-wide transition-colors ${route === l.r ? 'text-wonder-pinkdeep' : 'text-wonder-ink/75 hover:text-wonder-ink'}`}
               >
                 {l.label}
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-wonder-pinkdeep transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
             <Magnetic as="button" onClick={() => go('contact')} className="rounded-full bg-wonder-pinkdeep px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-wonder-plum">
