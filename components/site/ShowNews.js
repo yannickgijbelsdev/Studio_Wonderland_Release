@@ -13,7 +13,7 @@ function formatDate(iso) {
   }
 }
 
-export default function ShowNews() {
+export default function ShowNews({ archColor = 'fill-show-bg', archFlip = false }) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [active, setActive] = useState(null) // full article
@@ -57,7 +57,7 @@ export default function ShowNews() {
 
   return (
     <section id="nieuws" className="relative z-10 bg-show-bg px-6 pb-24 pt-24 md:px-10 md:pt-28">
-      <ArchDivider color="fill-show-bg" />
+      <ArchDivider color={archColor} flip={archFlip} />
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-14 text-center">
           <Eyebrow className="text-show-gold">Nieuws</Eyebrow>
@@ -81,7 +81,7 @@ export default function ShowNews() {
                 onClick={() => openArticle(it.id)}
                 data-fade
                 data-cursor="hover"
-                className="group flex flex-col overflow-hidden rounded-3xl border border-show-gold/15 bg-black/20 text-left transition-colors hover:border-show-gold/40"
+                className="group flex flex-col overflow-hidden rounded-3xl border border-show-gold/15 bg-black/20 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-show-gold/50 hover:shadow-[0_20px_50px_-20px_rgba(248,231,176,0.4)]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   {it.image_url ? (

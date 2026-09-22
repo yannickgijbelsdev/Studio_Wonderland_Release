@@ -71,12 +71,17 @@ export function Sparkles({ count = 60, className = '' }) {
   )
 }
 
-// Smooth full-width SVG arch that sits on top of a section and overlaps the section above it.
-export function ArchDivider({ color = 'fill-wonder-bg' }) {
+// Smooth full-width SVG arch. Can sit on top (default) or bottom of a section,
+// and curve in either direction (flip) so sections can alternate for a wavy look.
+export function ArchDivider({ color = 'fill-wonder-bg', position = 'top', flip = false }) {
+  const posClass = position === 'top' ? 'top-0 -translate-y-[99%]' : 'bottom-0 translate-y-[99%] rotate-180'
+  const d = flip
+    ? 'M0,100 L0,50 Q720,140 1440,50 L1440,100 Z'
+    : 'M0,100 L0,50 Q720,-40 1440,50 L1440,100 Z'
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-[99%] leading-[0]" aria-hidden="true">
+    <div className={`pointer-events-none absolute inset-x-0 leading-[0] ${posClass}`} aria-hidden="true">
       <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-[52px] w-full md:h-[92px]">
-        <path className={color} d="M0,100 L0,50 Q720,-40 1440,50 L1440,100 Z" />
+        <path className={color} d={d} />
       </svg>
     </div>
   )
