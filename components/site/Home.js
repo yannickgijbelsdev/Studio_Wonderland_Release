@@ -8,24 +8,16 @@ import { Magnetic, Eyebrow, Star, TitleReveal, Sparkles, ArchDivider } from './u
 import HeroVideos, { HeroScrollCue } from './HeroVideos'
 
 // Arch "doorway" portal tile — only a button remains.
+const CHAIN_TILE = `<svg xmlns='http://www.w3.org/2000/svg' width='34' height='62' viewBox='0 0 34 62'><defs><linearGradient id='cg' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#FFF8E2'/><stop offset='40%' stop-color='#ECCB63'/><stop offset='72%' stop-color='#C4941C'/><stop offset='100%' stop-color='#6f5109'/></linearGradient></defs><g fill='none' stroke='url(#cg)' stroke-linecap='round'><ellipse cx='0' cy='31' rx='6.5' ry='23' stroke-width='6.5'/><ellipse cx='34' cy='31' rx='6.5' ry='23' stroke-width='6.5'/><ellipse cx='17' cy='31' rx='15' ry='25' stroke-width='7.5'/><ellipse cx='17' cy='31' rx='15' ry='25' stroke='#fff' stroke-opacity='0.25' stroke-width='2'/></g></svg>`
+const CHAIN_BG = `url("data:image/svg+xml,${encodeURIComponent(CHAIN_TILE)}")`
+
 function LockChain() {
-  const links = Array.from({ length: 46 })
   return (
-    <svg viewBox="0 0 1840 64" preserveAspectRatio="none" className="chain-shimmer block h-14 w-full md:h-[72px]" style={{ overflow: 'visible' }} aria-hidden="true">
-      <defs>
-        <linearGradient id="chainGold" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FFF7E0" />
-          <stop offset="34%" stopColor="#EAC85F" />
-          <stop offset="66%" stopColor="#C9971F" />
-          <stop offset="100%" stopColor="#7d5b0e" />
-        </linearGradient>
-      </defs>
-      {links.map((_, i) => {
-        const cx = 20 + i * 40
-        const v = i % 2 === 0
-        return <ellipse key={i} cx={cx} cy={32} rx={v ? 11 : 19} ry={v ? 19 : 11} fill="none" stroke="url(#chainGold)" strokeWidth="7" strokeLinecap="round" />
-      })}
-    </svg>
+    <div
+      className="chain-shimmer h-16 w-full md:h-[84px]"
+      style={{ backgroundImage: CHAIN_BG, backgroundRepeat: 'repeat-x', backgroundSize: 'auto 100%', backgroundPosition: 'center' }}
+      aria-hidden="true"
+    />
   )
 }
 
