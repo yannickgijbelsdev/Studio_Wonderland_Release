@@ -54,9 +54,9 @@ function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
       <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 transition-opacity duration-500 ${locked ? '' : 'group-hover:opacity-70'}`} />
       {locked ? (
         <>
-          {/* big chain stretched across, anchored beyond both edges */}
+          {/* big chain stretched across, anchored well beyond both edges so it meets the tile borders */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div className="w-[190%] -rotate-[10deg]" style={{ transform: 'translateZ(0) rotate(-10deg)' }}><LockChain /></div>
+            <div className="w-[260%] -rotate-[10deg]" style={{ transform: 'translateZ(0) rotate(-10deg)' }}><LockChain /></div>
           </div>
           {/* big padlock in the centre */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><Padlock /></div>
@@ -118,43 +118,17 @@ export default function Home() {
       <section id="over-ons" className="relative z-10 bg-wonder-bg px-6 pb-24 pt-24 md:px-10 md:pb-36 md:pt-32">
         <ArchDivider color="fill-wonder-bg" />
         <Sparkles count={26} className="opacity-50" />
-        <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 md:grid-cols-2">
+        <div className="relative mx-auto max-w-3xl text-center">
           <div>
-            <Eyebrow className="text-wonder-pinkdeep">Over Studio Wonderland</Eyebrow>
+            <Eyebrow className="text-wonder-pinkdeep [&>*]:mx-auto justify-center flex">Over Studio Wonderland</Eyebrow>
             <TitleReveal
               lines={["Niet komen kijken.", "Maar binnenstappen."]}
-              className="mt-6 text-4xl text-wonder-ink md:text-6xl [&>span:last-child>span]:text-gradient-gold"
+              align="center"
+              className="mt-6 text-4xl text-wonder-ink md:text-6xl [&>span]:mx-auto [&>span:last-child>span]:text-gradient-gold"
             />
-            <p data-fade className="mt-8 max-w-lg text-lg leading-relaxed text-wonder-ink/80">
+            <p data-fade className="mt-8 mx-auto max-w-2xl text-lg leading-relaxed text-wonder-ink/80">
               Studio Wonderland creëert bijzondere livebelevingen voor jong en oud — werelden waarin bezoekers zich volledig kunnen onderdompelen. Wij combineren theater, muziek, licht en verhaal tot ervaringen die families samen beleven en nooit vergeten.
             </p>
-            <div data-fade className="mt-10 grid grid-cols-3 gap-6 border-t border-wonder-pink/40 pt-8">
-              <div><div className="font-display text-3xl text-wonder-pinkdeep">2</div><div className="mt-1 text-xs uppercase tracking-widest text-wonder-muted">Belevenissen</div></div>
-              <div><div className="font-display text-3xl text-wonder-pinkdeep">100k+</div><div className="mt-1 text-xs uppercase tracking-widest text-wonder-muted">Bezoekers</div></div>
-              <div><div className="font-display text-3xl text-wonder-pinkdeep">∞</div><div className="mt-1 text-xs uppercase tracking-widest text-wonder-muted">Verwondering</div></div>
-            </div>
-          </div>
-          <div className="relative">
-            <div data-img className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
-              <img src={IMG.showAudience} alt="Beleving" className="h-full w-full object-cover" />
-            </div>
-            <div data-parallax="0.15" className="absolute -bottom-10 -left-8 hidden w-44 overflow-hidden rounded-2xl border-4 border-wonder-bg shadow-xl md:block">
-              <img src={IMG.xmasSanta} alt="Winter" className="h-60 w-full object-cover" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="relative bg-wonder-bg px-6 pb-28 md:px-10">
-        <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-wonder-rose to-wonder-pinklt p-10 text-center md:p-20">
-          <Sparkles count={30} className="opacity-60" />
-          <div className="relative">
-            <h3 data-fade className="flex items-center justify-center gap-3 font-display text-3xl text-wonder-ink md:text-5xl"><Star className="h-[0.6em] w-[0.6em] text-wonder-pinkdeep" /> Klaar om binnen te stappen?</h3>
-            <p data-fade className="mx-auto mt-4 max-w-xl text-wonder-ink/70">Ontdek de beleving die je vandaag al kan bezoeken.</p>
-            <div data-fade className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Magnetic as="button" onClick={() => navigate('show')} className="rounded-full bg-show-red px-7 py-3.5 font-medium text-white">Ontdek de show</Magnetic>
-            </div>
           </div>
         </div>
       </section>
