@@ -1,10 +1,14 @@
 'use client'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowLeft, Ticket, CalendarDays, Gift, Clock } from 'lucide-react'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
 import { Magnetic, Eyebrow, Star, TitleReveal, ArchDivider, Sparkles, PhotoGallery } from './ui'
+import HeroVideos, { HeroScrollCue } from './HeroVideos'
+import ShowNews from './ShowNews'
+
+const XMAS_SITE = 'het-huis-van-de-kerstman'
 
 const TICKETS_URL = 'https://events.flextickets.nl/event/huis-van-de-kerstman'
 
@@ -63,18 +67,28 @@ function Snow() {
 
 export default function ChristmasWorld() {
   const scope = useRef(null)
-  const heroVid = useRef(null)
   const { navigate } = useSite()
-  useSectionAnimations(scope, [])
+  const [galleryPhotos, setGalleryPhotos] = useState([])
+  useSectionAnimations(scope, [galleryPhotos.length])
+
+  // Foto's uit de Clara/koodh galerij van het Huis van de Kerstman; valt terug op
+  // de vaste sfeerbeelden wanneer de galerij nog leeg is.
+  useEffect(() => {
+    let mounted = true
+    fetch(`/api/news?site=${XMAS_SITE}&category=galerij`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!mounted || !data) return
+        const imgs = (data.items || [])
+          .map((i) => ({ src: i.image_url, caption: i.image_caption_html }))
+          .filter((i) => i.src)
+        if (imgs.length) setGalleryPhotos(imgs)
+      })
+      .catch(() => {})
+    return () => { mounted = false }
+  }, [])
 
   useEffect(() => {
-    const v = heroVid.current
-    if (v) {
-      v.muted = true
-      try { v.load() } catch {}
-      const p = v.play?.()
-      if (p && p.catch) p.catch(() => {})
-    }
     const ctx = gsap.context(() => {
       gsap.to('.hero-img', { scale: 1.1, ease: 'none', scrollTrigger: { trigger: '.hero-sec', start: 'top top', end: 'bottom top', scrub: true } })
       gsap.from('.hero-cue', { opacity: 0, y: 12, duration: 1, delay: 0.8, ease: 'power3.out' })
@@ -84,31 +98,33 @@ export default function ChristmasWorld() {
 
   return (
     <div ref={scope} className="aurora-xmas">
-      {/* HERO */}
+      {/* HERO — identiek aan de Studio Wonderland-hoofdsite (crossfade video's) */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
-        <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg">
-          <source src="/hero-2.webm" type="video/webm" />
-          <source src={IMG.heroVideoAlt} type="video/mp4" />
-        </video>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-xmas-bg/85" />
-        <Snow />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-          <span className="text-[11px] uppercase tracking-[0.45em] text-xmas-gold [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Een productie van Studio Wonderland</span>
-          <h1 className="mt-5 font-display text-[13vw] leading-[0.94] text-white md:text-[7vw] [text-shadow:_0_2px_24px_rgba(0,0,0,0.55)]">
-            <span className="block">Huis van de</span>
-            <span className="block text-xmas-gold">Kerstman 2026</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-white/90 [text-shadow:_0_1px_12px_rgba(0,0,0,0.6)]">De reis naar de Kerstman begint in een snoepwinkel…</p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <TicketButton className="rounded-full bg-xmas-gold px-7 py-3.5 font-semibold text-xmas-bg hover:scale-[1.03] hover:bg-white">Tickets &amp; Golden Ticket</TicketButton>
-            <button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="rounded-full border border-white/40 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-sm hover:bg-white/10">Bekijk de data</button>
-          </div>
-        </div>
-        <div className="hero-cue absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2 text-white">
-          <span className="text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
-          <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5"><span className="h-2 w-1 animate-bounce rounded-full bg-white" /></span>
-        </div>
+        <HeroVideos />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
+        <HeroScrollCue />
       </section>
+
+      {/* NIEUWS — bovenaan, met boog omhoog in de hero */}
+      <ShowNews
+        site={XMAS_SITE}
+        category="nieuws"
+        origin="xmas"
+        title="Vers uit het Huis van de Kerstman"
+        archColor="fill-xmas-bg"
+        sectionBg="bg-xmas-bg"
+        eyebrowCls="text-xmas-gold"
+        titleCls="text-xmas-cream"
+        titleStar="text-xmas-gold"
+        cardBorder="border-xmas-gold/15"
+        cardHover="hover:border-xmas-gold/50 hover:shadow-[0_20px_50px_-20px_rgba(232,180,80,0.35)]"
+        dateCls="text-xmas-cream/50"
+        headingCls="text-xmas-cream group-hover:text-xmas-gold"
+        excerptCls="text-xmas-cream/70"
+        linkCls="text-xmas-gold"
+        fallbackBg="bg-xmas-green"
+        iconCls="text-xmas-gold/50"
+      />
 
       {/* HET VERHAAL */}
       <section id="verhaal" className="relative z-10 bg-xmas-green px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
@@ -223,7 +239,7 @@ export default function ChristmasWorld() {
             <Eyebrow className="text-xmas-gold [&]:justify-center">Foto's</Eyebrow>
             <TitleReveal lines={["Sfeerbeelden"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
           </div>
-          <PhotoGallery images={PHOTOS} accent="text-white" ringClass="ring-xmas-gold/20" />
+          <PhotoGallery images={galleryPhotos.length ? galleryPhotos : PHOTOS} accent="text-white" ringClass="ring-xmas-gold/20" />
 
           <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-xmas-gold/20 pt-10 md:flex-row">
             <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-xmas-cream/80 hover:text-xmas-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>

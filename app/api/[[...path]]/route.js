@@ -93,8 +93,9 @@ async function handleRoute(request, { params }) {
     if (route === '/news' && method === 'GET') {
       const url = new URL(request.url)
       const category = url.searchParams.get('category') || 'homepagina'
+      const site = url.searchParams.get('site') || 'sinterklaas-genk'
       try {
-        const res = await fetch(`${NEWS_BASE}/sinterklaas-genk/${encodeURIComponent(category)}`, { headers: { Accept: 'application/json' }, cache: 'no-store' })
+        const res = await fetch(`${NEWS_BASE}/${encodeURIComponent(site)}/${encodeURIComponent(category)}`, { headers: { Accept: 'application/json' }, cache: 'no-store' })
         if (!res.ok) return handleCORS(NextResponse.json({ items: [], count: 0 }))
         const data = await res.json()
         return handleCORS(NextResponse.json(data))

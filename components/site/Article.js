@@ -20,7 +20,7 @@ function cleanBody(html) {
 }
 
 export default function Article() {
-  const { articleId, navigate } = useSite()
+  const { articleId, articleOrigin = 'show', navigate } = useSite()
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -41,7 +41,7 @@ export default function Article() {
   return (
     <div className="spotlight-bg min-h-screen">
       <div className="mx-auto max-w-[820px] px-6 pb-28 pt-32 md:pt-36">
-        <button onClick={() => navigate('show', 'nieuws')} data-cursor="hover" className="mb-8 inline-flex items-center gap-2 text-sm text-show-cream/80 hover:text-show-gold">
+        <button onClick={() => navigate(articleOrigin, 'nieuws')} data-cursor="hover" className="mb-8 inline-flex items-center gap-2 text-sm text-show-cream/80 hover:text-show-gold">
           <ArrowLeft className="h-4 w-4" /> Terug naar nieuws
         </button>
 
@@ -58,7 +58,7 @@ export default function Article() {
           <div className="rounded-3xl border border-show-gold/20 bg-black/25 p-10 text-center">
             <Newspaper className="mx-auto h-10 w-10 text-show-gold/50" />
             <p className="mt-4 text-show-cream/80">Dit artikel kon niet geladen worden.</p>
-            <button onClick={() => navigate('show', 'nieuws')} className="mt-6 rounded-full bg-show-gold px-6 py-3 font-semibold text-show-bg hover:bg-white">Terug naar nieuws</button>
+            <button onClick={() => navigate(articleOrigin, 'nieuws')} className="mt-6 rounded-full bg-show-gold px-6 py-3 font-semibold text-show-bg hover:bg-white">Terug naar nieuws</button>
           </div>
         )}
 

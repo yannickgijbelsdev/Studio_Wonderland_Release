@@ -32,6 +32,7 @@ const WORLD_CLASS = {
 function App() {
   const [route, setRoute] = useState('home')
   const [articleId, setArticleId] = useState(null)
+  const [articleOrigin, setArticleOrigin] = useState('show')
   const lenisRef = useRef(null)
   const transRef = useRef(false)
 
@@ -59,13 +60,14 @@ function App() {
     })
   }, [route])
 
-  const openArticle = useCallback((id) => {
+  const openArticle = useCallback((id, origin = 'show') => {
     setArticleId(id)
+    setArticleOrigin(origin)
     navigate('article')
   }, [navigate])
 
   return (
-    <SiteContext.Provider value={{ route, navigate, articleId, openArticle }}>
+    <SiteContext.Provider value={{ route, navigate, articleId, articleOrigin, openArticle }}>
       <div className={`grain min-h-screen transition-colors duration-500 ${WORLD_CLASS[route] || WORLD_CLASS.home}`}>
         <Cursor />
         <Nav />
