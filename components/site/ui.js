@@ -125,7 +125,7 @@ export function PhotoGallery({ images = [], accent = 'text-white', ringClass = '
 
   return (
     <>
-      <div className="columns-2 gap-3 md:columns-3 lg:columns-4 [&>*]:mb-3">
+      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
         {images.map((src, i) => (
           <button
             key={i}

@@ -13,7 +13,7 @@ function formatDate(iso) {
   }
 }
 
-export default function ShowNews({ archColor = 'fill-show-bg', archFlip = false }) {
+export default function ShowNews({ archColor = 'fill-show-bg', archFlip = false, showArch = true }) {
   const { openArticle } = useSite()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -32,7 +32,7 @@ export default function ShowNews({ archColor = 'fill-show-bg', archFlip = false 
 
   return (
     <section id="nieuws" className="relative z-10 bg-show-bg px-6 pb-24 pt-24 md:px-10 md:pt-28">
-      <ArchDivider color={archColor} flip={archFlip} />
+      {showArch && <ArchDivider color={archColor} flip={archFlip} />}
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-14 text-center">
           <Eyebrow className="text-show-gold [&]:justify-center">Nieuws</Eyebrow>
@@ -49,7 +49,7 @@ export default function ShowNews({ archColor = 'fill-show-bg', archFlip = false 
             ))}
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2">
             {items.map((it) => (
               <button
                 key={it.id}
@@ -58,21 +58,18 @@ export default function ShowNews({ archColor = 'fill-show-bg', archFlip = false 
                 data-cursor="hover"
                 className="group flex flex-col overflow-hidden rounded-3xl border border-show-gold/15 bg-black/20 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-show-gold/50 hover:shadow-[0_20px_50px_-20px_rgba(248,231,176,0.4)]"
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-[16/9] overflow-hidden">
                   {it.image_url ? (
                     <img src={it.image_url} alt={it.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-show-reddeep"><Newspaper className="h-10 w-10 text-show-gold/50" /></div>
-                  )}
-                  {it.category?.name && (
-                    <span className="absolute left-4 top-4 rounded-full bg-show-gold px-3 py-1 text-[11px] font-semibold text-show-bg">{it.category.name}</span>
+                    <div className="flex h-full w-full items-center justify-center bg-show-reddeep"><Newspaper className="h-12 w-12 text-show-gold/50" /></div>
                   )}
                 </div>
-                <div className="flex flex-1 flex-col p-6">
+                <div className="flex flex-1 flex-col p-7 md:p-8">
                   <span className="text-xs uppercase tracking-[0.2em] text-show-cream/50">{formatDate(it.published_at)}</span>
-                  <h3 className="mt-3 font-display text-2xl leading-tight text-show-cream group-hover:text-show-gold">{it.title}</h3>
-                  {it.excerpt && <p className="mt-3 line-clamp-3 text-sm text-show-cream/70">{it.excerpt}</p>}
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-show-gold">Lees meer <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                  <h3 className="mt-3 font-display text-3xl leading-tight text-show-cream group-hover:text-show-gold md:text-4xl">{it.title}</h3>
+                  {it.excerpt && <p className="mt-4 line-clamp-3 text-base text-show-cream/70">{it.excerpt}</p>}
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-show-gold">Lees meer <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
                 </div>
               </button>
             ))}

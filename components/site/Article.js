@@ -63,10 +63,7 @@ export default function Article() {
               </div>
             )}
             <div className="mt-8">
-              {article.category?.name && (
-                <span className="rounded-full bg-show-gold px-3 py-1 text-[11px] font-semibold text-show-bg">{article.category.name}</span>
-              )}
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-show-cream/50">{formatDate(article.published_at)}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-show-cream/50">{formatDate(article.published_at)}</p>
               <h1 className="mt-2 font-display text-4xl leading-tight text-show-cream md:text-5xl">{article.title}</h1>
               <div
                 className="clara-body mt-8 space-y-4 text-lg leading-relaxed text-show-cream/85 [&_a]:text-show-gold [&_a]:underline [&_figure]:my-6 [&_figcaption]:mt-1.5 [&_figcaption]:text-xs [&_figcaption]:text-show-cream/50 [&_img]:rounded-2xl [&_p]:leading-relaxed"

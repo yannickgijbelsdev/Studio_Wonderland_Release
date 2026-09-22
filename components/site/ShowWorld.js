@@ -11,10 +11,10 @@ import ShowNews from './ShowNews'
 const TICKETS_URL = 'https://events.flextickets.nl/event/de-grote-sinterklaasshow'
 
 const PARTNERS = [
-  { name: 'Stad Genk', logo: '/partners/genk.png' },
-  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp' },
-  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png' },
-  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp' },
+  { name: 'Stad Genk', logo: '/partners/genk.png', cls: '' },
+  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: 'invert' },
+  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: '' },
+  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: '' },
 ]
 
 const WORLDS4 = [
@@ -50,14 +50,13 @@ function TicketButton({ className = '', children }) {
   )
 }
 
-// A sliding partner strip (white silhouettes) used on either side of the hero scroll cue.
-function PartnerStrip({ reverse = false }) {
-  const set = [...PARTNERS, ...PARTNERS]
+// A single full-width sliding partner marquee (left → right), no duplicated look.
+function PartnerMarquee() {
   return (
-    <div className="relative min-w-0 flex-1 overflow-hidden">
-      <div className={`flex w-max items-center gap-12 md:gap-16 ${reverse ? '[animation:marquee_24s_linear_infinite_reverse]' : '[animation:marquee_24s_linear_infinite]'}`}>
-        {[...set, ...set].map((p, i) => (
-          <img key={i} src={p.logo} alt={p.name} title={p.name} className="h-6 w-auto shrink-0 opacity-90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)] [filter:brightness(0)_invert(1)] md:h-8" />
+    <div className="w-full overflow-hidden border-t border-black/5 bg-white/92 py-4 backdrop-blur-md md:py-5">
+      <div className="flex w-max items-center gap-16 [animation:marquee_26s_linear_infinite_reverse] md:gap-24">
+        {[...PARTNERS, ...PARTNERS].map((p, i) => (
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-12 w-auto shrink-0 md:h-16 ${p.cls}`} />
         ))}
       </div>
     </div>
@@ -86,23 +85,20 @@ export default function ShowWorld() {
         </video>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
 
-        {/* Bottom band: partners left · scroll cue · partners right */}
-        <div className="absolute inset-x-0 bottom-[86px] z-10 md:bottom-[104px]">
-          <div className="mx-auto flex max-w-[1500px] items-center gap-5 px-5 md:gap-8 md:px-10">
-            <PartnerStrip />
-            <div className="hero-cue flex shrink-0 flex-col items-center gap-3 text-white">
-              <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
-              <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
-                <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
-              </span>
-            </div>
-            <PartnerStrip reverse />
+        {/* Bottom: centered scroll cue above a full-width sliding partner bar */}
+        <div className="absolute inset-x-0 bottom-0 z-10">
+          <div className="hero-cue mb-4 flex flex-col items-center gap-3 text-white">
+            <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
+            <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+              <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+            </span>
           </div>
+          <PartnerMarquee />
         </div>
       </section>
 
       {/* NIEUWS — bovenaan */}
-      <ShowNews archColor="fill-show-bg" archFlip={false} />
+      <ShowNews showArch={false} />
 
       {/* HET VERHAAL — voluit, zonder foto */}
       <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
