@@ -84,11 +84,11 @@ export default function ChristmasWorld() {
             <Magnetic as="button" onClick={() => navigate('contact')} className="mt-8 rounded-full bg-xmas-red px-8 py-4 font-semibold text-white hover:bg-white hover:text-xmas-green">Blijf op de hoogte</Magnetic>
           </div>
         </div>
+        <ArchDivider color="fill-xmas-green" position="bottom" />
       </section>
 
       {/* ONDERDELEN */}
       <section className="relative z-10 bg-xmas-bg px-6 pb-24 pt-24 md:px-10 md:pt-28">
-        <ArchDivider color="fill-xmas-bg" />
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-14 text-center">
             <Eyebrow className="text-xmas-gold">De ervaring</Eyebrow>
@@ -134,11 +134,11 @@ export default function ChristmasWorld() {
             ))}
           </Accordion>
         </div>
+        <ArchDivider color="fill-xmas-green" position="bottom" />
       </section>
 
       {/* FOTO'S */}
       <section id="fotos" className="relative z-10 bg-xmas-bg px-6 pb-28 pt-24 md:px-10 md:pt-28">
-        <ArchDivider color="fill-xmas-bg" />
         <div className="mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">
             <Eyebrow className="text-xmas-gold">Foto's</Eyebrow>
