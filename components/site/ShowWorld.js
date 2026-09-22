@@ -50,13 +50,14 @@ function TicketButton({ className = '', children }) {
   )
 }
 
-// A single full-width sliding partner marquee (left → right), no duplicated look.
-function PartnerMarquee() {
+// A sliding partner strip (white silhouettes) placed beside the hero scroll cue.
+function PartnerStrip({ reverse = false }) {
+  const set = [...PARTNERS, ...PARTNERS]
   return (
-    <div className="w-full overflow-hidden border-t border-black/5 bg-white/92 py-4 backdrop-blur-md md:py-5">
-      <div className="flex w-max items-center gap-16 [animation:marquee_26s_linear_infinite_reverse] md:gap-24">
-        {[...PARTNERS, ...PARTNERS].map((p, i) => (
-          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-12 w-auto shrink-0 md:h-16 ${p.cls}`} />
+    <div className="relative min-w-0 flex-1 overflow-hidden">
+      <div className={`flex w-max items-center gap-12 md:gap-16 ${reverse ? '[animation:marquee_24s_linear_infinite_reverse]' : '[animation:marquee_24s_linear_infinite]'}`}>
+        {[...set, ...set].map((p, i) => (
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className="h-9 w-auto shrink-0 opacity-95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)] [filter:brightness(0)_invert(1)] md:h-11" />
         ))}
       </div>
     </div>
@@ -85,15 +86,18 @@ export default function ShowWorld() {
         </video>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
 
-        {/* Bottom: centered scroll cue above a full-width sliding partner bar */}
-        <div className="absolute inset-x-0 bottom-0 z-10">
-          <div className="hero-cue mb-4 flex flex-col items-center gap-3 text-white">
-            <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
-            <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
-              <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
-            </span>
+        {/* Bottom: partners flank the centered scroll cue (all white, sliding) */}
+        <div className="absolute inset-x-0 bottom-[70px] z-10 md:bottom-[90px]">
+          <div className="mx-auto flex max-w-[1600px] items-center gap-6 px-5 md:gap-10 md:px-10">
+            <PartnerStrip />
+            <div className="hero-cue flex shrink-0 flex-col items-center gap-3 text-white">
+              <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
+              <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+                <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+              </span>
+            </div>
+            <PartnerStrip reverse />
           </div>
-          <PartnerMarquee />
         </div>
       </section>
 

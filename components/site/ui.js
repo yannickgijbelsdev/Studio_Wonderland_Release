@@ -125,16 +125,16 @@ export function PhotoGallery({ images = [], accent = 'text-white', ringClass = '
 
   return (
     <>
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {images.map((src, i) => (
           <button
             key={i}
             data-img
             onClick={() => setIdx(i)}
             data-cursor="hover"
-            className={`group relative block w-full overflow-hidden rounded-2xl ring-1 ${ringClass} focus:outline-none`}
+            className={`group relative block aspect-square w-full overflow-hidden rounded-2xl ring-1 ${ringClass} focus:outline-none`}
           >
-            <img src={src} alt="Foto" className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+            <img src={src} alt="Foto" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
             <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/15" />
           </button>
         ))}

@@ -32,7 +32,10 @@ export default function Footer() {
         </div>
         <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50 md:flex-row">
           <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland.</span>
-          <span>Muziek &bull; Humor &bull; Dans &bull; Magie</span>
+          <div className="flex items-center gap-5">
+            <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
+            <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
+          </div>
         </div>
       </footer>
     )
@@ -64,7 +67,10 @@ export default function Footer() {
       </div>
       <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted md:flex-row">
         <span>&copy; {new Date().getFullYear()} Studio Wonderland. Alle rechten voorbehouden.</span>
-        <span>Wij maken werelden waar families samen in kunnen stappen.</span>
+        <div className="flex items-center gap-5">
+          <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
+          <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
+        </div>
       </div>
     </footer>
   )

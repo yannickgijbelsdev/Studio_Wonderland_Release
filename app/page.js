@@ -14,6 +14,8 @@ import Productions from '@/components/site/Productions'
 import About from '@/components/site/About'
 import Contact from '@/components/site/Contact'
 import Article from '@/components/site/Article'
+import Legal from '@/components/site/Legal'
+import CookieConsent from '@/components/site/CookieConsent'
 
 const WORLD_CLASS = {
   home: 'bg-wonder-bg text-wonder-ink',
@@ -23,6 +25,8 @@ const WORLD_CLASS = {
   show: 'bg-show-bg text-show-cream',
   xmas: 'bg-xmas-bg text-xmas-cream',
   article: 'bg-show-bg text-show-cream',
+  privacy: 'bg-wonder-bg text-wonder-ink',
+  cookies: 'bg-wonder-bg text-wonder-ink',
 }
 
 function App() {
@@ -73,9 +77,13 @@ function App() {
           {route === 'about' && <About />}
           {route === 'contact' && <Contact />}
           {route === 'article' && <Article />}
+          {route === 'privacy' && <Legal type="privacy" />}
+          {route === 'cookies' && <Legal type="cookies" />}
         </main>
         <Footer />
       </div>
+
+      <CookieConsent />
 
       <Toaster position="top-center" theme="light" />
     </SiteContext.Provider>
