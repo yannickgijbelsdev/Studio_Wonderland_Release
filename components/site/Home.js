@@ -54,11 +54,7 @@ function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
       <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 transition-opacity duration-500 ${locked ? '' : 'group-hover:opacity-70'}`} />
       {locked ? (
         <>
-          {/* big chain stretched across, anchored well beyond both edges so it meets the tile borders */}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div className="w-[260%] -rotate-[10deg]" style={{ transform: 'translateZ(0) rotate(-10deg)' }}><LockChain /></div>
-          </div>
-          {/* big padlock in the centre */}
+          {/* padlock only in the centre */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><Padlock /></div>
           {/* label plate */}
           <div className="pointer-events-none absolute bottom-8 left-1/2 w-[86%] -translate-x-1/2 rounded-full border border-xmas-gold/50 bg-black/55 px-5 py-2.5 text-center text-[13px] font-semibold uppercase tracking-[0.14em] text-xmas-gold backdrop-blur-sm md:text-sm">

@@ -7,11 +7,11 @@ export default function Footer() {
 
   if (isShow) {
     return (
-      <footer className="relative border-t-2 border-show-gold/40 bg-show-reddeep px-6 py-16 text-show-cream md:px-10">
+      <footer className="relative border-t-2 border-show-gold/40 bg-show-reddeep px-6 py-24 text-show-cream md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
-            <img src="/sinterklaas-show-logo.png" alt="De Grote Sinterklaasshow" className="h-20 w-auto md:h-24" />
-            <p className="mt-5 max-w-md text-show-cream/70">De Grote Sinterklaasshow — een spectaculaire liveshow vol muziek, humor, dans en magie. Schouwburg, Stadhuis Genk.</p>
+            <img src="/sinterklaas-show-logo.png" alt="De Grote Sinterklaasshow" className="h-28 w-auto md:h-36" />
+            <p className="mt-6 max-w-md text-show-cream/70">De Grote Sinterklaasshow — een spectaculaire liveshow vol muziek, humor, dans en magie. Schouwburg, Stadhuis Genk.</p>
             <a href="mailto:info@sinterklaasgenk.be" data-cursor="hover" className="mt-6 inline-block font-medium text-show-gold underline-offset-4 hover:underline">info@sinterklaasgenk.be</a>
           </div>
           <div>
@@ -30,11 +30,19 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50 md:flex-row">
-          <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland.</span>
-          <div className="flex items-center gap-5">
-            <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
-            <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
+        <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center gap-6 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50">
+          <div className="flex flex-col items-center gap-2">
+            <span className="uppercase tracking-[0.2em] text-show-cream/40">Powered by</span>
+            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block rounded-md bg-show-cream px-4 py-2">
+              <img src="/koodh-logo.png" alt="Koodh" className="h-6 w-auto" />
+            </a>
+          </div>
+          <div className="flex flex-col items-center justify-between gap-4 self-stretch md:flex-row">
+            <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780</span>
+            <div className="flex items-center gap-5">
+              <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
+              <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
+            </div>
           </div>
         </div>
       </footer>
@@ -65,11 +73,19 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted md:flex-row">
-        <span>&copy; {new Date().getFullYear()} Studio Wonderland. Alle rechten voorbehouden.</span>
-        <div className="flex items-center gap-5">
-          <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
-          <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
+      <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center gap-6 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted">
+        <div className="flex flex-col items-center gap-2">
+          <span className="uppercase tracking-[0.2em] text-wonder-muted/70">Powered by</span>
+          <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block">
+            <img src="/koodh-logo.png" alt="Koodh" className="h-6 w-auto" />
+          </a>
+        </div>
+        <div className="flex flex-col items-center justify-between gap-4 self-stretch md:flex-row">
+          <span>&copy; {new Date().getFullYear()} Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780 &middot; Alle rechten voorbehouden.</span>
+          <div className="flex items-center gap-5">
+            <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
+            <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
+          </div>
         </div>
       </div>
     </footer>
