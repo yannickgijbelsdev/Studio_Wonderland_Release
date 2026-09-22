@@ -30,19 +30,14 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center gap-6 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50">
-          <div className="flex flex-col items-center gap-2">
-            <span className="uppercase tracking-[0.2em] text-show-cream/40">Powered by</span>
-            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block rounded-md bg-show-cream px-4 py-2">
-              <img src="/koodh-logo.png" alt="Koodh" className="h-6 w-auto" />
+        <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50 md:flex-row">
+          <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780</span>
+          <div className="flex items-center gap-5">
+            <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
+            <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
+            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block rounded bg-show-cream px-2.5 py-1.5">
+              <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" />
             </a>
-          </div>
-          <div className="flex flex-col items-center justify-between gap-4 self-stretch md:flex-row">
-            <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780</span>
-            <div className="flex items-center gap-5">
-              <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
-              <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
-            </div>
           </div>
         </div>
       </footer>
@@ -73,19 +68,14 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center gap-6 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted">
-        <div className="flex flex-col items-center gap-2">
-          <span className="uppercase tracking-[0.2em] text-wonder-muted/70">Powered by</span>
+      <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted md:flex-row">
+        <span>&copy; {new Date().getFullYear()} Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780 &middot; Alle rechten voorbehouden.</span>
+        <div className="flex items-center gap-5">
+          <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
+          <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
           <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block">
-            <img src="/koodh-logo.png" alt="Koodh" className="h-6 w-auto" />
+            <img src="/koodh-logo.png" alt="Koodh" className="h-5 w-auto" />
           </a>
-        </div>
-        <div className="flex flex-col items-center justify-between gap-4 self-stretch md:flex-row">
-          <span>&copy; {new Date().getFullYear()} Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780 &middot; Alle rechten voorbehouden.</span>
-          <div className="flex items-center gap-5">
-            <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
-            <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
-          </div>
         </div>
       </div>
     </footer>
