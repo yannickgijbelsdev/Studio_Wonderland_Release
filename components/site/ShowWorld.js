@@ -141,7 +141,7 @@ export default function ShowWorld() {
       </section>
 
       {/* VIER WERELDEN — compact, 4 sterretjes */}
-      <section className="relative z-10 overflow-hidden bg-show-bg px-6 py-24 md:px-10 md:py-28">
+      <section className="relative z-10 bg-show-bg px-6 py-24 md:px-10 md:py-28">
         <ArchDivider color="fill-show-bg" />
         <Sparkles count={26} />
         <div className="relative mx-auto max-w-[1000px] text-center">
