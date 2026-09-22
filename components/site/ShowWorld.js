@@ -11,10 +11,10 @@ import ShowNews from './ShowNews'
 const TICKETS_URL = 'https://events.flextickets.nl/event/de-grote-sinterklaasshow'
 
 const PARTNERS = [
-  { name: 'Stad Genk', logo: '/partners/genk-white.png' },
-  { name: 'Balls & Glory', logo: '/partners/ballsglory-white.png' },
-  { name: 'Hotel Bonka', logo: '/partners/hotelbonka-white.png' },
-  { name: 'Rotary Club Genk', logo: '/partners/rotary-white.png' },
+  { name: 'Stad Genk', logo: '/partners/genk.png', cls: '' },
+  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: 'invert' },
+  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: '' },
+  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: '' },
 ]
 
 const WORLDS4 = [
@@ -50,15 +50,21 @@ function TicketButton({ className = '', children }) {
   )
 }
 
-// A sliding partner strip (white silhouettes) placed beside the hero scroll cue.
-function PartnerStrip({ reverse = false }) {
-  const set = [...PARTNERS, ...PARTNERS]
+// One continuous partner marquee (left → right) on a light bar, with the scroll
+// cue centered at the same height. Original logos are kept unchanged.
+function HeroPartners() {
   return (
-    <div className="relative min-w-0 flex-1 overflow-hidden">
-      <div className={`flex w-max items-center gap-12 md:gap-16 ${reverse ? '[animation:marquee_24s_linear_infinite_reverse]' : '[animation:marquee_24s_linear_infinite]'}`}>
-        {[...set, ...set].map((p, i) => (
-          <img key={i} src={p.logo} alt={p.name} title={p.name} className="h-12 w-auto shrink-0 opacity-95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)] md:h-16" />
+    <div className="relative flex h-[72px] w-full items-center overflow-hidden border-t border-black/5 bg-white/92 backdrop-blur-md md:h-[88px]">
+      <div className="flex w-max items-center gap-16 [animation:marquee_34s_linear_infinite_reverse] md:gap-28">
+        {[...PARTNERS, ...PARTNERS].map((p, i) => (
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-10 w-auto shrink-0 md:h-12 ${p.cls}`} />
         ))}
+      </div>
+      <div className="hero-cue absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1.5 rounded-full bg-show-reddeep px-6 py-2.5 text-white shadow-xl">
+        <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.3em]">Scroll om te ontdekken</span>
+        <span className="flex h-7 w-4 items-start justify-center rounded-full border-2 border-white/80 p-1">
+          <span className="h-1.5 w-0.5 animate-bounce rounded-full bg-white" />
+        </span>
       </div>
     </div>
   )
@@ -66,10 +72,18 @@ function PartnerStrip({ reverse = false }) {
 
 export default function ShowWorld() {
   const scope = useRef(null)
+  const heroVid = useRef(null)
   const { navigate } = useSite()
   useSectionAnimations(scope, [])
 
   useEffect(() => {
+    const v = heroVid.current
+    if (v) {
+      v.muted = true
+      try { v.load() } catch {}
+      const p = v.play?.()
+      if (p && p.catch) p.catch(() => {})
+    }
     const ctx = gsap.context(() => {
       gsap.to('.hero-img', { scale: 1.1, ease: 'none', scrollTrigger: { trigger: '.hero-sec', start: 'top top', end: 'bottom top', scrub: true } })
       gsap.from('.hero-cue', { opacity: 0, y: 12, duration: 1, delay: 0.8, ease: 'power3.out' })
@@ -81,23 +95,15 @@ export default function ShowWorld() {
     <div ref={scope} className="spotlight-bg">
       {/* HERO — enkel de Sinterklaas-video, partners flankeren de scroll-cue */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
-        <video className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg">
+        <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
+          <source src="/hero-1.webm" type="video/webm" />
           <source src={IMG.heroVideo} type="video/mp4" />
         </video>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
 
-        {/* Bottom: partners flank the centered scroll cue (all white, sliding) */}
-        <div className="absolute inset-x-0 bottom-[70px] z-10 md:bottom-[90px]">
-          <div className="mx-auto flex max-w-[1600px] items-center gap-6 px-5 md:gap-10 md:px-10">
-            <PartnerStrip />
-            <div className="hero-cue flex shrink-0 flex-col items-center gap-3 text-white">
-              <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
-              <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
-                <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
-              </span>
-            </div>
-            <PartnerStrip reverse />
-          </div>
+        {/* Bottom: one continuous partner marquee (left → right) with the cue at the same height */}
+        <div className="absolute inset-x-0 bottom-0 z-10">
+          <HeroPartners />
         </div>
       </section>
 
