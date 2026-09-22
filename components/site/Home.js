@@ -8,6 +8,48 @@ import { Magnetic, Eyebrow, Star, TitleReveal, Sparkles, ArchDivider } from './u
 import HeroVideos, { HeroScrollCue } from './HeroVideos'
 
 // Arch "doorway" portal tile — only a button remains.
+function LockChain() {
+  const links = Array.from({ length: 46 })
+  return (
+    <svg viewBox="0 0 1840 64" preserveAspectRatio="none" className="chain-shimmer block h-14 w-full md:h-[72px]" style={{ overflow: 'visible' }} aria-hidden="true">
+      <defs>
+        <linearGradient id="chainGold" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFF7E0" />
+          <stop offset="34%" stopColor="#EAC85F" />
+          <stop offset="66%" stopColor="#C9971F" />
+          <stop offset="100%" stopColor="#7d5b0e" />
+        </linearGradient>
+      </defs>
+      {links.map((_, i) => {
+        const cx = 20 + i * 40
+        const v = i % 2 === 0
+        return <ellipse key={i} cx={cx} cy={32} rx={v ? 11 : 19} ry={v ? 19 : 11} fill="none" stroke="url(#chainGold)" strokeWidth="7" strokeLinecap="round" />
+      })}
+    </svg>
+  )
+}
+
+function Padlock() {
+  return (
+    <svg viewBox="0 0 100 122" className="chain-lock relative h-24 w-auto drop-shadow-[0_6px_14px_rgba(0,0,0,0.55)] md:h-32" aria-hidden="true">
+      <defs>
+        <linearGradient id="lockGold" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0%" stopColor="#FFF7E0" />
+          <stop offset="38%" stopColor="#EFCF6E" />
+          <stop offset="72%" stopColor="#C9971F" />
+          <stop offset="100%" stopColor="#8a6511" />
+        </linearGradient>
+      </defs>
+      <path d="M31 58 V42 a19 19 0 0 1 38 0 V58" fill="none" stroke="url(#lockGold)" strokeWidth="11" strokeLinecap="round" />
+      <rect x="18" y="54" width="64" height="58" rx="12" fill="url(#lockGold)" stroke="#6d5209" strokeWidth="2" />
+      <rect x="18" y="54" width="64" height="14" rx="12" fill="#ffffff" opacity="0.28" />
+      <circle cx="50" cy="80" r="7.5" fill="#5a3d05" />
+      <rect x="46.5" y="84" width="7" height="17" rx="3.5" fill="#5a3d05" />
+      <circle className="lock-glint" cx="33" cy="70" r="2.6" fill="#fff" />
+    </svg>
+  )
+}
+
 function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
   const Comp = locked ? 'div' : 'button'
   return (
@@ -16,27 +58,20 @@ function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
       data-cursor={locked ? undefined : 'hover'}
       className={`group relative block h-[62vh] w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/30 md:h-[80vh] ${locked ? 'cursor-default' : ''}`}
     >
-      <img src={image} alt={alt} className={`absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out ${locked ? 'scale-105 brightness-[0.45] saturate-[0.85]' : 'group-hover:scale-105'}`} />
+      <img src={image} alt={alt} className={`absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out ${locked ? 'scale-105 brightness-[0.4] saturate-[0.85]' : 'group-hover:scale-105'}`} />
       <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 transition-opacity duration-500 ${locked ? '' : 'group-hover:opacity-70'}`} />
       {locked ? (
         <>
+          {/* big chain stretched across, anchored beyond both edges */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div
-              className="relative w-[200%] -rotate-[7deg]"
-              style={{ transform: 'translateZ(0) rotate(-7deg)', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
-            >
-              <div className="relative bg-gradient-to-b from-[#FBEECB] via-[#E9C766] to-[#C99A26] py-[18px] text-center shadow-[0_16px_36px_-10px_rgba(0,0,0,0.65)]">
-                {/* soft inner highlight + trim lines for a ribbon feel */}
-                <span className="absolute inset-x-0 top-[3px] h-px bg-white/55" />
-                <span className="absolute inset-x-0 bottom-[3px] h-px bg-[#8a6511]/50" />
-                <span className="relative flex items-center justify-center gap-2.5 px-6 text-[13px] font-extrabold uppercase tracking-[0.2em] text-[#4a3204] md:text-[15px]" style={{ textShadow: '0 1px 0 rgba(255,255,255,0.35)' }}>
-                  <Lock className="h-4 w-4 md:h-[18px] md:w-[18px]" strokeWidth={2.5} />
-                  {ribbon}
-                </span>
-              </div>
-            </div>
+            <div className="w-[190%] -rotate-[10deg]" style={{ transform: 'translateZ(0) rotate(-10deg)' }}><LockChain /></div>
           </div>
-          <div className="pointer-events-none absolute bottom-7 left-1/2 -translate-x-1/2 rounded-full bg-black/45 px-5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">Binnenkort beschikbaar</div>
+          {/* big padlock in the centre */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><Padlock /></div>
+          {/* label plate */}
+          <div className="pointer-events-none absolute bottom-8 left-1/2 w-[86%] -translate-x-1/2 rounded-full border border-xmas-gold/50 bg-black/55 px-5 py-2.5 text-center text-[13px] font-semibold uppercase tracking-[0.14em] text-xmas-gold backdrop-blur-sm md:text-sm">
+            Je hebt nog geen toegang tot deze wereld
+          </div>
         </>
       ) : (
         <div className="relative flex h-full items-end justify-center p-8">
