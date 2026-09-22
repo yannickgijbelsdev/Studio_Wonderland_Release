@@ -68,7 +68,7 @@ function PartnerStrip() {
 
 function HeroPartners() {
   return (
-    <div className="absolute inset-x-0 bottom-[64px] z-10 md:bottom-[84px]">
+    <div className="absolute inset-x-0 bottom-[120px] z-10 md:bottom-[150px]">
       <div className="mx-auto flex max-w-[1600px] items-center gap-6 px-5 md:gap-10 md:px-10">
         <PartnerStrip />
         <div className="hero-cue flex shrink-0 flex-col items-center gap-2 text-white">
@@ -138,11 +138,11 @@ export default function ShowWorld() {
             <TicketButton className="rounded-full bg-show-gold px-8 py-4 font-semibold text-show-bg hover:scale-[1.03] hover:bg-white">Bestel je tickets</TicketButton>
           </div>
         </div>
-        <ArchDivider color="fill-show-reddeep" position="bottom" />
       </section>
 
       {/* VIER WERELDEN — compact, 4 sterretjes */}
       <section className="relative z-10 bg-show-bg px-6 py-24 md:px-10 md:py-28">
+        <ArchDivider color="fill-show-bg" flip />
         <Sparkles count={26} />
         <div className="relative mx-auto max-w-[1000px] text-center">
           <Eyebrow className="text-show-gold [&]:justify-center">De show</Eyebrow>
@@ -182,11 +182,11 @@ export default function ShowWorld() {
           </div>
           <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-show-cream/40">Portretten volgen binnenkort</p>
         </div>
-        <ArchDivider color="fill-show-reddeep" position="bottom" />
       </section>
 
       {/* FAQ — verticaal gecentreerd */}
       <section id="faq" className="relative z-10 flex min-h-[85vh] flex-col justify-center bg-show-bg px-6 py-24 md:px-10 md:py-28">
+        <ArchDivider color="fill-show-bg" flip />
         <div className="mx-auto w-full max-w-[820px]">
           <div className="mb-12 text-center">
             <Eyebrow className="text-show-gold [&]:justify-center">Praktisch</Eyebrow>
