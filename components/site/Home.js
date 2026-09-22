@@ -4,30 +4,7 @@ import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
-import { Magnetic, Eyebrow, Star, TitleReveal } from './ui'
-
-function Sparkles({ count = 60, className = '' }) {
-  const [dots, setDots] = useState([])
-  useEffect(() => {
-    const colors = ['#ffffff', '#F6E7B8', '#F4B8CB', '#E098A8', '#FFF6F9']
-    setDots(Array.from({ length: count }).map((_, i) => ({
-      key: i,
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-      size: 1 + Math.random() * 3.5,
-      delay: (Math.random() * 4).toFixed(2),
-      dur: (2 + Math.random() * 3).toFixed(2),
-      color: colors[i % colors.length],
-    })))
-  }, [count])
-  return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
-      {dots.map((d) => (
-        <span key={d.key} className="sparkle" style={{ top: `${d.top}%`, left: `${d.left}%`, width: d.size, height: d.size, background: d.color, animationDelay: `${d.delay}s`, animationDuration: `${d.dur}s` }} />
-      ))}
-    </div>
-  )
-}
+import { Magnetic, Eyebrow, Star, TitleReveal, Sparkles, ArchDivider } from './ui'
 
 // Hero that crossfades between BOTH uploaded videos, looping.
 function HeroVideos() {
@@ -77,16 +54,6 @@ function PortalTile({ image, cta, onClick, alt }) {
   )
 }
 
-function ArchDivider({ color = 'fill-wonder-bg' }) {
-  return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-[99%] leading-[0]" aria-hidden="true">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-[52px] w-full md:h-[92px]">
-        <path className={color} d="M0,100 L0,50 Q720,-40 1440,50 L1440,100 Z" />
-      </svg>
-    </div>
-  )
-}
-
 export default function Home() {
   const scope = useRef(null)
   const { navigate } = useSite()
@@ -105,7 +72,7 @@ export default function Home() {
       {/* HERO — both videos crossfading, no text, smooth arch handoff */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
         <HeroVideos />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-wonder-pink/50" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
         <div className="hero-cue absolute bottom-[112px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white md:bottom-[132px]">
           <span className="text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
           <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">

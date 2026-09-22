@@ -1,24 +1,11 @@
 'use client'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/site/anim'
 
-export function Magnetic({ children, className = '', as = 'button', strength = 0.35, onClick, ...rest }) {
-  const ref = useRef(null)
+export function Magnetic({ children, className = '', as = 'button', strength, onClick, ...rest }) {
   const Tag = as
-  const move = (e) => {
-    const el = ref.current
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    gsap.to(el, {
-      x: (e.clientX - (r.left + r.width / 2)) * strength,
-      y: (e.clientY - (r.top + r.height / 2)) * strength,
-      duration: 0.6,
-      ease: 'power3.out',
-    })
-  }
-  const leave = () => gsap.to(ref.current, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1,0.4)' })
   return (
-    <Tag ref={ref} onMouseMove={move} onMouseLeave={leave} onClick={onClick} data-cursor="hover" className={className} {...rest}>
+    <Tag onClick={onClick} data-cursor="hover" className={`transition-all duration-300 ease-out ${className}`} {...rest}>
       {children}
     </Tag>
   )
@@ -43,7 +30,7 @@ export function Star({ className = 'h-4 w-4' }) {
 }
 
 // A heading that reveals on scroll, with the logo star before the first line and no clipping.
-export function TitleReveal({ lines, starClass = 'text-wonder-pinkdeep', className = '', align = 'left' }) {
+export function TitleReveal({ lines, starClass = 'text-wonder-pinkdeep', className = '' }) {
   return (
     <h2 className={`font-display leading-[1.12] ${className}`}>
       {lines.map((ln, i) => (
@@ -55,5 +42,53 @@ export function TitleReveal({ lines, starClass = 'text-wonder-pinkdeep', classNa
         </span>
       ))}
     </h2>
+  )
+}
+
+// Twinkling glitter layer (client-only to avoid hydration mismatch).
+export function Sparkles({ count = 60, className = '' }) {
+  const [dots, setDots] = useState([])
+  useEffect(() => {
+    const colors = ['#ffffff', '#F6E7B8', '#F4B8CB', '#E098A8', '#FFF6F9']
+    setDots(Array.from({ length: count }).map((_, i) => ({
+      key: i,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      size: 1 + Math.random() * 3.5,
+      delay: (Math.random() * 4).toFixed(2),
+      dur: (2 + Math.random() * 3).toFixed(2),
+      color: colors[i % colors.length],
+    })))
+  }, [count])
+  return (
+    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
+      {dots.map((d) => (
+        <span key={d.key} className="sparkle" style={{ top: `${d.top}%`, left: `${d.left}%`, width: d.size, height: d.size, background: d.color, animationDelay: `${d.delay}s`, animationDuration: `${d.dur}s` }} />
+      ))}
+    </div>
+  )
+}
+
+// Smooth full-width SVG arch that sits on top of a section and overlaps the section above it.
+export function ArchDivider({ color = 'fill-wonder-bg' }) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-[99%] leading-[0]" aria-hidden="true">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-[52px] w-full md:h-[92px]">
+        <path className={color} d="M0,100 L0,50 Q720,-40 1440,50 L1440,100 Z" />
+      </svg>
+    </div>
+  )
+}
+
+// Reusable pink title band that arches into the light content below \u2014 shared across pages.
+export function PageHeader({ eyebrow, lines, starClass = 'text-[#F8E7B0] drop-shadow-[0_0_12px_rgba(248,231,176,0.75)]' }) {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-wonder-pink via-wonder-pinkdeep to-wonder-plum px-6 pb-32 pt-36 text-center md:px-10 md:pb-40 md:pt-44">
+      <Sparkles count={54} />
+      <div className="relative mx-auto max-w-[1200px]">
+        {eyebrow && <Eyebrow className="text-white/85">{eyebrow}</Eyebrow>}
+        <TitleReveal lines={lines} starClass={starClass} className="mt-5 text-5xl text-white md:text-7xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+      </div>
+    </section>
   )
 }

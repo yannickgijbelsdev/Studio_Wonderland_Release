@@ -135,6 +135,20 @@ backend:
         -comment: "✅ All 3 tests passed: POST creates contact with UUID and strips _id. Validation correctly returns 400 with error message when required fields missing. GET returns array sorted by created_at desc with no _id present."
 
 frontend:
+  - task: "Bugfix: buttons fade normally, softer hero overlay, curtain page transition"
+    implemented: true
+    working: true
+    file: "components/site/ui.js, app/page.js, components/site/Home.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "main"
+        -comment: "User reported buttons moving strangely (magnetic effect) — replaced Magnetic with a plain fading button (transition-all duration-300, no gsap x/y movement). Softened hero bottom overlay (removed pink glow, now subtle black gradient). Replaced the page/loader transition with a theatre-curtain effect: two panels slide in from left/right to cover, route swaps, then slide apart to reveal (classes .pt-left/.pt-right)."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ ALL THREE BUGFIXES VERIFIED AND WORKING. (1) BUTTONS FADE: Tested 'Boek een beleving' nav button, 'Ontdek de show', and 'Ontdek het Huis van de Kerstman' CTA buttons - all showed 0.00px movement on hover (no magnetic effect). (2) HERO OVERLAY: Confirmed overlay uses only subtle dark gradient (from-black/10 via-transparent to-black/20) with no pink glow. (3) CURTAIN TRANSITION: Theatre curtain transition works correctly - successfully navigated Home→Over ons→Contact→Home with curtain panels sliding in/out properly, logo appearing centered, and pages rendering after transitions. No curtain stuck on screen. All tests passed with screenshots captured."
   - task: "Homepage, experience worlds, productions, about, contact, admin UI + GSAP/Lenis animations"
     implemented: true
     working: "NA"
@@ -145,16 +159,17 @@ frontend:
     status_history:
         -working: "NA"
         -agent: "main"
-        -comment: "Client-side world routing with page transitions, custom cursor, Lenis smooth scroll, GSAP scroll reveals. Not yet tested by testing agent (awaiting user permission)."
+        -comment: "Client-side world routing with page transitions, custom cursor, Lenis smooth scroll, GSAP scroll reveals."
 
 metadata:
   created_by: "main_agent"
-  version: "1.0"
+  version: "1.1"
   test_sequence: 1
-  run_ui: false
+  run_ui: true
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Bugfix: buttons fade normally, softer hero overlay, curtain page transition"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -164,3 +179,7 @@ agent_communication:
     -message: "Please test the backend API only. Base path is /api. Endpoints: GET /api/productions (should auto-seed 3 items if empty), POST /api/productions (title,year,description,cover,gallery[],videos[]), PUT /api/productions/{id}, DELETE /api/productions/{id}, POST /api/contact (requires name,email,message; 400 otherwise), GET /api/contact. Ensure UUIDs are used and Mongo _id is never present in responses."
     -agent: "testing"
     -message: "Backend testing complete. All 10 tests passed (100% success rate). Productions API: GET auto-seeds correctly, POST/PUT/DELETE work as expected, 404 handling correct. Contact API: POST validation works, GET sorting correct. All responses use UUID ids and strip Mongo _id. No critical issues found. Backend is fully functional."
+    -agent: "main"
+    -message: "FRONTEND BUGFIX VERIFICATION NEEDED. Base URL from frontend .env (NEXT_PUBLIC_BASE_URL). Please verify these three reported fixes on the homepage and navigation: (1) BUTTONS: hover over the pink 'Boek een beleving' button in the top nav pill and the 'Ontdek de show'/'Ontdek het Huis van de Kerstman' buttons — they must NOT translate/move around the screen (magnetic effect removed); they should only smoothly change colour/fade on hover. (2) HERO OVERLAY: the homepage hero (top, fullscreen video area) should NOT have a strong pink glow at the bottom — only a subtle dark gradient. (3) CURTAIN TRANSITION: click a nav link (e.g. 'Over ons' then 'Contact') — a theatre-curtain transition should play: two panels slide in from left and right to cover the screen (with the Studio Wonderland logo appearing centered), then slide apart to reveal the new page. Confirm the new page renders after the transition and that navigation works. Report PASS/FAIL for each of the three items with screenshots."
+    -agent: "testing"
+    -message: "✅ FRONTEND BUGFIX VERIFICATION COMPLETE - ALL TESTS PASSED. Tested all three reported bug fixes with comprehensive Playwright automation. (1) BUTTONS FADE: ✅ PASS - All buttons (nav 'Boek een beleving', CTA 'Ontdek de show', CTA 'Ontdek het Huis van de Kerstman') showed 0.00px movement on hover - magnetic effect successfully removed. (2) HERO OVERLAY: ✅ PASS - Confirmed overlay uses only subtle dark gradient (from-black/10 via-transparent to-black/20) with no pink glow detected. (3) CURTAIN TRANSITION: ✅ PASS - Theatre curtain transition works perfectly across multiple navigations (Home→Over ons→Contact→Home). Curtain panels slide in from sides, logo appears centered, panels slide apart to reveal new pages. No curtain stuck on screen. All functionality verified with screenshots. No critical issues found. All bug fixes are working as intended."
