@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, Ticket, MapPin } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
@@ -87,7 +87,23 @@ export default function ShowWorld() {
   const scope = useRef(null)
   const heroVid = useRef(null)
   const { navigate } = useSite()
-  useSectionAnimations(scope, [])
+  const [galleryPhotos, setGalleryPhotos] = useState([])
+  useSectionAnimations(scope, [galleryPhotos.length])
+
+  // Foto's uit de Clara/koodh galerij (categorie "galerij"); valt terug op de
+  // vaste foto's wanneer de galerij nog leeg is.
+  useEffect(() => {
+    let mounted = true
+    fetch('/api/news?category=galerij')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!mounted || !data) return
+        const imgs = (data.items || []).map((i) => i.image_url).filter(Boolean)
+        if (imgs.length) setGalleryPhotos(imgs)
+      })
+      .catch(() => {})
+    return () => { mounted = false }
+  }, [])
 
   useEffect(() => {
     const v = heroVid.current
@@ -211,7 +227,7 @@ export default function ShowWorld() {
             <Eyebrow className="text-show-gold [&]:justify-center">Foto's</Eyebrow>
             <TitleReveal lines={["Beleef de magie"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
-          <PhotoGallery images={PHOTOS} accent="text-white" ringClass="ring-show-gold/20" />
+          <PhotoGallery images={galleryPhotos.length ? galleryPhotos : PHOTOS} accent="text-white" ringClass="ring-show-gold/20" />
 
           <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-show-gold/20 pt-10 md:flex-row">
             <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-cream/80 hover:text-show-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
