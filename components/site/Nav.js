@@ -31,21 +31,30 @@ const WORLDS = {
     cta: 'bg-xmas-red text-white hover:bg-white hover:text-xmas-green',
     overlay: 'bg-xmas-bg',
     ctaLabel: 'Tickets & info',
-    ticketAnchor: 'verhaal',
+    ticketAnchor: 'tickets',
   },
 }
 
-const SECTION_LINKS = [
-  { label: 'Verhaal', a: 'verhaal' },
-  { label: 'FAQ', a: 'faq' },
-  { label: "Foto's", a: 'fotos' },
-]
+const SECTION_LINKS = {
+  show: [
+    { label: 'Verhaal', a: 'verhaal' },
+    { label: 'FAQ', a: 'faq' },
+    { label: "Foto's", a: 'fotos' },
+  ],
+  xmas: [
+    { label: 'Verhaal', a: 'verhaal' },
+    { label: 'Golden Ticket', a: 'golden' },
+    { label: 'Data', a: 'tickets' },
+    { label: "Foto's", a: 'fotos' },
+  ],
+}
 
 function WorldNav({ route }) {
   const { navigate } = useSite()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const w = WORLDS[route]
+  const links = SECTION_LINKS[route] || SECTION_LINKS.show
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 50)
@@ -70,7 +79,7 @@ function WorldNav({ route }) {
           </button>
 
           <nav className="hidden items-center gap-8 md:flex">
-            {SECTION_LINKS.map((l) => (
+            {links.map((l) => (
               <button
                 key={l.a}
                 onClick={() => go(l.a)}
@@ -112,7 +121,7 @@ function WorldNav({ route }) {
           <button onClick={() => setOpen(false)} className={w.active}><X className="h-7 w-7" /></button>
         </div>
         <nav className="flex flex-1 flex-col justify-center gap-2 px-8">
-          {SECTION_LINKS.map((l) => (
+          {links.map((l) => (
             <button key={l.a} onClick={() => go(l.a)} className={`border-b ${w.divider} py-5 text-left font-display text-3xl ${w.active}`}>
               {l.label}
             </button>

@@ -1,11 +1,51 @@
 'use client'
 import { useEffect, useMemo, useRef } from 'react'
-import { ArrowLeft, Home as HomeIcon, Users, Sparkles as SparkIcon } from 'lucide-react'
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
+import { ArrowLeft, Ticket, CalendarDays, Gift, Clock } from 'lucide-react'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
-import { Magnetic, Eyebrow, Star, TitleReveal, ArchDivider } from './ui'
+import { Magnetic, Eyebrow, Star, TitleReveal, ArchDivider, Sparkles, PhotoGallery } from './ui'
+
+const TICKETS_URL = 'https://events.flextickets.nl/event/huis-van-de-kerstman'
+
+const CENTER_TITLE = 'mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center'
+
+const BELEVING = [
+  { label: 'Verwondering', desc: 'Stap zelf het verhaal binnen, van kamer tot kamer vol magie.' },
+  { label: 'Samenzijn', desc: 'Een kerstervaring om samen als gezin te beleven.' },
+  { label: 'Vriendschap', desc: 'Help de elfen, ontmoet de personages en werk samen.' },
+  { label: 'Magie', desc: 'Los opdrachten op en maak de wonderlijke reis naar de Kerstman.' },
+]
+
+const GOLDEN_STEPS = [
+  'Je wordt persoonlijk ontvangen door een kerstelf en ontdekt het Snoephuis van Mr. Bonbonetti.',
+  'Samen breng je de drie magische snoepjes bij elkaar en stap je in de Magische Kast.',
+  'Je maakt de wonderlijke vlucht naar het Huis van de Kerstman — want de Kerstman weet dat jullie komen.',
+  'In een kleine groep ontmoet je de Kerstman persoonlijk. Breng zeker je brief of tekening mee, want je mag die zelf aan hem geven.',
+  'Neem plaats bij de Kerstman, luister naar een bijzonder kerstverhaal en vertel gerust wat jij zo mooi vindt aan Kerstmis.',
+  'Daarna is er uitgebreid tijd voor een persoonlijke foto met de Kerstman.',
+  'Leer de kerstelfendans, zing samen het kerstlied én toon dat je voldoende kerstmagie bezit — en ontvang een officieel Elfencertificaat.',
+]
+
+const FREE_DATES = ['ZA 12 dec', 'ZO 13 dec', 'WO 16 dec', 'ZA 19 dec', 'ZO 20 dec', 'MA 21 dec', 'DI 22 dec', 'WO 23 dec', 'DO 24 dec']
+
+const GOLDEN_DATES = [
+  { day: 'Zondag 13 december', slots: ['10u–11u', '11u–12u', '12u–13u'] },
+  { day: 'Zaterdag 19 december', slots: ['10u–11u', '11u–12u', '12u–13u'] },
+  { day: 'Zondag 20 december', slots: ['10u–11u', '11u–12u', '12u–13u'] },
+  { day: 'Maandag 21 december', slots: ['10u–11u', '11u–12u', '12u–13u'] },
+  { day: 'Dinsdag 22 december', slots: ['10u–11u', '11u–12u', '12u–13u'] },
+]
+
+const PHOTOS = [IMG.xmasBaubles, IMG.xmasStars, IMG.xmasTrees, IMG.xmasSanta, IMG.xmasHouse, IMG.xmasStatue, IMG.xmasFamily1, IMG.xmasWalk]
+
+function TicketButton({ className = '', children }) {
+  return (
+    <a href={TICKETS_URL} target="_blank" rel="noopener noreferrer" data-cursor="hover" className={`inline-flex items-center justify-center gap-2 transition-all duration-300 ${className}`}>
+      <Ticket className="h-5 w-5" /> {children}
+    </a>
+  )
+}
 
 function Snow() {
   const flakes = useMemo(() => Array.from({ length: 40 }).map((_, i) => {
@@ -21,141 +61,176 @@ function Snow() {
   )
 }
 
-const FAQ = [
-  { q: 'Wanneer is het Huis van de Kerstman open?', a: 'Vanaf november 2026. Exacte data en tijdsloten volgen binnenkort.' },
-  { q: 'Voor welke leeftijd is de ervaring bedoeld?', a: 'Voor het hele gezin — van de allerkleinsten tot grootouders.' },
-  { q: 'Hoe lang duurt een bezoek?', a: 'Reken op ongeveer een uur om alle kamers rustig te beleven.' },
-  { q: 'Is het toegankelijk met een kinderwagen of rolstoel?', a: 'Ja, de volledige route is vlot toegankelijk.' },
-  { q: 'Kan ik op voorhand tickets reserveren?', a: 'Zeker. Reserveren gebeurt per tijdslot zodra de verkoop start.' },
-]
-
 export default function ChristmasWorld() {
   const scope = useRef(null)
+  const heroVid = useRef(null)
   const { navigate } = useSite()
   useSectionAnimations(scope, [])
 
   useEffect(() => {
+    const v = heroVid.current
+    if (v) {
+      v.muted = true
+      try { v.load() } catch {}
+      const p = v.play?.()
+      if (p && p.catch) p.catch(() => {})
+    }
     const ctx = gsap.context(() => {
-      gsap.from('.x-hero-line', { yPercent: 120, duration: 1.1, stagger: 0.1, ease: 'power4.out' })
-      gsap.to('.x-hero-img', { scale: 1.12, ease: 'none', scrollTrigger: { trigger: '.x-hero', start: 'top top', end: 'bottom top', scrub: true } })
+      gsap.to('.hero-img', { scale: 1.1, ease: 'none', scrollTrigger: { trigger: '.hero-sec', start: 'top top', end: 'bottom top', scrub: true } })
+      gsap.from('.hero-cue', { opacity: 0, y: 12, duration: 1, delay: 0.8, ease: 'power3.out' })
     }, scope)
     return () => ctx.revert()
   }, [])
 
-  const parts = [
-    { icon: HomeIcon, t: 'Het Huis', d: 'Wandel door kamer na kamer van het magische huis van de Kerstman.', i: IMG.xmasHouse },
-    { icon: Users, t: 'De personages', d: 'Ontmoet de Kerstman, zijn helpers en de bewoners van het huis.', i: IMG.xmasSantaChair },
-    { icon: SparkIcon, t: 'De ervaring', d: 'Een interactieve reis vol licht, geur, geluid en verwondering.', i: IMG.xmasWalk },
-  ]
-
   return (
     <div ref={scope} className="aurora-xmas">
-      <div className="flex justify-center pt-24 pb-2">
-        <button onClick={() => navigate('home')} data-cursor="hover" className="text-[11px] uppercase tracking-[0.4em] text-xmas-gold/80 hover:text-xmas-gold">Een productie van Studio Wonderland</button>
-      </div>
-
       {/* HERO */}
-      <section className="x-hero relative h-[88svh] overflow-hidden">
-        <img src={IMG.xmasLandscape} alt="Huis van de Kerstman" className="x-hero-img absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-xmas-bg via-xmas-bg/40 to-black/40" />
+      <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
+        <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg">
+          <source src="/hero-2.webm" type="video/webm" />
+          <source src={IMG.heroVideoAlt} type="video/mp4" />
+        </video>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-xmas-bg/85" />
         <Snow />
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-          <span className="x-hero-line text-xs uppercase tracking-[0.5em] text-xmas-gold">Winterwereld &middot; 2026</span>
-          <h1 className="mt-5 font-display text-[13vw] leading-[0.94] text-white md:text-[8vw]">
-            <span className="block overflow-hidden pb-[0.1em]"><span className="x-hero-line block"><Star className="mr-3 inline-block h-[0.5em] w-[0.5em] -translate-y-[0.08em] align-middle text-xmas-gold" />Huis van de</span></span>
-            <span className="block overflow-hidden pb-[0.1em]"><span className="x-hero-line block text-xmas-gold">Kerstman 2026</span></span>
+          <span className="text-[11px] uppercase tracking-[0.45em] text-xmas-gold [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Een productie van Studio Wonderland</span>
+          <h1 className="mt-5 font-display text-[13vw] leading-[0.94] text-white md:text-[7vw] [text-shadow:_0_2px_24px_rgba(0,0,0,0.55)]">
+            <span className="block">Huis van de</span>
+            <span className="block text-xmas-gold">Kerstman 2026</span>
           </h1>
-          <p className="x-hero-line mt-6 max-w-xl text-lg text-white/85">Stap binnen in de magische wereld van de Kerstman.</p>
+          <p className="mt-6 max-w-xl text-lg text-white/90 [text-shadow:_0_1px_12px_rgba(0,0,0,0.6)]">De reis naar de Kerstman begint in een snoepwinkel…</p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <TicketButton className="rounded-full bg-xmas-gold px-7 py-3.5 font-semibold text-xmas-bg hover:scale-[1.03] hover:bg-white">Tickets &amp; Golden Ticket</TicketButton>
+            <button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="rounded-full border border-white/40 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-sm hover:bg-white/10">Bekijk de data</button>
+          </div>
+        </div>
+        <div className="hero-cue absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2 text-white">
+          <span className="text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
+          <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5"><span className="h-2 w-1 animate-bounce rounded-full bg-white" /></span>
         </div>
       </section>
 
-      {/* WELKOM / VERHAAL */}
+      {/* HET VERHAAL */}
       <section id="verhaal" className="relative z-10 bg-xmas-green px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
         <ArchDivider color="fill-xmas-green" />
         <Snow />
-        <div className="relative mx-auto grid max-w-[1200px] items-center gap-12 md:grid-cols-2">
-          <div data-img className="aspect-[4/3] overflow-hidden rounded-3xl">
-            <img src={IMG.xmasRoad} alt="Winterwereld" className="h-full w-full object-cover" />
+        <div className="relative mx-auto max-w-[820px] text-center">
+          <Eyebrow className="text-xmas-gold [&]:justify-center">Het verhaal</Eyebrow>
+          <TitleReveal lines={["De reis begint", "in een snoepwinkel"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
+          <div data-fade className="mt-8 space-y-5 text-left text-lg leading-relaxed text-xmas-cream/85">
+            <p>Ergens in Genk bevindt zich een bijzondere snoepwinkel. Achter de toonbank vind je potten vol kleurrijke snoepjes, vreemde recepten en wonderlijke uitvindingen. Hier woont en werkt <strong className="text-xmas-cream">Mr. Bonbonetti</strong>, een excentrieke snoepmaker en uitvinder die ervan overtuigd is dat een beetje magie en teamwork bijna ieder probleem kunnen oplossen.</p>
+            <p>Maar achter in zijn winkel staat iets wat bijna niemand kent… <strong className="text-xmas-gold">De Magische Kast.</strong> En die kast kan vliegen.</p>
           </div>
-          <div>
-            <Eyebrow className="text-xmas-gold">Welkom</Eyebrow>
-            <TitleReveal lines={["Een warme", "winterwereld"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl" />
-            <p data-fade className="mt-6 text-xmas-cream/80">Kerstlichtjes, zachte sneeuw, houten interieurs en gezellige geuren. Elke hoek van dit huis is ontworpen om families samen te laten dromen en verwonderen.</p>
-            <Magnetic as="button" onClick={() => navigate('contact')} className="mt-8 rounded-full bg-xmas-red px-8 py-4 font-semibold text-white hover:bg-white hover:text-xmas-green">Blijf op de hoogte</Magnetic>
+          <div data-fade className="mx-auto mt-12 max-w-[720px] rounded-3xl border border-xmas-gold/20 bg-black/20 p-8 text-left">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-xmas-red">Een magisch kerstavontuur</span>
+            <p className="mt-3 text-xmas-cream/85">Dit jaar nodigt Studio Wonderland gezinnen uit om zélf op reis te gaan naar het Huis van de Kerstman. Je avontuur begint in de magische snoepwinkel van Mr. Bonbonetti. Daar ontdek je dat er een probleem is: de Magische Kast, waarmee de elfen naar de Kerstman reizen, wil niet meer vliegen. Zoek, puzzel en werk samen om de kast weer te doen werken.</p>
           </div>
         </div>
       </section>
 
-      {/* ONDERDELEN */}
-      <section className="relative z-10 bg-xmas-bg px-6 pb-24 pt-24 md:px-10 md:pt-28">
+      {/* EEN KERSTBELEVING VOOR HET HELE GEZIN — 4 sterretjes */}
+      <section className="relative z-10 bg-xmas-bg px-6 py-24 md:px-10 md:py-28">
         <ArchDivider color="fill-xmas-bg" flip />
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-14 text-center">
-            <Eyebrow className="text-xmas-gold">De ervaring</Eyebrow>
-            <TitleReveal lines={["Stap van kamer naar kamer"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+        <Sparkles count={22} />
+        <div className="relative mx-auto max-w-[1100px]">
+          <div className="text-center">
+            <Eyebrow className="text-xmas-gold [&]:justify-center">Voor het hele gezin</Eyebrow>
+            <TitleReveal lines={["Een kerstbeleving", "voor het hele gezin"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {parts.map((p, idx) => {
-              const Icon = p.icon
-              return (
-                <div key={idx} data-fade className="group relative overflow-hidden rounded-3xl border border-xmas-gold/15 bg-xmas-panel">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={p.i} alt={p.t} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-xmas-panel via-transparent to-transparent" />
-                  </div>
-                  <div className="p-7">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-xmas-gold/15 text-xmas-gold"><Icon className="h-5 w-5" /></span>
-                      <h3 className="font-display text-2xl text-xmas-cream">{p.t}</h3>
-                    </div>
-                    <p className="mt-3 text-xmas-cream/75">{p.d}</p>
-                  </div>
-                </div>
-              )
-            })}
+          <p data-fade className="mx-auto mb-14 mt-6 max-w-[720px] text-center text-xmas-cream/75">Huis van de Kerstman 2026 is geen klassieke voorstelling waarbij kinderen alleen maar kijken. Ze stappen zelf het verhaal binnen: ze ontmoeten personages, helpen de elfen, lossen opdrachten op en maken samen de magische reis naar de Kerstman. Een kerstervaring rond verwondering, samenzijn, vriendschap en magie.</p>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {BELEVING.map((b, i) => (
+              <div key={i} data-fade className="rounded-3xl border border-xmas-gold/15 bg-xmas-panel p-7 text-center transition-all duration-300 hover:-translate-y-1 hover:border-xmas-gold/40">
+                <Star className="mx-auto h-6 w-6 text-xmas-gold" />
+                <h4 className="mt-4 font-display text-xl text-xmas-cream">{b.label}</h4>
+                <p className="mt-2 text-sm leading-relaxed text-xmas-cream/70">{b.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* PRAKTISCH + FAQ */}
-      <section id="faq" className="relative z-10 bg-xmas-green px-6 pb-24 pt-24 md:px-10 md:pt-28">
+      {/* GOLDEN TICKET */}
+      <section id="golden" className="relative z-10 bg-xmas-green px-6 py-24 md:px-10 md:py-28">
         <ArchDivider color="fill-xmas-green" />
-        <div className="mx-auto max-w-[900px]">
-          <div className="mb-12 text-center">
-            <Eyebrow className="text-xmas-gold">Praktische info</Eyebrow>
-            <TitleReveal lines={["Veelgestelde vragen"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+        <Snow />
+        <div className="relative mx-auto max-w-[900px]">
+          <div className="text-center">
+            <Eyebrow className="text-xmas-gold [&]:justify-center">Golden Ticket</Eyebrow>
+            <TitleReveal lines={["Het Golden Ticket"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
+            <p data-fade className="mx-auto mt-6 max-w-[720px] text-xmas-cream/85">Sommige uitnodigingen van de Kerstman zijn nét dat tikkeltje magischer… Met het Golden Ticket beleef je de magische reis naar het Huis van de Kerstman op een heel bijzondere manier. En dan gebeurt er iets bijzonders: want de Kerstman weet dat jullie komen, en hij heeft speciaal voor jullie tijd vrijgemaakt.</p>
           </div>
-          <Accordion type="single" collapsible className="w-full">
-            {FAQ.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-xmas-gold/20">
-                <AccordionTrigger className="text-left text-xmas-cream hover:text-xmas-gold">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-xmas-cream/75">{f.a}</AccordionContent>
-              </AccordionItem>
+          <ol className="mt-12 space-y-4">
+            {GOLDEN_STEPS.map((s, i) => (
+              <li key={i} data-fade className="flex gap-4 rounded-2xl border border-xmas-gold/15 bg-black/20 p-5">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-xmas-gold font-semibold text-xmas-bg">{i + 1}</span>
+                <p className="text-xmas-cream/85">{s}</p>
+              </li>
             ))}
-          </Accordion>
+          </ol>
+          <div data-fade className="mt-10 grid gap-4 rounded-3xl border border-xmas-gold/30 bg-xmas-gold/10 p-8 text-center sm:grid-cols-3">
+            <div><span className="text-xs uppercase tracking-[0.2em] text-xmas-gold">Beleving</span><p className="mt-1 font-display text-xl text-xmas-cream">Golden Ticket</p></div>
+            <div><span className="text-xs uppercase tracking-[0.2em] text-xmas-gold">Tijdslot</span><p className="mt-1 font-display text-xl text-xmas-cream">45 minuten</p></div>
+            <div><span className="text-xs uppercase tracking-[0.2em] text-xmas-gold">Leeftijd</span><p className="mt-1 font-display text-xl text-xmas-cream">Alle leeftijden</p></div>
+          </div>
+          <p data-fade className="mt-6 text-center text-sm italic text-xmas-cream/60">Jouw persoonlijke uitnodiging voor het Huis van de Kerstman.</p>
+        </div>
+      </section>
+
+      {/* BEN JIJ KLAAR — DATA & TICKETS */}
+      <section id="tickets" className="relative z-10 bg-xmas-bg px-6 py-24 md:px-10 md:py-28">
+        <ArchDivider color="fill-xmas-bg" flip />
+        <div className="mx-auto max-w-[1000px]">
+          <div className="text-center">
+            <Eyebrow className="text-xmas-gold [&]:justify-center">Ben jij klaar voor de reis?</Eyebrow>
+            <TitleReveal lines={["Data & tickets"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
+          </div>
+          <p data-fade className="mx-auto mb-12 mt-6 max-w-[760px] text-center text-xmas-cream/75">De Magische Kast staat bijna klaar. Nu ontbreken alleen jullie nog. Het Huis van de Kerstman is <strong className="text-xmas-cream">gratis toegankelijk</strong> tijdens de gewone openingsuren. Wil je méér dan alleen een bezoek? Kies dan voor de Golden Ticket-beleving met een gereserveerd tijdstip, zonder aanschuiven. Een beperkt aantal Golden Tickets per voormiddag.</p>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div data-fade className="rounded-3xl border border-xmas-gold/15 bg-xmas-panel p-7">
+              <div className="flex items-center gap-2 text-xmas-gold"><CalendarDays className="h-5 w-5" /><h3 className="font-display text-2xl text-xmas-cream">Gratis toegankelijk</h3></div>
+              <p className="mt-1 flex items-center gap-1.5 text-sm text-xmas-cream/60"><Clock className="h-3.5 w-3.5" /> Telkens van 14u tot 17u</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {FREE_DATES.map((d, i) => (<span key={i} className="rounded-full bg-black/25 px-3.5 py-1.5 text-sm text-xmas-cream/85">{d}</span>))}
+              </div>
+            </div>
+            <div data-fade className="rounded-3xl border border-xmas-gold/30 bg-xmas-gold/10 p-7">
+              <div className="flex items-center gap-2 text-xmas-gold"><Gift className="h-5 w-5" /><h3 className="font-display text-2xl text-xmas-cream">Golden Ticket</h3></div>
+              <p className="mt-1 text-sm text-xmas-cream/60">Tijdslot 45 min · beperkt aantal per voormiddag</p>
+              <div className="mt-5 space-y-3">
+                {GOLDEN_DATES.map((g, i) => (
+                  <div key={i} className="flex flex-col gap-2 border-b border-xmas-gold/15 pb-3 last:border-0 sm:flex-row sm:items-center sm:justify-between">
+                    <span className="text-xmas-cream/90">{g.day}</span>
+                    <span className="flex flex-wrap gap-1.5">{g.slots.map((s, j) => (<span key={j} className="rounded-full bg-black/25 px-2.5 py-1 text-xs text-xmas-cream/80">{s}</span>))}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 text-center">
+            <TicketButton className="rounded-full bg-xmas-red px-8 py-4 font-semibold text-white hover:scale-[1.03] hover:bg-white hover:text-xmas-green">Bestel je tickets via FlexTickets</TicketButton>
+          </div>
         </div>
       </section>
 
       {/* FOTO'S */}
-      <section id="fotos" className="relative z-10 bg-xmas-bg px-6 pb-28 pt-24 md:px-10 md:pt-28">
-        <ArchDivider color="fill-xmas-bg" flip />
-        <div className="mx-auto max-w-[1300px]">
+      <section id="fotos" className="relative z-10 bg-xmas-green px-6 pb-40 pt-24 md:px-10 md:pb-48 md:pt-28">
+        <ArchDivider color="fill-xmas-green" />
+        <Snow />
+        <div className="relative mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">
-            <Eyebrow className="text-xmas-gold">Foto's</Eyebrow>
-            <TitleReveal lines={["Sfeerbeelden"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+            <Eyebrow className="text-xmas-gold [&]:justify-center">Foto's</Eyebrow>
+            <TitleReveal lines={["Sfeerbeelden"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
           </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {[IMG.xmasBaubles, IMG.xmasStars, IMG.xmasTrees, IMG.xmasSanta, IMG.xmasHouse, IMG.xmasStatue, IMG.xmasFamily1, IMG.xmasWalk].map((src, i) => (
-              <div key={i} data-img className={`overflow-hidden rounded-2xl ${i % 3 === 0 ? 'aspect-[3/4]' : 'aspect-square'}`}>
-                <img src={src} alt="Sfeer" className="h-full w-full object-cover transition-transform duration-1000 hover:scale-110" />
-              </div>
-            ))}
-          </div>
-          <div className="mt-16 flex items-center justify-between border-t border-xmas-gold/20 pt-10">
+          <PhotoGallery images={PHOTOS} accent="text-white" ringClass="ring-xmas-gold/20" />
+
+          <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-xmas-gold/20 pt-10 md:flex-row">
             <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-xmas-cream/80 hover:text-xmas-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
             <Magnetic as="button" onClick={() => navigate('show')} className="rounded-full border border-xmas-gold/40 px-5 py-2.5 text-sm text-xmas-gold hover:bg-xmas-gold hover:text-xmas-bg">Naar De Grote Sinterklaasshow</Magnetic>
           </div>
         </div>
+        <ArchDivider color="fill-xmas-green" position="bottom" />
       </section>
     </div>
   )
