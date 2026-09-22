@@ -11,10 +11,10 @@ import ShowNews from './ShowNews'
 const TICKETS_URL = 'https://events.flextickets.nl/event/de-grote-sinterklaasshow'
 
 const PARTNERS = [
-  { name: 'Stad Genk', logo: '/partners/genk.png', cls: '' },
-  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: 'invert' },
-  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: '' },
-  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: '' },
+  { name: 'Stad Genk', logo: '/partners/genk-white.png' },
+  { name: 'Balls & Glory', logo: '/partners/ballsglory-white.png' },
+  { name: 'Hotel Bonka', logo: '/partners/hotelbonka-white.png' },
+  { name: 'Rotary Club Genk', logo: '/partners/rotary-white.png' },
 ]
 
 const WORLDS4 = [
@@ -57,7 +57,7 @@ function PartnerStrip({ reverse = false }) {
     <div className="relative min-w-0 flex-1 overflow-hidden">
       <div className={`flex w-max items-center gap-12 md:gap-16 ${reverse ? '[animation:marquee_24s_linear_infinite_reverse]' : '[animation:marquee_24s_linear_infinite]'}`}>
         {[...set, ...set].map((p, i) => (
-          <img key={i} src={p.logo} alt={p.name} title={p.name} className="h-9 w-auto shrink-0 opacity-95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)] [filter:brightness(0)_invert(1)] md:h-11" />
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className="h-12 w-auto shrink-0 opacity-95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)] md:h-16" />
         ))}
       </div>
     </div>
