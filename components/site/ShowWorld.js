@@ -50,27 +50,34 @@ function TicketButton({ className = '', children }) {
   )
 }
 
-// The scroll cue sits ABOVE a single continuous partner marquee (left → right).
-// Cue and logos are on separate rows, so logos never pass behind the cue.
+// A single marquee (left → right) with the scroll cue sitting IN BETWEEN, forming
+// the break in the strip: logos slide up to the cue, the cue interrupts, and the
+// scroll continues on the other side.
 // All logos are white except GENK, which keeps its original black/white artwork.
+function PartnerStrip() {
+  return (
+    <div className="relative min-w-0 flex-1 overflow-hidden">
+      <div className="flex w-max items-center gap-14 [animation:marquee_30s_linear_infinite_reverse] md:gap-24">
+        {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((p, i) => (
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-12 w-auto shrink-0 opacity-95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)] md:h-16 ${p.cls}`} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function HeroPartners() {
   return (
-    <div className="absolute inset-x-0 bottom-[48px] z-10 md:bottom-[60px]">
-      <div className="hero-cue mx-auto mb-5 flex w-max flex-col items-center gap-2 text-white md:mb-6">
-        <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
-        <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
-          <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
-        </span>
-      </div>
-      <div className="relative overflow-hidden">
-        <div className="flex w-max items-center gap-14 [animation:marquee_30s_linear_infinite_reverse] md:gap-24">
-          {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((p, i) => (
-            <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-12 w-auto shrink-0 opacity-95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)] md:h-16 ${p.cls}`} />
-          ))}
+    <div className="absolute inset-x-0 bottom-[64px] z-10 md:bottom-[84px]">
+      <div className="mx-auto flex max-w-[1600px] items-center gap-6 px-5 md:gap-10 md:px-10">
+        <PartnerStrip />
+        <div className="hero-cue flex shrink-0 flex-col items-center gap-2 text-white">
+          <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
+          <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+            <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+          </span>
         </div>
-        {/* fade edges so logos slide in/out softly */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black/40 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black/40 to-transparent" />
+        <PartnerStrip />
       </div>
     </div>
   )
