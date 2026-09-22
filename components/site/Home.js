@@ -21,10 +21,19 @@ function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
       {locked ? (
         <>
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div className="relative w-[150%] -rotate-[7deg] bg-gradient-to-r from-[#C9971F] via-[#FBEFC4] to-[#C9971F] py-4 text-center shadow-[0_14px_40px_-8px_rgba(0,0,0,0.6)] ring-1 ring-white/40">
-              <span className="flex items-center justify-center gap-2.5 px-4 text-sm font-bold uppercase tracking-[0.16em] text-[#5a3d05] md:text-base">
-                <Lock className="h-4 w-4 md:h-5 md:w-5" /> {ribbon}
-              </span>
+            <div
+              className="relative w-[150%] -rotate-[7deg]"
+              style={{ transform: 'translateZ(0) rotate(-7deg)', WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
+            >
+              <div className="relative bg-gradient-to-b from-[#FBEECB] via-[#E9C766] to-[#C99A26] py-[18px] text-center shadow-[0_16px_36px_-10px_rgba(0,0,0,0.65)]">
+                {/* soft inner highlight + trim lines for a ribbon feel */}
+                <span className="absolute inset-x-0 top-[3px] h-px bg-white/55" />
+                <span className="absolute inset-x-0 bottom-[3px] h-px bg-[#8a6511]/50" />
+                <span className="relative flex items-center justify-center gap-2.5 px-6 text-[13px] font-extrabold uppercase tracking-[0.2em] text-[#4a3204] md:text-[15px]" style={{ textShadow: '0 1px 0 rgba(255,255,255,0.35)' }}>
+                  <Lock className="h-4 w-4 md:h-[18px] md:w-[18px]" strokeWidth={2.5} />
+                  {ribbon}
+                </span>
+              </div>
             </div>
           </div>
           <div className="pointer-events-none absolute bottom-7 left-1/2 -translate-x-1/2 rounded-full bg-black/45 px-5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">Binnenkort beschikbaar</div>
