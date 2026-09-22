@@ -118,8 +118,8 @@ export default function ShowWorld() {
         <HeroPartners />
       </section>
 
-      {/* NIEUWS — bovenaan */}
-      <ShowNews showArch={false} />
+      {/* NIEUWS — bovenaan, met boog omhoog in de hero (zoals de hoofdsite) */}
+      <ShowNews />
 
       {/* HET VERHAAL — voluit, zonder foto */}
       <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
