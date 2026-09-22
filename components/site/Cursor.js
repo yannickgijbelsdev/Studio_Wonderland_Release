@@ -30,8 +30,8 @@ export default function Cursor() {
     // gentle sparkle trail while moving
     const spawnSparkle = (x, y) => {
       if (!layerEl) return
-      const s = makeStar(4 + Math.random() * 7)
-      gsap.set(s, { x: x + (Math.random() * 16 - 8), y: y + (Math.random() * 16 - 8), scale: 1, opacity: 1, rotation: Math.random() * 90 })
+      const s = makeStar(3 + Math.random() * 5)
+      gsap.set(s, { x: x + (Math.random() * 14 - 7), y: y + (Math.random() * 14 - 7), scale: 1, opacity: 0.9, rotation: Math.random() * 90 })
       gsap.to(s, {
         x: `+=${Math.random() * 40 - 20}`,
         y: `+=${Math.random() * 34 + 6}`,
@@ -73,14 +73,14 @@ export default function Cursor() {
       if (!shown) { gsap.to(arrowEl, { opacity: 1, duration: 0.3 }); shown = true }
       xArrow(e.clientX); yArrow(e.clientY)
       const now = performance.now()
-      const gap = hovering ? 40 : 26
+      const gap = hovering ? 55 : 36
       if (now - last > gap) { last = now; spawnSparkle(e.clientX, e.clientY) }
     }
 
     const over = (e) => {
       if (e.target.closest('[data-cursor]') || e.target.closest('a,button,[role="button"]')) {
         hovering = true
-        gsap.to(arrowEl, { scale: 1.45, rotation: -12, duration: 0.3, ease: 'power3' })
+        gsap.to(arrowEl, { scale: 1.3, rotation: -10, duration: 0.3, ease: 'power3' })
       }
     }
     const out = (e) => {
@@ -95,7 +95,7 @@ export default function Cursor() {
       burst(e.clientX, e.clientY)
     }
     const up = () => {
-      gsap.to(arrowEl, { scale: hovering ? 1.45 : 1, duration: 0.4, ease: 'elastic.out(1,0.5)' })
+      gsap.to(arrowEl, { scale: hovering ? 1.3 : 1, duration: 0.4, ease: 'elastic.out(1,0.5)' })
     }
 
     window.addEventListener('mousemove', move)
@@ -117,7 +117,7 @@ export default function Cursor() {
       <div ref={layer} className="pointer-events-none fixed inset-0 z-[9998]" aria-hidden="true" />
       {/* primary gold arrow cursor */}
       <div ref={arrow} className="pointer-events-none fixed left-0 top-0 z-[9999]" style={{ transformOrigin: '2px 2px' }} aria-hidden="true">
-        <svg width="27" height="27" viewBox="0 0 24 24" style={{ display: 'block', filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.5)) drop-shadow(0 0 9px rgba(248,231,176,0.7))' }}>
+        <svg width="19" height="19" viewBox="0 0 24 24" style={{ display: 'block', filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(248,231,176,0.5))' }}>
           <defs>
             <linearGradient id="cur-g" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#FFF6DE" />
