@@ -6,16 +6,15 @@ import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
 import { Magnetic, Eyebrow, Star, TitleReveal, ArchDivider, Sparkles, PhotoGallery } from './ui'
-import HeroVideos, { HeroScrollCue } from './HeroVideos'
 import ShowNews from './ShowNews'
 
 const TICKETS_URL = 'https://events.flextickets.nl/event/de-grote-sinterklaasshow'
 
 const PARTNERS = [
-  { name: 'Stad Genk', logo: '/partners/genk.png', cls: '' },
-  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: 'invert' },
-  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: '' },
-  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: '' },
+  { name: 'Stad Genk', logo: '/partners/genk.png' },
+  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp' },
+  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png' },
+  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp' },
 ]
 
 const WORLDS4 = [
@@ -51,14 +50,14 @@ function TicketButton({ className = '', children }) {
   )
 }
 
-// Full-width sliding partner bar on a light band so every logo is clearly visible.
-function PartnerBand() {
+// A sliding partner strip (white silhouettes) used on either side of the hero scroll cue.
+function PartnerStrip({ reverse = false }) {
   const set = [...PARTNERS, ...PARTNERS]
   return (
-    <div className="group relative w-full overflow-hidden py-6">
-      <div className="flex w-max items-center gap-16 pr-16 [animation:marquee_28s_linear_infinite] group-hover:[animation-play-state:paused] md:gap-24 md:pr-24">
+    <div className="relative min-w-0 flex-1 overflow-hidden">
+      <div className={`flex w-max items-center gap-12 md:gap-16 ${reverse ? '[animation:marquee_24s_linear_infinite_reverse]' : '[animation:marquee_24s_linear_infinite]'}`}>
         {[...set, ...set].map((p, i) => (
-          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-10 w-auto shrink-0 opacity-90 transition-opacity hover:opacity-100 md:h-12 ${p.cls}`} />
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className="h-6 w-auto shrink-0 opacity-90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)] [filter:brightness(0)_invert(1)] md:h-8" />
         ))}
       </div>
     </div>
@@ -80,11 +79,26 @@ export default function ShowWorld() {
 
   return (
     <div ref={scope} className="spotlight-bg">
-      {/* HERO — identiek aan de Studio Wonderland homepagina */}
+      {/* HERO — enkel de Sinterklaas-video, partners flankeren de scroll-cue */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
-        <HeroVideos />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
-        <HeroScrollCue />
+        <video className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto" poster="/hero-poster.jpg">
+          <source src={IMG.heroVideo} type="video/mp4" />
+        </video>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
+
+        {/* Bottom band: partners left · scroll cue · partners right */}
+        <div className="absolute inset-x-0 bottom-[86px] z-10 md:bottom-[104px]">
+          <div className="mx-auto flex max-w-[1500px] items-center gap-5 px-5 md:gap-8 md:px-10">
+            <PartnerStrip />
+            <div className="hero-cue flex shrink-0 flex-col items-center gap-3 text-white">
+              <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
+              <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+                <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+              </span>
+            </div>
+            <PartnerStrip reverse />
+          </div>
+        </div>
       </section>
 
       {/* NIEUWS — bovenaan */}
@@ -173,7 +187,7 @@ export default function ShowWorld() {
       </section>
 
       {/* FOTO'S */}
-      <section id="fotos" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pt-28">
+      <section id="fotos" className="relative z-10 bg-show-reddeep px-6 pb-40 pt-24 md:px-10 md:pb-48 md:pt-28">
         <ArchDivider color="fill-show-reddeep" flip />
         <div className="mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">
@@ -181,21 +195,13 @@ export default function ShowWorld() {
             <TitleReveal lines={["Beleef de magie"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           <PhotoGallery images={PHOTOS} accent="text-white" ringClass="ring-show-gold/20" />
-        </div>
-      </section>
 
-      {/* PARTNERS — zichtbare schuivende balk op lichte band */}
-      <section className="relative z-10 bg-white px-6 pb-40 pt-20 md:pb-48 md:pt-24">
-        <ArchDivider color="fill-white" />
-        <div className="mx-auto max-w-[1200px]">
-          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.3em] text-show-bg/60">Met dank aan onze partners</p>
-          <PartnerBand />
-          <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t border-show-bg/10 pt-10 md:flex-row">
-            <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-bg/70 hover:text-show-red"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
-            <Magnetic as="button" onClick={() => navigate('xmas')} className="rounded-full border border-show-red/40 px-5 py-2.5 text-sm text-show-red hover:bg-show-red hover:text-white">Naar het Huis van de Kerstman</Magnetic>
+          <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-show-gold/20 pt-10 md:flex-row">
+            <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-cream/80 hover:text-show-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
+            <Magnetic as="button" onClick={() => navigate('xmas')} className="rounded-full border border-show-gold/40 px-5 py-2.5 text-sm text-show-gold hover:bg-show-gold hover:text-show-bg">Naar het Huis van de Kerstman</Magnetic>
           </div>
         </div>
-        <ArchDivider color="fill-white" position="bottom" />
+        <ArchDivider color="fill-show-reddeep" position="bottom" />
       </section>
     </div>
   )

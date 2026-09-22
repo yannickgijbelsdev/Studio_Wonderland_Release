@@ -149,6 +149,20 @@ backend:
         -comment: "✅ All 4 News API tests passed (100% success): (1) GET /api/news returns 200 with object containing items[] array, each item has id, title, image_url, published_at, category.name. (2) GET /api/news?category=homepagina returns 200 with same structure, category param respected. (3) GET /api/news/{id} returns 200 with full article including body field (341 char HTML string), title, image_url, published_at, category. (4) GET /api/news/nonexistent-id-123 returns 404 with error field 'Artikel niet gevonden', server did NOT crash. Sanity checks: GET /api/productions (200, 3 items) and GET /api/contact (200, 1 item) still working - no regression. All endpoints functioning correctly."
 
 frontend:
+  - task: "Show hero: only Sinterklaas video + partners flanking scroll cue"
+    implemented: true
+    working: true
+    file: "components/site/ShowWorld.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "main"
+        -comment: "User bug report: (1) The Huis van de Kerstman video must NOT appear on the Sinterklaas website — previously the show hero reused the shared crossfading dual-video hero (hero-1.mp4 = Sinterklaas, hero-2.mp4 = Kerstman). Fixed: the show hero now uses a SINGLE looping <video> with only /hero-1.mp4 (Sinterklaas). (2) Partners must flank the 'Scroll om te ontdekken' cue on BOTH sides and slide. Fixed: hero bottom band now renders a left sliding partner marquee (PartnerStrip), the centered scroll cue, and a right sliding partner marquee (reverse direction). Logos are white silhouettes. Verified via screenshot: video source = /hero-1.mp4, two partner strips present, cue centered."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ BOTH BUG FIXES VERIFIED AND WORKING. (A) VIDEO SOURCE: ✅ PASS - Confirmed exactly ONE <video> element in .hero-sec with source='/hero-1.mp4' (Sinterklaas video). No second video present. The Christmas video /hero-2.mp4 is NOT used. (B) PARTNER STRIPS: ✅ PASS - Confirmed TWO partner strips (overflow-hidden containers) flanking the centered scroll cue 'Scroll om te ontdekken'. Each strip contains 16 partner logos (Stad Genk, Balls & Glory, Hotel Bonka, Rotary Club Genk - duplicated for continuous marquee). Both strips have 'marquee' CSS animation applied and logos are rendered (naturalWidth > 0). One strip slides in reverse direction. Desktop (1920x800) and mobile (390x844) screenshots captured. No horizontal overflow at 390px width. All requirements met."
   - task: "Bugfix: buttons fade normally, softer hero overlay, curtain page transition"
     implemented: true
     working: true
@@ -200,3 +214,5 @@ agent_communication:
     -message: "NEW: Please test ONLY the new News proxy endpoints on the backend (base path /api). (1) GET /api/news — should return 200 with a JSON object containing an 'items' array (proxied from external CMS https://clr.koodh.com/api/news/sinterklaas-genk/homepagina). Each item should have id, title, image_url, published_at, category. (2) GET /api/news?category=homepagina — same as above, category param respected. (3) GET /api/news/{id} — use an id from the list response (e.g. the first item's id) and confirm it returns 200 with the full article object including a 'body' field (HTML string), title, image_url, published_at. (4) GET /api/news/nonexistent-id-123 — should return a non-200 (404 or 502) with an error field and NOT crash. Do NOT retest productions/contact (already passing) unless quick sanity. Report PASS/FAIL for each."
     -agent: "testing"
     -message: "✅ NEWS PROXY API TESTING COMPLETE - ALL TESTS PASSED (6/6, 100% success). (1) GET /api/news: ✅ PASS - Returns 200 with object containing items[] array. Each item has id, title, image_url, published_at, category.name. Structure validated. (2) GET /api/news?category=homepagina: ✅ PASS - Returns 200 with same structure, category parameter respected. (3) GET /api/news/{id}: ✅ PASS - Returns 200 with full article including body field (341 char HTML string), title, image_url, published_at, category. (4) GET /api/news/nonexistent-id-123: ✅ PASS - Returns 404 with error field 'Artikel niet gevonden', server did NOT crash. SANITY CHECKS: ✅ GET /api/productions (200, 3 items) and ✅ GET /api/contact (200, 1 item) - no regression. All backend endpoints functioning correctly. No critical issues found."
+    -agent: "testing"
+    -message: "✅ SINTERKLAAS HERO BUG FIX VERIFICATION COMPLETE - ALL TESTS PASSED. Verified both reported fixes on the Sinterklaas world hero section. (A) VIDEO SOURCE: ✅ PASS - Confirmed exactly ONE <video> in .hero-sec with src='/hero-1.mp4' (Sinterklaas video only). No /hero-2.mp4 (Christmas video) present. (B) PARTNER STRIPS: ✅ PASS - Confirmed TWO sliding partner marquee strips flanking the centered scroll cue 'Scroll om te ontdekken'. Each strip contains 16 logos (Stad Genk, Balls & Glory, Hotel Bonka, Rotary Club Genk). Both have 'marquee' CSS animation, one in reverse direction. All logos rendered correctly. Screenshots captured at desktop (1920x800) and mobile (390x844). No horizontal overflow at 390px. All requirements met. No critical issues found."
