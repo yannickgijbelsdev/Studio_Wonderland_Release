@@ -77,6 +77,16 @@ function PortalTile({ image, cta, onClick, alt }) {
   )
 }
 
+function ArchDivider({ color = 'fill-wonder-bg' }) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-[99%] leading-[0]" aria-hidden="true">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-[52px] w-full md:h-[92px]">
+        <path className={color} d="M0,100 L0,50 Q720,-40 1440,50 L1440,100 Z" />
+      </svg>
+    </div>
+  )
+}
+
 export default function Home() {
   const scope = useRef(null)
   const { navigate } = useSite()
@@ -96,18 +106,21 @@ export default function Home() {
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
         <HeroVideos />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-wonder-pink/50" />
-        <div className="hero-cue absolute bottom-12 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/85">
-          <span className="text-[10px] uppercase tracking-[0.35em]">Ontdek</span>
-          <ChevronDown className="h-5 w-5 animate-bounce" />
+        <div className="hero-cue absolute bottom-[112px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white md:bottom-[132px]">
+          <span className="text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
+          <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+            <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+          </span>
         </div>
       </section>
 
       {/* KIES JOUW WERELD — magical arch section, glitter, buttons only */}
-      <section id="belevenissen" className="relative z-10 -mt-[7vh] overflow-hidden rounded-[50%_50%_0_0_/_4rem_4rem_0_0] bg-gradient-to-b from-wonder-pink via-wonder-pinkdeep to-wonder-plum px-6 pb-28 pt-32 md:rounded-[50%_50%_0_0_/_7rem_7rem_0_0] md:px-10 md:pb-36 md:pt-44">
+      <section id="belevenissen" className="relative z-10 bg-gradient-to-b from-wonder-pink via-wonder-pinkdeep to-wonder-plum px-6 pb-28 pt-24 md:px-10 md:pb-36 md:pt-32">
+        <ArchDivider color="fill-wonder-pink" />
         <Sparkles count={90} />
         <div className="relative mx-auto max-w-[1400px]">
           <div className="mb-14 text-center">
-            <TitleReveal lines={["Kies jouw wereld"]} align="center" starClass="text-wonder-goldlight" className="text-5xl text-white md:text-7xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+            <TitleReveal lines={["Kies jouw wereld"]} align="center" starClass="text-[#F8E7B0] drop-shadow-[0_0_12px_rgba(248,231,176,0.75)]" className="text-5xl text-white md:text-7xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           <div className="grid gap-8 md:grid-cols-2">
             <PortalTile image={IMG.showTile} alt="De Grote Sinterklaasshow" cta="Ontdek de show" onClick={() => navigate('show')} />
@@ -117,7 +130,8 @@ export default function Home() {
       </section>
 
       {/* STUDIO WONDERLAND INTRO */}
-      <section className="relative z-10 -mt-[5vh] overflow-hidden rounded-[50%_50%_0_0_/_4rem_4rem_0_0] bg-wonder-bg px-6 pb-24 pt-28 md:rounded-[50%_50%_0_0_/_7rem_7rem_0_0] md:px-10 md:pb-36 md:pt-40">
+      <section className="relative z-10 bg-wonder-bg px-6 pb-24 pt-24 md:px-10 md:pb-36 md:pt-32">
+        <ArchDivider color="fill-wonder-bg" />
         <Sparkles count={26} className="opacity-50" />
         <div className="relative mx-auto grid max-w-[1400px] items-center gap-14 md:grid-cols-2">
           <div>

@@ -26,8 +26,8 @@ export function Magnetic({ children, className = '', as = 'button', strength = 0
 
 export function Eyebrow({ children, className = '' }) {
   return (
-    <span className={`inline-flex items-center gap-3 text-[11px] font-medium tracking-[0.4em] uppercase ${className}`}>
-      <Star className="h-3 w-3" />
+    <span className={`inline-flex items-center gap-2.5 text-[11px] font-medium tracking-[0.4em] uppercase ${className}`}>
+      <Star className="h-3.5 w-3.5" />
       {children}
     </span>
   )
@@ -43,13 +43,13 @@ export function Star({ className = 'h-4 w-4' }) {
 }
 
 // A heading that reveals on scroll, with the logo star before the first line and no clipping.
-export function TitleReveal({ lines, starClass = 'text-wonder-pink', className = '', align = 'left' }) {
+export function TitleReveal({ lines, starClass = 'text-wonder-pinkdeep', className = '', align = 'left' }) {
   return (
-    <h2 className={`font-display leading-[1.06] ${className}`}>
+    <h2 className={`font-display leading-[1.12] ${className}`}>
       {lines.map((ln, i) => (
-        <span key={i} className="block overflow-hidden pb-[0.12em]">
+        <span key={i} className="block overflow-hidden pb-[0.28em]">
           <span data-reveal className="block">
-            {i === 0 && <Star className={`mr-3 inline-block h-[0.52em] w-[0.52em] -translate-y-[0.06em] align-middle ${starClass}`} />}
+            {i === 0 && <Star className={`mr-3 inline-block h-[0.66em] w-[0.66em] -translate-y-[0.04em] align-middle ${starClass}`} />}
             {ln}
           </span>
         </span>
