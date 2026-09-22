@@ -12,6 +12,13 @@ function formatDate(iso) {
   }
 }
 
+// Remove the leading featured-image credit paragraph from the body — it is shown
+// separately (small) right under the featured image instead.
+function cleanBody(html) {
+  if (!html) return ''
+  return html.replace(/^\s*<p[^>]*class="[^"]*clara-image-credit[^"]*"[^>]*>[\s\S]*?<\/p>/i, '').trim()
+}
+
 export default function Article() {
   const { articleId, navigate } = useSite()
   const [article, setArticle] = useState(null)
@@ -58,16 +65,23 @@ export default function Article() {
         {!loading && !error && article && (
           <article>
             {article.image_url && (
-              <div className="aspect-[16/9] w-full overflow-hidden rounded-3xl">
-                <img src={article.image_url} alt={article.title} className="h-full w-full object-cover" />
-              </div>
+              <figure className="m-0">
+                <div className="aspect-[16/9] w-full overflow-hidden rounded-3xl">
+                  <img src={article.image_url} alt={article.title} className="h-full w-full object-cover" />
+                </div>
+                {article.image_caption_html && (
+                  <figcaption
+                    className="mt-1.5 text-xs text-show-cream/50 [&_p]:m-0"
+                    dangerouslySetInnerHTML={{ __html: article.image_caption_html }}
+                  />
+                )}
+              </figure>
             )}
             <div className="mt-8">
-              <p className="text-xs uppercase tracking-[0.2em] text-show-cream/50">{formatDate(article.published_at)}</p>
-              <h1 className="mt-2 font-display text-4xl leading-tight text-show-cream md:text-5xl">{article.title}</h1>
+              <h1 className="font-display text-4xl leading-tight text-show-cream md:text-5xl">{article.title}</h1>
               <div
-                className="clara-body mt-8 space-y-4 text-lg leading-relaxed text-show-cream/85 [&_a]:text-show-gold [&_a]:underline [&_figure]:my-6 [&_figcaption]:mt-1.5 [&_figcaption]:text-xs [&_figcaption]:text-show-cream/50 [&_img]:rounded-2xl [&_p]:leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: article.body || '' }}
+                className="clara-body mt-8 space-y-4 text-lg leading-relaxed text-show-cream/85 [&_.clara-image-credit]:text-xs [&_.clara-image-credit]:text-show-cream/50 [&_a]:text-show-gold [&_a]:underline [&_figure]:my-6 [&_figcaption]:mt-1.5 [&_figcaption]:text-xs [&_figcaption]:text-show-cream/50 [&_img]:rounded-2xl [&_p]:leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: cleanBody(article.body) }}
               />
             </div>
           </article>
