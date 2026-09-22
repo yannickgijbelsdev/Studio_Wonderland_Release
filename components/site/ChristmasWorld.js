@@ -70,7 +70,7 @@ export default function ChristmasWorld() {
       </section>
 
       {/* WELKOM / VERHAAL */}
-      <section className="relative z-10 bg-xmas-green px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
+      <section id="verhaal" className="relative z-10 bg-xmas-green px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
         <ArchDivider color="fill-xmas-green" />
         <Snow />
         <div className="relative mx-auto grid max-w-[1200px] items-center gap-12 md:grid-cols-2">
@@ -118,7 +118,7 @@ export default function ChristmasWorld() {
       </section>
 
       {/* PRAKTISCH + FAQ */}
-      <section className="relative z-10 bg-xmas-green px-6 pb-24 pt-24 md:px-10 md:pt-28">
+      <section id="faq" className="relative z-10 bg-xmas-green px-6 pb-24 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-xmas-green" />
         <div className="mx-auto max-w-[900px]">
           <div className="mb-12 text-center">
@@ -137,7 +137,7 @@ export default function ChristmasWorld() {
       </section>
 
       {/* FOTO'S */}
-      <section className="relative z-10 bg-xmas-bg px-6 pb-28 pt-24 md:px-10 md:pt-28">
+      <section id="fotos" className="relative z-10 bg-xmas-bg px-6 pb-28 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-xmas-bg" />
         <div className="mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">

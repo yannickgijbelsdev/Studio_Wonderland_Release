@@ -96,7 +96,7 @@ export default function ShowWorld() {
       </section>
 
       {/* HET VERHAAL / TICKETS */}
-      <section className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
+      <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
         <ArchDivider color="fill-show-reddeep" />
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 md:grid-cols-2">
           <div data-img className="aspect-[4/3] overflow-hidden rounded-3xl">
@@ -156,7 +156,7 @@ export default function ShowWorld() {
       </section>
 
       {/* FAQ */}
-      <section className="relative z-10 bg-show-bg px-6 pb-24 pt-24 md:px-10 md:pt-28">
+      <section id="faq" className="relative z-10 bg-show-bg px-6 pb-24 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-bg" />
         <div className="mx-auto max-w-[900px]">
           <div className="mb-12 text-center">
@@ -175,7 +175,7 @@ export default function ShowWorld() {
       </section>
 
       {/* FOTO'S */}
-      <section className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pt-28">
+      <section id="fotos" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-reddeep" />
         <div className="mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">
