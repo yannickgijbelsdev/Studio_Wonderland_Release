@@ -207,6 +207,7 @@ function MainNav() {
 
 export default function Nav() {
   const { route } = useSite()
-  if (route === 'show' || route === 'xmas') return <WorldNav route={route} />
+  const worldRoute = route === 'article' ? 'show' : route
+  if (worldRoute === 'show' || worldRoute === 'xmas') return <WorldNav route={worldRoute} />
   return <MainNav />
 }

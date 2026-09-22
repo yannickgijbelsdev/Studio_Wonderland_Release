@@ -2,7 +2,42 @@
 import { useSite } from './ctx'
 
 export default function Footer() {
-  const { navigate } = useSite()
+  const { route, navigate } = useSite()
+  const isShow = route === 'show' || route === 'article'
+
+  if (isShow) {
+    return (
+      <footer className="relative border-t border-show-gold/20 bg-show-bg px-6 py-16 text-show-cream md:px-10">
+        <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <img src="/sinterklaas-show-logo.png" alt="De Grote Sinterklaasshow" className="h-20 w-auto md:h-24" />
+            <p className="mt-5 max-w-md text-show-cream/70">De Grote Sinterklaasshow — een spectaculaire liveshow vol muziek, humor, dans en magie. Schouwburg, Stadhuis Genk.</p>
+            <a href="mailto:info@sinterklaasgenk.be" data-cursor="hover" className="mt-6 inline-block font-medium text-show-gold underline-offset-4 hover:underline">info@sinterklaasgenk.be</a>
+          </div>
+          <div>
+            <h4 className="text-xs uppercase tracking-[0.3em] text-show-cream/50">De show</h4>
+            <ul className="mt-4 space-y-3">
+              <li><button onClick={() => navigate('show', 'verhaal')} data-cursor="hover" className="hover:text-show-gold">Het verhaal</button></li>
+              <li><button onClick={() => navigate('show', 'faq')} data-cursor="hover" className="hover:text-show-gold">Veelgestelde vragen</button></li>
+              <li><button onClick={() => navigate('show', 'fotos')} data-cursor="hover" className="hover:text-show-gold">Foto's</button></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-xs uppercase tracking-[0.3em] text-show-cream/50">Tickets</h4>
+            <ul className="mt-4 space-y-3">
+              <li><a href="https://events.flextickets.nl/event/de-grote-sinterklaasshow" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="hover:text-show-gold">Bestel je tickets</a></li>
+              <li><button onClick={() => navigate('home')} data-cursor="hover" className="text-show-cream/60 hover:text-show-gold">Studio Wonderland</button></li>
+            </ul>
+          </div>
+        </div>
+        <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50 md:flex-row">
+          <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland.</span>
+          <span>Muziek &bull; Humor &bull; Dans &bull; Magie</span>
+        </div>
+      </footer>
+    )
+  }
+
   return (
     <footer className="relative border-t border-wonder-gold/20 bg-wonder-bg px-6 py-16 text-wonder-ink md:px-10">
       <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
@@ -24,7 +59,6 @@ export default function Footer() {
           <ul className="mt-4 space-y-3">
             <li><button onClick={() => navigate('about')} data-cursor="hover" className="hover:text-wonder-gold">Over ons</button></li>
             <li><button onClick={() => navigate('contact')} data-cursor="hover" className="hover:text-wonder-gold">Contact</button></li>
-            <li><button onClick={() => navigate('admin')} data-cursor="hover" className="text-wonder-muted hover:text-wonder-gold">Beheer</button></li>
           </ul>
         </div>
       </div>

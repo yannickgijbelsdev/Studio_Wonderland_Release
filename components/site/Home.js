@@ -5,34 +5,7 @@ import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
 import { Magnetic, Eyebrow, Star, TitleReveal, Sparkles, ArchDivider } from './ui'
-
-// Hero that crossfades between BOTH uploaded videos, looping.
-function HeroVideos() {
-  const a = useRef(null)
-  const b = useRef(null)
-  const [active, setActive] = useState(0)
-  useEffect(() => {
-    const va = a.current, vb = b.current
-    if (!va || !vb) return
-    const tryPlay = (v) => { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) }
-    tryPlay(va)
-    const onEndA = () => { vb.currentTime = 0; tryPlay(vb); setActive(1) }
-    const onEndB = () => { va.currentTime = 0; tryPlay(va); setActive(0) }
-    va.addEventListener('ended', onEndA)
-    vb.addEventListener('ended', onEndB)
-    return () => { va.removeEventListener('ended', onEndA); vb.removeEventListener('ended', onEndB) }
-  }, [])
-  return (
-    <>
-      <video ref={a} className={`hero-img absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${active === 0 ? 'opacity-100' : 'opacity-0'}`} autoPlay muted playsInline preload="auto" poster="/hero-poster.jpg">
-        <source src={IMG.heroVideo} type="video/mp4" />
-      </video>
-      <video ref={b} className={`hero-img absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${active === 1 ? 'opacity-100' : 'opacity-0'}`} muted playsInline preload="auto" poster="/hero-poster.jpg">
-        <source src={IMG.heroVideoAlt} type="video/mp4" />
-      </video>
-    </>
-  )
-}
+import HeroVideos, { HeroScrollCue } from './HeroVideos'
 
 // Arch "doorway" portal tile — only a button remains.
 function PortalTile({ image, cta, onClick, alt }) {
@@ -73,12 +46,7 @@ export default function Home() {
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
         <HeroVideos />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
-        <div className="hero-cue absolute bottom-[112px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-white md:bottom-[132px]">
-          <span className="text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.55)]">Scroll om te ontdekken</span>
-          <span className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
-            <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
-          </span>
-        </div>
+        <HeroScrollCue />
       </section>
 
       {/* KIES JOUW WERELD — magical arch section, glitter, buttons only */}

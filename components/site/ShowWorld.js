@@ -1,20 +1,21 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
-import { ArrowLeft, Ticket, MapPin, Radio, Crown, Gift } from 'lucide-react'
+import { useEffect, useRef } from 'react'
+import { ArrowLeft, Ticket, MapPin } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
 import { Magnetic, Eyebrow, Star, TitleReveal, ArchDivider, Sparkles, PhotoGallery } from './ui'
+import HeroVideos, { HeroScrollCue } from './HeroVideos'
 import ShowNews from './ShowNews'
 
 const TICKETS_URL = 'https://events.flextickets.nl/event/de-grote-sinterklaasshow'
 
 const PARTNERS = [
-  { name: 'Stad Genk', logo: '/partners/genk.png', cls: 'invert' },
-  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: '' },
-  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: 'invert' },
-  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: 'brightness-0 invert' },
+  { name: 'Stad Genk', logo: '/partners/genk.png', cls: '' },
+  { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: 'invert' },
+  { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: '' },
+  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: '' },
 ]
 
 const WORLDS4 = [
@@ -25,10 +26,10 @@ const WORLDS4 = [
 ]
 
 const CHARACTERS = [
-  { icon: Radio, role: 'Backstagereporter', name: 'Rob Vanoudenhoven', desc: 'Volgt als reporter alles van dichtbij en neemt het publiek mee achter de schermen van deze bijzondere tv-show.', tone: 'from-show-gold/30 to-show-red/20' },
-  { icon: Crown, role: 'De valsspelers', name: 'Barones Boterkoek & dochters', desc: 'Willen koste wat het kost winnen en spelen daarbij niet bepaald eerlijk. Acts lopen mis en zelfs de applausmeter lijkt gemanipuleerd…', tone: 'from-purple-500/25 to-show-red/20' },
-  { icon: Gift, role: 'Het onderzoeksteam', name: 'De Pieten', desc: 'Gaan op onderzoek uit wanneer kandidaten plots verdwijnen. Tijdens de grote finale komt de waarheid aan het licht.', tone: 'from-show-red/25 to-show-gold/20' },
-  { icon: Star, role: 'De grote held', name: 'Sinterklaas', desc: 'Grijpt in op het juiste moment, waarna de show eindigt zoals het hoort: met muziek, feest en het hele publiek op de dansvloer.', tone: 'from-show-gold/35 to-amber-500/20' },
+  { role: 'Backstagereporter', name: 'Rob Vanoudenhoven', desc: 'Volgt als reporter alles van dichtbij en neemt het publiek mee achter de schermen van deze bijzondere tv-show.' },
+  { role: 'De valsspelers', name: 'Barones Boterkoek & dochters', desc: 'Willen koste wat het kost winnen en spelen daarbij niet bepaald eerlijk. Acts lopen mis en zelfs de applausmeter lijkt gemanipuleerd…' },
+  { role: 'Het onderzoeksteam', name: 'De Pieten', desc: 'Gaan op onderzoek uit wanneer kandidaten plots verdwijnen. Tijdens de grote finale komt de waarheid aan het licht.' },
+  { role: 'De grote held', name: 'Sinterklaas', desc: 'Grijpt in op het juiste moment, waarna de show eindigt zoals het hoort: met muziek, feest en het hele publiek op de dansvloer.' },
 ]
 
 const FAQ = [
@@ -50,14 +51,14 @@ function TicketButton({ className = '', children }) {
   )
 }
 
-// Full-width sliding partner bar for the hero.
-function PartnerMarquee() {
+// Full-width sliding partner bar on a light band so every logo is clearly visible.
+function PartnerBand() {
   const set = [...PARTNERS, ...PARTNERS]
   return (
-    <div className="group relative w-full overflow-hidden border-t border-show-gold/30 bg-show-reddeep/90 py-4 backdrop-blur-md">
-      <div className="flex w-max items-center gap-14 pr-14 [animation:marquee_26s_linear_infinite] group-hover:[animation-play-state:paused] md:gap-20 md:pr-20">
+    <div className="group relative w-full overflow-hidden py-6">
+      <div className="flex w-max items-center gap-16 pr-16 [animation:marquee_28s_linear_infinite] group-hover:[animation-play-state:paused] md:gap-24 md:pr-24">
         {[...set, ...set].map((p, i) => (
-          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-8 w-auto opacity-95 transition-opacity hover:opacity-100 md:h-10 ${p.cls}`} />
+          <img key={i} src={p.logo} alt={p.name} title={p.name} className={`h-10 w-auto shrink-0 opacity-90 transition-opacity hover:opacity-100 md:h-12 ${p.cls}`} />
         ))}
       </div>
     </div>
@@ -71,35 +72,19 @@ export default function ShowWorld() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.show-hero-line', { y: 40, opacity: 0, duration: 1, stagger: 0.1, ease: 'power3.out', delay: 0.2 })
-      gsap.to('.show-hero-img', { scale: 1.12, ease: 'none', scrollTrigger: { trigger: '.show-hero', start: 'top top', end: 'bottom top', scrub: true } })
+      gsap.to('.hero-img', { scale: 1.1, ease: 'none', scrollTrigger: { trigger: '.hero-sec', start: 'top top', end: 'bottom top', scrub: true } })
+      gsap.from('.hero-cue', { opacity: 0, y: 12, duration: 1, delay: 0.8, ease: 'power3.out' })
     }, scope)
     return () => ctx.revert()
   }, [])
 
   return (
     <div ref={scope} className="spotlight-bg">
-      <div className="flex justify-center pt-24 pb-2">
-        <button onClick={() => navigate('home')} data-cursor="hover" className="text-[11px] uppercase tracking-[0.4em] text-show-gold/80 hover:text-show-gold">Een productie van Studio Wonderland</button>
-      </div>
-
-      {/* HERO — no big titles, partner marquee across the bottom */}
-      <section className="show-hero relative h-[80svh] overflow-hidden">
-        <img src={IMG.showNeon} alt="De Grote Sinterklaasshow" className="show-hero-img absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-show-bg via-show-bg/40 to-black/40" />
-        <Sparkles count={40} />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-          <span className="show-hero-line inline-flex items-center gap-2 rounded-full bg-black/35 px-4 py-1.5 text-xs uppercase tracking-[0.35em] text-show-gold backdrop-blur-sm">
-            <MapPin className="h-3.5 w-3.5" /> Schouwburg — Stadhuis Genk
-          </span>
-          <div className="show-hero-line mt-7">
-            <TicketButton className="rounded-full bg-show-gold px-8 py-4 text-lg font-semibold text-show-bg shadow-[0_12px_40px_-10px_rgba(248,231,176,0.8)] hover:scale-[1.03] hover:bg-white">Bestel je tickets</TicketButton>
-          </div>
-        </div>
-        {/* Partner marquee */}
-        <div className="absolute inset-x-0 bottom-0 z-10">
-          <PartnerMarquee />
-        </div>
+      {/* HERO — identiek aan de Studio Wonderland homepagina */}
+      <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
+        <HeroVideos />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
+        <HeroScrollCue />
       </section>
 
       {/* NIEUWS — bovenaan */}
@@ -146,7 +131,7 @@ export default function ShowWorld() {
         </div>
       </section>
 
-      {/* WIE IS WIE — netter, 2 kolommen */}
+      {/* WIE IS WIE — netter, zonder iconen */}
       <section className="relative z-10 bg-show-reddeep px-6 py-24 md:px-10 md:py-28">
         <ArchDivider color="fill-show-reddeep" flip />
         <div className="mx-auto max-w-[1050px]">
@@ -155,21 +140,14 @@ export default function ShowWorld() {
             <TitleReveal lines={["De sterren van de show"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           <div className="grid gap-6 md:grid-cols-2">
-            {CHARACTERS.map((c, idx) => {
-              const Icon = c.icon
-              return (
-                <div key={idx} data-fade className="group flex items-start gap-5 rounded-3xl border border-show-gold/15 bg-black/25 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-show-gold/45 md:p-7">
-                  <div className={`flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${c.tone} ring-1 ring-show-gold/25 transition-transform duration-300 group-hover:scale-110`}>
-                    <Icon className="h-7 w-7 text-show-gold" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-show-red">{c.role}</span>
-                    <h4 className="mt-1 font-display text-xl leading-tight text-show-cream">{c.name}</h4>
-                    <p className="mt-2.5 text-sm leading-relaxed text-show-cream/70">{c.desc}</p>
-                  </div>
-                </div>
-              )
-            })}
+            {CHARACTERS.map((c, idx) => (
+              <div key={idx} data-fade className="group relative overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-show-gold/45 md:p-8">
+                <span className="absolute left-0 top-7 h-10 w-1 rounded-r bg-show-gold/70" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-show-red">{c.role}</span>
+                <h4 className="mt-1.5 font-display text-2xl leading-tight text-show-cream">{c.name}</h4>
+                <p className="mt-3 text-sm leading-relaxed text-show-cream/70">{c.desc}</p>
+              </div>
+            ))}
           </div>
           <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-show-cream/40">Portretten volgen binnenkort</p>
         </div>
@@ -194,8 +172,8 @@ export default function ShowWorld() {
         </div>
       </section>
 
-      {/* FOTO'S — met bodemboog naar de footer */}
-      <section id="fotos" className="relative z-10 bg-show-reddeep px-6 pb-40 pt-24 md:px-10 md:pb-48 md:pt-28">
+      {/* FOTO'S */}
+      <section id="fotos" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-reddeep" flip />
         <div className="mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">
@@ -203,13 +181,21 @@ export default function ShowWorld() {
             <TitleReveal lines={["Beleef de magie"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           <PhotoGallery images={PHOTOS} accent="text-white" ringClass="ring-show-gold/20" />
+        </div>
+      </section>
 
-          <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-show-gold/20 pt-10 md:flex-row">
-            <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-cream/80 hover:text-show-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
-            <Magnetic as="button" onClick={() => navigate('xmas')} className="rounded-full border border-show-gold/40 px-5 py-2.5 text-sm text-show-gold hover:bg-show-gold hover:text-show-bg">Naar het Huis van de Kerstman</Magnetic>
+      {/* PARTNERS — zichtbare schuivende balk op lichte band */}
+      <section className="relative z-10 bg-white px-6 pb-40 pt-20 md:pb-48 md:pt-24">
+        <ArchDivider color="fill-white" />
+        <div className="mx-auto max-w-[1200px]">
+          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.3em] text-show-bg/60">Met dank aan onze partners</p>
+          <PartnerBand />
+          <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t border-show-bg/10 pt-10 md:flex-row">
+            <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-bg/70 hover:text-show-red"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
+            <Magnetic as="button" onClick={() => navigate('xmas')} className="rounded-full border border-show-red/40 px-5 py-2.5 text-sm text-show-red hover:bg-show-red hover:text-white">Naar het Huis van de Kerstman</Magnetic>
           </div>
         </div>
-        <ArchDivider color="fill-show-reddeep" position="bottom" />
+        <ArchDivider color="fill-white" position="bottom" />
       </section>
     </div>
   )

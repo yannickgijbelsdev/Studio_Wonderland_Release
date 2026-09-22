@@ -13,20 +13,21 @@ import ChristmasWorld from '@/components/site/ChristmasWorld'
 import Productions from '@/components/site/Productions'
 import About from '@/components/site/About'
 import Contact from '@/components/site/Contact'
-import Admin from '@/components/site/Admin'
+import Article from '@/components/site/Article'
 
 const WORLD_CLASS = {
   home: 'bg-wonder-bg text-wonder-ink',
   productions: 'bg-wonder-bg text-wonder-ink',
   about: 'bg-wonder-bg text-wonder-ink',
   contact: 'bg-wonder-bg text-wonder-ink',
-  admin: 'bg-wonder-bg text-wonder-ink',
   show: 'bg-show-bg text-show-cream',
   xmas: 'bg-xmas-bg text-xmas-cream',
+  article: 'bg-show-bg text-show-cream',
 }
 
 function App() {
   const [route, setRoute] = useState('home')
+  const [articleId, setArticleId] = useState(null)
   const lenisRef = useRef(null)
   const transRef = useRef(false)
 
@@ -68,8 +69,13 @@ function App() {
       })
   }, [route])
 
+  const openArticle = useCallback((id) => {
+    setArticleId(id)
+    navigate('article')
+  }, [navigate])
+
   return (
-    <SiteContext.Provider value={{ route, navigate }}>
+    <SiteContext.Provider value={{ route, navigate, articleId, openArticle }}>
       <div className={`grain min-h-screen transition-colors duration-500 ${WORLD_CLASS[route] || WORLD_CLASS.home}`}>
         <Cursor />
         <Nav />
@@ -80,7 +86,7 @@ function App() {
           {route === 'productions' && <Productions />}
           {route === 'about' && <About />}
           {route === 'contact' && <Contact />}
-          {route === 'admin' && <Admin />}
+          {route === 'article' && <Article />}
         </main>
         <Footer />
       </div>
