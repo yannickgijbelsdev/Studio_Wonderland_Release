@@ -123,7 +123,7 @@ export default function ShowWorld() {
 
       {/* HET VERHAAL — voluit, zonder foto */}
       <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
-        <ArchDivider color="fill-show-reddeep" flip />
+        <ArchDivider color="fill-show-reddeep" />
         <div className="mx-auto max-w-[820px] text-center">
           <Eyebrow className="text-show-gold [&]:justify-center">Het verhaal</Eyebrow>
           <TitleReveal lines={["Eén grote talentenshow"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
@@ -138,11 +138,11 @@ export default function ShowWorld() {
             <TicketButton className="rounded-full bg-show-gold px-8 py-4 font-semibold text-show-bg hover:scale-[1.03] hover:bg-white">Bestel je tickets</TicketButton>
           </div>
         </div>
+        <ArchDivider color="fill-show-reddeep" position="bottom" />
       </section>
 
       {/* VIER WERELDEN — compact, 4 sterretjes */}
       <section className="relative z-10 bg-show-bg px-6 py-24 md:px-10 md:py-28">
-        <ArchDivider color="fill-show-bg" />
         <Sparkles count={26} />
         <div className="relative mx-auto max-w-[1000px] text-center">
           <Eyebrow className="text-show-gold [&]:justify-center">De show</Eyebrow>
@@ -164,7 +164,7 @@ export default function ShowWorld() {
 
       {/* WIE IS WIE — netter, zonder iconen */}
       <section className="relative z-10 bg-show-reddeep px-6 py-24 md:px-10 md:py-28">
-        <ArchDivider color="fill-show-reddeep" flip />
+        <ArchDivider color="fill-show-reddeep" />
         <div className="mx-auto max-w-[1050px]">
           <div className="mb-14 text-center">
             <Eyebrow className="text-show-gold [&]:justify-center">Wie is wie</Eyebrow>
@@ -182,11 +182,11 @@ export default function ShowWorld() {
           </div>
           <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-show-cream/40">Portretten volgen binnenkort</p>
         </div>
+        <ArchDivider color="fill-show-reddeep" position="bottom" />
       </section>
 
       {/* FAQ — verticaal gecentreerd */}
       <section id="faq" className="relative z-10 flex min-h-[85vh] flex-col justify-center bg-show-bg px-6 py-24 md:px-10 md:py-28">
-        <ArchDivider color="fill-show-bg" />
         <div className="mx-auto w-full max-w-[820px]">
           <div className="mb-12 text-center">
             <Eyebrow className="text-show-gold [&]:justify-center">Praktisch</Eyebrow>
@@ -205,7 +205,7 @@ export default function ShowWorld() {
 
       {/* FOTO'S */}
       <section id="fotos" className="relative z-10 bg-show-reddeep px-6 pb-40 pt-24 md:px-10 md:pb-48 md:pt-28">
-        <ArchDivider color="fill-show-reddeep" flip />
+        <ArchDivider color="fill-show-reddeep" />
         <div className="mx-auto max-w-[1300px]">
           <div className="mb-12 text-center">
             <Eyebrow className="text-show-gold [&]:justify-center">Foto's</Eyebrow>

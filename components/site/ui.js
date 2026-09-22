@@ -76,11 +76,11 @@ export function Sparkles({ count = 60, className = '' }) {
 export function ArchDivider({ color = 'fill-wonder-bg', position = 'top', flip = false }) {
   const posClass = position === 'top' ? 'top-0 -translate-y-[99%]' : 'bottom-0 translate-y-[99%] rotate-180'
   const d = flip
-    ? 'M0,100 L0,50 Q720,140 1440,50 L1440,100 Z'
-    : 'M0,100 L0,50 Q720,-40 1440,50 L1440,100 Z'
+    ? 'M0,100 L0,20 Q720,150 1440,20 L1440,100 Z'
+    : 'M0,100 L0,80 Q720,-50 1440,80 L1440,100 Z'
   return (
     <div className={`pointer-events-none absolute inset-x-0 leading-[0] ${posClass}`} aria-hidden="true">
-      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-[52px] w-full md:h-[92px]">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="block h-[64px] w-full md:h-[110px]">
         <path className={color} d={d} />
       </svg>
     </div>
