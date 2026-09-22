@@ -125,7 +125,7 @@ html.lenis, html.lenis body { height: auto; }
   top: -10vh;
   border-radius: 9999px;
   background: #fff;
-  filter: blur(0.4px);
+  will-change: transform, opacity;
   animation-name: snowfall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;

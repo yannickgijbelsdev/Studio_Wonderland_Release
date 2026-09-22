@@ -52,7 +52,7 @@ function TicketButton({ className = '', children }) {
 }
 
 function Snow() {
-  const flakes = useMemo(() => Array.from({ length: 40 }).map((_, i) => {
+  const flakes = useMemo(() => Array.from({ length: 22 }).map((_, i) => {
     const size = 2 + Math.random() * 5
     return { left: Math.random() * 100, size, delay: -Math.random() * 12, dur: 9 + Math.random() * 10, drift: (Math.random() * 60 - 30).toFixed(0) + 'px', opacity: 0.3 + Math.random() * 0.6, key: i }
   }), [])

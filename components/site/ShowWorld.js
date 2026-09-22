@@ -283,9 +283,8 @@ export default function ShowWorld() {
           </div>
           <PhotoGallery images={galleryPhotos.length ? galleryPhotos : PHOTOS} accent="text-white" ringClass="ring-show-gold/20" />
 
-          <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-show-gold/20 pt-10 md:flex-row">
+          <div className="mt-16 flex flex-col items-center justify-center gap-6 border-t border-show-gold/20 pt-10">
             <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-cream/80 hover:text-show-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
-            <Magnetic as="button" onClick={() => navigate('xmas')} className="rounded-full border border-show-gold/40 px-5 py-2.5 text-sm text-show-gold hover:bg-show-gold hover:text-show-bg">Naar het Huis van de Kerstman</Magnetic>
           </div>
         </div>
         <ArchDivider color="fill-show-reddeep" position="bottom" />

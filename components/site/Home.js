@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, Lock } from 'lucide-react'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
@@ -8,22 +8,36 @@ import { Magnetic, Eyebrow, Star, TitleReveal, Sparkles, ArchDivider } from './u
 import HeroVideos, { HeroScrollCue } from './HeroVideos'
 
 // Arch "doorway" portal tile — only a button remains.
-function PortalTile({ image, cta, onClick, alt }) {
+function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
+  const Comp = locked ? 'div' : 'button'
   return (
-    <button
-      onClick={onClick}
-      data-cursor="hover"
-      className="group relative h-[62vh] w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/30 md:h-[80vh]"
+    <Comp
+      onClick={locked ? undefined : onClick}
+      data-cursor={locked ? undefined : 'hover'}
+      className={`group relative block h-[62vh] w-full overflow-hidden rounded-[1.75rem] ring-1 ring-white/30 md:h-[80vh] ${locked ? 'cursor-default' : ''}`}
     >
-      <img src={image} alt={alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 transition-opacity duration-500 group-hover:opacity-70" />
-      <div className="relative flex h-full items-end justify-center p-8">
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-7 py-4 font-semibold text-wonder-ink shadow-xl transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-wonder-pinkdeep group-hover:text-white">
-          {cta}
-          <ArrowUpRight className="h-5 w-5 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
-        </span>
-      </div>
-    </button>
+      <img src={image} alt={alt} className={`absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out ${locked ? 'scale-105 brightness-[0.45] saturate-[0.85]' : 'group-hover:scale-105'}`} />
+      <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 transition-opacity duration-500 ${locked ? '' : 'group-hover:opacity-70'}`} />
+      {locked ? (
+        <>
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+            <div className="relative w-[150%] -rotate-[7deg] bg-gradient-to-r from-[#C9971F] via-[#FBEFC4] to-[#C9971F] py-4 text-center shadow-[0_14px_40px_-8px_rgba(0,0,0,0.6)] ring-1 ring-white/40">
+              <span className="flex items-center justify-center gap-2.5 px-4 text-sm font-bold uppercase tracking-[0.16em] text-[#5a3d05] md:text-base">
+                <Lock className="h-4 w-4 md:h-5 md:w-5" /> {ribbon}
+              </span>
+            </div>
+          </div>
+          <div className="pointer-events-none absolute bottom-7 left-1/2 -translate-x-1/2 rounded-full bg-black/45 px-5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">Binnenkort beschikbaar</div>
+        </>
+      ) : (
+        <div className="relative flex h-full items-end justify-center p-8">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-7 py-4 font-semibold text-wonder-ink shadow-xl transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-wonder-pinkdeep group-hover:text-white">
+            {cta}
+            <ArrowUpRight className="h-5 w-5 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </span>
+        </div>
+      )}
+    </Comp>
   )
 }
 
@@ -59,7 +73,7 @@ export default function Home() {
           </div>
           <div className="grid gap-8 md:grid-cols-2">
             <PortalTile image={IMG.showTile} alt="De Grote Sinterklaasshow" cta="Ontdek de show" onClick={() => navigate('show')} />
-            <PortalTile image={IMG.xmasLandscape} alt="Huis van de Kerstman 2026" cta="Ontdek het Huis van de Kerstman" onClick={() => navigate('xmas')} />
+            <PortalTile image={IMG.xmasLandscape} alt="Huis van de Kerstman 2026" locked ribbon="Je hebt nog geen toegang tot deze wereld" />
           </div>
         </div>
       </section>
@@ -101,10 +115,9 @@ export default function Home() {
           <Sparkles count={30} className="opacity-60" />
           <div className="relative">
             <h3 data-fade className="flex items-center justify-center gap-3 font-display text-3xl text-wonder-ink md:text-5xl"><Star className="h-[0.6em] w-[0.6em] text-wonder-pinkdeep" /> Klaar om binnen te stappen?</h3>
-            <p data-fade className="mx-auto mt-4 max-w-xl text-wonder-ink/70">Ontdek de twee belevenissen die je vandaag kan bezoeken.</p>
+            <p data-fade className="mx-auto mt-4 max-w-xl text-wonder-ink/70">Ontdek de beleving die je vandaag al kan bezoeken.</p>
             <div data-fade className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Magnetic as="button" onClick={() => navigate('show')} className="rounded-full bg-show-red px-7 py-3.5 font-medium text-white">Ontdek de show</Magnetic>
-              <Magnetic as="button" onClick={() => navigate('xmas')} className="rounded-full bg-xmas-green px-7 py-3.5 font-medium text-white">Ontdek het Huis van de Kerstman</Magnetic>
             </div>
           </div>
         </div>
