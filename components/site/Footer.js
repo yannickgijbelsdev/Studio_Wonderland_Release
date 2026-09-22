@@ -35,8 +35,8 @@ export default function Footer() {
           <div className="flex items-center gap-5">
             <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
             <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
-            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block rounded bg-show-cream px-2.5 py-1.5">
-              <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" />
+            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block">
+              <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
             </a>
           </div>
         </div>

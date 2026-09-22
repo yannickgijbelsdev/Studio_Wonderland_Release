@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { Toaster } from '@/components/ui/sonner'
 import { gsap, ScrollTrigger } from '@/lib/site/anim'
-import { SiteContext } from '@/components/site/ctx'
+import { SiteContext, pathForRoute, routeForPath } from '@/components/site/ctx'
 import Cursor from '@/components/site/Cursor'
 import Nav from '@/components/site/Nav'
 import Footer from '@/components/site/Footer'
@@ -46,10 +46,23 @@ function App() {
     return () => { gsap.ticker.remove(raf); lenis.destroy() }
   }, [])
 
+  // Sync route with browser URL (initial load + back/forward buttons)
+  useEffect(() => {
+    setRoute(routeForPath(window.location.pathname))
+    const onPop = () => setRoute(routeForPath(window.location.pathname))
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
   const navigate = useCallback((next, anchor) => {
     if (next === route) {
       if (anchor && lenisRef.current) lenisRef.current.scrollTo(`#${anchor}`, { offset: -80, duration: 1.2 })
       return
+    }
+    // Update the browser URL for real routes (articles keep the world's URL)
+    if (next !== 'article' && typeof window !== 'undefined') {
+      const path = pathForRoute(next)
+      if (window.location.pathname !== path) window.history.pushState({ route: next }, '', path)
     }
     setRoute(next)
     if (lenisRef.current) lenisRef.current.scrollTo(0, { immediate: true })

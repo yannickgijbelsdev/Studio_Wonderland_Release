@@ -37,6 +37,17 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      { source: "/degrotesinterklaasshow", destination: "/" },
+      { source: "/hethuisvandekerstman", destination: "/" },
+      { source: "/eerder-te-beleven", destination: "/" },
+      { source: "/over-ons", destination: "/" },
+      { source: "/contact", destination: "/" },
+      { source: "/privacybeleid", destination: "/" },
+      { source: "/cookiebeleid", destination: "/" },
+    ];
+  },
 };
 
 module.exports = nextConfig;
