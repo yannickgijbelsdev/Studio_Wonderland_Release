@@ -1,5 +1,7 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { gsap } from '@/lib/site/anim'
 
 export function Magnetic({ children, className = '', as = 'button', strength, onClick, ...rest }) {
@@ -90,5 +92,70 @@ export function PageHeader({ eyebrow, lines, starClass = 'text-[#F8E7B0] drop-sh
         <TitleReveal lines={lines} starClass={starClass} className="mt-5 text-5xl text-white md:text-7xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
       </div>
     </section>
+  )
+}
+
+
+// Masonry-style photo grid with an interactive lightbox. Reused across worlds.
+export function PhotoGallery({ images = [], accent = 'text-white', ringClass = 'ring-white/20' }) {
+  const [idx, setIdx] = useState(null)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+  const open = idx !== null
+  const close = useCallback(() => setIdx(null), [])
+  const prev = useCallback(() => setIdx((i) => (i === null ? i : (i - 1 + images.length) % images.length)), [images.length])
+  const next = useCallback(() => setIdx((i) => (i === null ? i : (i + 1) % images.length)), [images.length])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') close()
+      if (e.key === 'ArrowLeft') prev()
+      if (e.key === 'ArrowRight') next()
+    }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [open, close, prev, next])
+
+  return (
+    <>
+      <div className="columns-2 gap-3 md:columns-3 lg:columns-4 [&>*]:mb-3">
+        {images.map((src, i) => (
+          <button
+            key={i}
+            data-img
+            onClick={() => setIdx(i)}
+            data-cursor="hover"
+            className={`group relative block w-full overflow-hidden rounded-2xl ring-1 ${ringClass} focus:outline-none`}
+          >
+            <img src={src} alt="Foto" className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+            <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/15" />
+          </button>
+        ))}
+      </div>
+
+      {open && mounted && createPortal(
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 backdrop-blur-sm" onClick={close}>
+          <button onClick={close} className={`absolute right-5 top-5 z-10 rounded-full bg-white/10 p-2.5 ${accent} transition hover:bg-white/20`} aria-label="Sluiten">
+            <X className="h-6 w-6" />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); prev() }} className={`absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-2.5 md:left-6 ${accent} transition hover:bg-white/20`} aria-label="Vorige">
+            <ChevronLeft className="h-7 w-7" />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); next() }} className={`absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-2.5 md:right-6 ${accent} transition hover:bg-white/20`} aria-label="Volgende">
+            <ChevronRight className="h-7 w-7" />
+          </button>
+          <img
+            src={images[idx]}
+            alt="Foto groot"
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[86vh] max-w-[92vw] rounded-lg object-contain shadow-2xl"
+          />
+          <span className={`absolute bottom-5 left-1/2 -translate-x-1/2 text-sm ${accent} opacity-70`}>{idx + 1} / {images.length}</span>
+        </div>,
+        document.body
+      )}
+    </>
   )
 }

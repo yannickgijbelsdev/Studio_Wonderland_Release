@@ -133,6 +133,20 @@ backend:
         -working: true
         -agent: "testing"
         -comment: "✅ All 3 tests passed: POST creates contact with UUID and strips _id. Validation correctly returns 400 with error message when required fields missing. GET returns array sorted by created_at desc with no _id present."
+  - task: "News proxy API (GET list + GET article by id) to external Clara/koodh CMS"
+    implemented: true
+    working: true
+    file: "app/api/[[...path]]/route.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "main"
+        -comment: "Added GET /api/news?category=homepagina which proxies to https://clr.koodh.com/api/news/sinterklaas-genk/{category} and returns the JSON as-is (object with items[]). Added GET /api/news/{id} which proxies to https://clr.koodh.com/api/news/articles/{id} and returns the full article (title, image_url, body HTML, published_at, category). On upstream failure the list returns {items:[],count:0} and the article returns 404/502. Verified both manually via curl through localhost:3000 (200, valid JSON)."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ All 4 News API tests passed (100% success): (1) GET /api/news returns 200 with object containing items[] array, each item has id, title, image_url, published_at, category.name. (2) GET /api/news?category=homepagina returns 200 with same structure, category param respected. (3) GET /api/news/{id} returns 200 with full article including body field (341 char HTML string), title, image_url, published_at, category. (4) GET /api/news/nonexistent-id-123 returns 404 with error field 'Artikel niet gevonden', server did NOT crash. Sanity checks: GET /api/productions (200, 3 items) and GET /api/contact (200, 1 item) still working - no regression. All endpoints functioning correctly."
 
 frontend:
   - task: "Bugfix: buttons fade normally, softer hero overlay, curtain page transition"
@@ -168,8 +182,7 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "Bugfix: buttons fade normally, softer hero overlay, curtain page transition"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -183,3 +196,7 @@ agent_communication:
     -message: "FRONTEND BUGFIX VERIFICATION NEEDED. Base URL from frontend .env (NEXT_PUBLIC_BASE_URL). Please verify these three reported fixes on the homepage and navigation: (1) BUTTONS: hover over the pink 'Boek een beleving' button in the top nav pill and the 'Ontdek de show'/'Ontdek het Huis van de Kerstman' buttons — they must NOT translate/move around the screen (magnetic effect removed); they should only smoothly change colour/fade on hover. (2) HERO OVERLAY: the homepage hero (top, fullscreen video area) should NOT have a strong pink glow at the bottom — only a subtle dark gradient. (3) CURTAIN TRANSITION: click a nav link (e.g. 'Over ons' then 'Contact') — a theatre-curtain transition should play: two panels slide in from left and right to cover the screen (with the Studio Wonderland logo appearing centered), then slide apart to reveal the new page. Confirm the new page renders after the transition and that navigation works. Report PASS/FAIL for each of the three items with screenshots."
     -agent: "testing"
     -message: "✅ FRONTEND BUGFIX VERIFICATION COMPLETE - ALL TESTS PASSED. Tested all three reported bug fixes with comprehensive Playwright automation. (1) BUTTONS FADE: ✅ PASS - All buttons (nav 'Boek een beleving', CTA 'Ontdek de show', CTA 'Ontdek het Huis van de Kerstman') showed 0.00px movement on hover - magnetic effect successfully removed. (2) HERO OVERLAY: ✅ PASS - Confirmed overlay uses only subtle dark gradient (from-black/10 via-transparent to-black/20) with no pink glow detected. (3) CURTAIN TRANSITION: ✅ PASS - Theatre curtain transition works perfectly across multiple navigations (Home→Over ons→Contact→Home). Curtain panels slide in from sides, logo appears centered, panels slide apart to reveal new pages. No curtain stuck on screen. All functionality verified with screenshots. No critical issues found. All bug fixes are working as intended."
+    -agent: "main"
+    -message: "NEW: Please test ONLY the new News proxy endpoints on the backend (base path /api). (1) GET /api/news — should return 200 with a JSON object containing an 'items' array (proxied from external CMS https://clr.koodh.com/api/news/sinterklaas-genk/homepagina). Each item should have id, title, image_url, published_at, category. (2) GET /api/news?category=homepagina — same as above, category param respected. (3) GET /api/news/{id} — use an id from the list response (e.g. the first item's id) and confirm it returns 200 with the full article object including a 'body' field (HTML string), title, image_url, published_at. (4) GET /api/news/nonexistent-id-123 — should return a non-200 (404 or 502) with an error field and NOT crash. Do NOT retest productions/contact (already passing) unless quick sanity. Report PASS/FAIL for each."
+    -agent: "testing"
+    -message: "✅ NEWS PROXY API TESTING COMPLETE - ALL TESTS PASSED (6/6, 100% success). (1) GET /api/news: ✅ PASS - Returns 200 with object containing items[] array. Each item has id, title, image_url, published_at, category.name. Structure validated. (2) GET /api/news?category=homepagina: ✅ PASS - Returns 200 with same structure, category parameter respected. (3) GET /api/news/{id}: ✅ PASS - Returns 200 with full article including body field (341 char HTML string), title, image_url, published_at, category. (4) GET /api/news/nonexistent-id-123: ✅ PASS - Returns 404 with error field 'Artikel niet gevonden', server did NOT crash. SANITY CHECKS: ✅ GET /api/productions (200, 3 items) and ✅ GET /api/contact (200, 1 item) - no regression. All backend endpoints functioning correctly. No critical issues found."

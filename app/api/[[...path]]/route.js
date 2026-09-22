@@ -88,6 +88,33 @@ async function handleRoute(request, { params }) {
       return handleCORS(NextResponse.json({ message: 'Studio Wonderland API' }))
     }
 
+    // ---- NEWS (proxy naar Clara/koodh CMS) ----
+    const NEWS_BASE = 'https://clr.koodh.com/api/news'
+    if (route === '/news' && method === 'GET') {
+      const url = new URL(request.url)
+      const category = url.searchParams.get('category') || 'homepagina'
+      try {
+        const res = await fetch(`${NEWS_BASE}/sinterklaas-genk/${encodeURIComponent(category)}`, { headers: { Accept: 'application/json' }, cache: 'no-store' })
+        if (!res.ok) return handleCORS(NextResponse.json({ items: [], count: 0 }))
+        const data = await res.json()
+        return handleCORS(NextResponse.json(data))
+      } catch (e) {
+        return handleCORS(NextResponse.json({ items: [], count: 0 }))
+      }
+    }
+
+    if (route.startsWith('/news/') && method === 'GET') {
+      const id = path[1]
+      try {
+        const res = await fetch(`${NEWS_BASE}/articles/${encodeURIComponent(id)}`, { headers: { Accept: 'application/json' }, cache: 'no-store' })
+        if (!res.ok) return handleCORS(NextResponse.json({ error: 'Artikel niet gevonden' }, { status: 404 }))
+        const data = await res.json()
+        return handleCORS(NextResponse.json(data))
+      } catch (e) {
+        return handleCORS(NextResponse.json({ error: 'Kon artikel niet laden' }, { status: 502 }))
+      }
+    }
+
     // ---- PRODUCTIONS ----
     if (route === '/productions' && method === 'GET') {
       await seedProductions(db)

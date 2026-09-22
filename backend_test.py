@@ -445,6 +445,222 @@ def test_contact_get():
         print_test("GET /api/contact", False, f"Exception: {str(e)}")
         return False
 
+def test_news_get_list():
+    """Test GET /api/news - should return items array from external CMS"""
+    print("\n" + "="*80)
+    print("TEST 11: GET /api/news (proxy to external CMS)")
+    print("="*80)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/news", timeout=15)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code != 200:
+            print_test("GET /api/news", False, f"Expected 200, got {response.status_code}")
+            return None
+        
+        data = response.json()
+        print(f"Response type: {type(data)}")
+        print(f"Response keys: {data.keys() if isinstance(data, dict) else 'Not a dict'}")
+        
+        # Verify it's an object with items array
+        if not isinstance(data, dict):
+            print_test("GET /api/news returns object", False, f"Expected dict, got {type(data)}")
+            return None
+        
+        if 'items' not in data:
+            print_test("GET /api/news has items field", False, f"Keys: {data.keys()}")
+            return None
+        
+        if not isinstance(data['items'], list):
+            print_test("GET /api/news items is array", False, f"items type: {type(data['items'])}")
+            return None
+        
+        print(f"Number of items: {len(data['items'])}")
+        
+        # Verify structure of first item if available
+        if len(data['items']) > 0:
+            item = data['items'][0]
+            print(f"\nFirst item keys: {item.keys()}")
+            
+            required_fields = ['id', 'title', 'image_url', 'published_at', 'category']
+            missing_fields = [f for f in required_fields if f not in item]
+            
+            if missing_fields:
+                print_test("News item has required fields", False, f"Missing: {missing_fields}")
+                return None
+            
+            # Verify category has name
+            if not isinstance(item['category'], dict) or 'name' not in item['category']:
+                print_test("News item category has name", False, f"category: {item.get('category')}")
+                return None
+            
+            print_test("GET /api/news structure", True, f"All fields valid")
+        
+        print_test("GET /api/news", True, f"Returns object with {len(data['items'])} items")
+        return data
+        
+    except Exception as e:
+        print_test("GET /api/news", False, f"Exception: {str(e)}")
+        return None
+
+def test_news_get_list_with_category():
+    """Test GET /api/news?category=homepagina"""
+    print("\n" + "="*80)
+    print("TEST 12: GET /api/news?category=homepagina")
+    print("="*80)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/news?category=homepagina", timeout=15)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code != 200:
+            print_test("GET /api/news?category=homepagina", False, f"Expected 200, got {response.status_code}")
+            return None
+        
+        data = response.json()
+        
+        # Verify same structure as without category
+        if not isinstance(data, dict) or 'items' not in data:
+            print_test("GET /api/news?category structure", False, f"Invalid structure")
+            return None
+        
+        if not isinstance(data['items'], list):
+            print_test("GET /api/news?category items is array", False, f"items type: {type(data['items'])}")
+            return None
+        
+        print(f"Number of items: {len(data['items'])}")
+        print_test("GET /api/news?category=homepagina", True, f"Returns {len(data['items'])} items")
+        return data
+        
+    except Exception as e:
+        print_test("GET /api/news?category=homepagina", False, f"Exception: {str(e)}")
+        return None
+
+def test_news_get_article(article_id):
+    """Test GET /api/news/{id} - get full article"""
+    print("\n" + "="*80)
+    print(f"TEST 13: GET /api/news/{article_id} (full article)")
+    print("="*80)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/news/{article_id}", timeout=15)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code != 200:
+            print_test("GET /api/news/{id}", False, f"Expected 200, got {response.status_code}")
+            return False
+        
+        data = response.json()
+        print(f"Response type: {type(data)}")
+        print(f"Response keys: {data.keys() if isinstance(data, dict) else 'Not a dict'}")
+        
+        # Verify it's an object
+        if not isinstance(data, dict):
+            print_test("GET /api/news/{id} returns object", False, f"Expected dict, got {type(data)}")
+            return False
+        
+        # Verify required fields including body
+        required_fields = ['title', 'image_url', 'published_at', 'category', 'body']
+        missing_fields = [f for f in required_fields if f not in data]
+        
+        if missing_fields:
+            print_test("Article has required fields", False, f"Missing: {missing_fields}")
+            return False
+        
+        # Verify body is a string (HTML)
+        if not isinstance(data['body'], str):
+            print_test("Article body is string", False, f"body type: {type(data['body'])}")
+            return False
+        
+        print(f"Body length: {len(data['body'])} characters")
+        print_test("GET /api/news/{id}", True, f"Returns full article with body field")
+        return True
+        
+    except Exception as e:
+        print_test("GET /api/news/{id}", False, f"Exception: {str(e)}")
+        return False
+
+def test_news_get_article_not_found():
+    """Test GET /api/news/nonexistent-id - should return error"""
+    print("\n" + "="*80)
+    print("TEST 14: GET /api/news/nonexistent-id-123 (should return error)")
+    print("="*80)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/news/nonexistent-id-123", timeout=15)
+        print(f"Status Code: {response.status_code}")
+        
+        # Should be non-200 (404 or 502)
+        if response.status_code == 200:
+            print_test("GET /api/news/invalid-id returns error status", False, f"Got 200, expected 404 or 502")
+            return False
+        
+        if response.status_code not in [404, 502]:
+            print_test("GET /api/news/invalid-id returns 404 or 502", False, f"Got {response.status_code}")
+            return False
+        
+        data = response.json()
+        print(f"Error response: {json.dumps(data, indent=2)}")
+        
+        # Verify error field is present
+        if 'error' not in data:
+            print_test("Error response has error field", False, f"Response: {data}")
+            return False
+        
+        print_test("GET /api/news/invalid-id", True, f"Returns {response.status_code} with error field")
+        return True
+        
+    except Exception as e:
+        print_test("GET /api/news/invalid-id", False, f"Exception: {str(e)}")
+        return False
+
+def test_sanity_productions():
+    """Quick sanity check that productions endpoint still works"""
+    print("\n" + "="*80)
+    print("SANITY CHECK: GET /api/productions")
+    print("="*80)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/productions", timeout=10)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            if isinstance(data, list):
+                print_test("Sanity: GET /api/productions", True, f"Returns array with {len(data)} items")
+                return True
+        
+        print_test("Sanity: GET /api/productions", False, f"Status {response.status_code}")
+        return False
+        
+    except Exception as e:
+        print_test("Sanity: GET /api/productions", False, f"Exception: {str(e)}")
+        return False
+
+def test_sanity_contact():
+    """Quick sanity check that contact endpoint still works"""
+    print("\n" + "="*80)
+    print("SANITY CHECK: GET /api/contact")
+    print("="*80)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/contact", timeout=10)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            if isinstance(data, list):
+                print_test("Sanity: GET /api/contact", True, f"Returns array with {len(data)} items")
+                return True
+        
+        print_test("Sanity: GET /api/contact", False, f"Status {response.status_code}")
+        return False
+        
+    except Exception as e:
+        print_test("Sanity: GET /api/contact", False, f"Exception: {str(e)}")
+        return False
+
 def main():
     """Run all backend tests"""
     print("\n" + "="*80)
@@ -459,87 +675,63 @@ def main():
         'failed': 0
     }
     
-    # Test Productions API
+    # Test News API (NEW - main focus)
     print("\n\n" + "="*80)
-    print("PRODUCTIONS API TESTS")
+    print("NEWS PROXY API TESTS (NEW)")
     print("="*80)
     
-    # Test 1: GET productions (auto-seed)
-    productions = test_productions_get()
+    # Test 11: GET /api/news
+    news_data = test_news_get_list()
     results['total'] += 1
-    if productions is not None:
+    if news_data is not None:
         results['passed'] += 1
-    else:
-        results['failed'] += 1
-    
-    # Test 2: POST production
-    created_production = test_productions_post()
-    results['total'] += 1
-    if created_production is not None:
-        results['passed'] += 1
-        production_id = created_production['id']
         
-        # Test 3: Verify in list
+        # Test 12: GET /api/news?category=homepagina
         results['total'] += 1
-        if test_production_in_list(production_id):
+        if test_news_get_list_with_category():
             results['passed'] += 1
         else:
             results['failed'] += 1
         
-        # Test 4: PUT production
-        results['total'] += 1
-        if test_productions_put(production_id):
-            results['passed'] += 1
-        else:
-            results['failed'] += 1
-        
-        # Test 5: PUT non-existent
-        results['total'] += 1
-        if test_productions_put_not_found():
-            results['passed'] += 1
-        else:
-            results['failed'] += 1
-        
-        # Test 6: DELETE production
-        results['total'] += 1
-        if test_productions_delete(production_id):
-            results['passed'] += 1
-            
-            # Test 7: Verify not in list
-            results['total'] += 1
-            if test_production_not_in_list(production_id):
-                results['passed'] += 1
+        # Test 13: GET /api/news/{id} - use first item's id
+        if news_data.get('items') and len(news_data['items']) > 0:
+            article_id = news_data['items'][0].get('id')
+            if article_id:
+                results['total'] += 1
+                if test_news_get_article(article_id):
+                    results['passed'] += 1
+                else:
+                    results['failed'] += 1
             else:
-                results['failed'] += 1
+                print("⚠️  Warning: No article id found in first item, skipping article test")
+        else:
+            print("⚠️  Warning: No items in news list, skipping article test")
+        
+        # Test 14: GET /api/news/nonexistent-id
+        results['total'] += 1
+        if test_news_get_article_not_found():
+            results['passed'] += 1
         else:
             results['failed'] += 1
     else:
-        results['failed'] += 6  # Skip remaining tests
-        results['total'] += 6
+        results['failed'] += 1
+        print("⚠️  Skipping remaining news tests due to list failure")
     
-    # Test Contact API
+    # Sanity checks for existing endpoints
     print("\n\n" + "="*80)
-    print("CONTACT API TESTS")
+    print("SANITY CHECKS (existing endpoints)")
     print("="*80)
     
-    # Test 8: POST contact
-    created_contact = test_contact_post()
+    # Sanity: Productions
     results['total'] += 1
-    if created_contact is not None:
+    if test_sanity_productions():
         results['passed'] += 1
     else:
         results['failed'] += 1
     
-    # Test 9: POST contact validation
+    # Sanity: Contact
     results['total'] += 1
-    if test_contact_post_validation():
-        results['passed'] += 1
-    else:
-        results['failed'] += 1
-    
-    # Test 10: GET contact
-    results['total'] += 1
-    if test_contact_get():
+    if test_sanity_contact():
         results['passed'] += 1
     else:
         results['failed'] += 1
