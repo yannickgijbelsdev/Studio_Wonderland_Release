@@ -4,7 +4,6 @@ import { gsap } from '@/lib/site/anim'
 
 export default function Cursor() {
   const arrow = useRef(null)
-  const ring = useRef(null)
   const layer = useRef(null)
 
   useEffect(() => {
@@ -12,18 +11,13 @@ export default function Cursor() {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
 
     const arrowEl = arrow.current
-    const ringEl = ring.current
     const layerEl = layer.current
-    gsap.set([arrowEl, ringEl], { opacity: 0 })
-    gsap.set(ringEl, { xPercent: -50, yPercent: -50 })
+    gsap.set(arrowEl, { opacity: 0 })
 
-    // arrow follows fast, ring trails softly for a premium feel
     const xArrow = gsap.quickTo(arrowEl, 'x', { duration: 0.07, ease: 'power3' })
     const yArrow = gsap.quickTo(arrowEl, 'y', { duration: 0.07, ease: 'power3' })
-    const xRing = gsap.quickTo(ringEl, 'x', { duration: 0.38, ease: 'power3' })
-    const yRing = gsap.quickTo(ringEl, 'y', { duration: 0.38, ease: 'power3' })
 
-    const makeStar = (x, y, size) => {
+    const makeStar = (size) => {
       const s = document.createElement('span')
       s.style.cssText = `position:fixed;left:0;top:0;width:${size}px;height:${size}px;pointer-events:none;transform:translate(-50%,-50%);` +
         `background:#F8E7B0;` +
@@ -36,7 +30,7 @@ export default function Cursor() {
     // gentle sparkle trail while moving
     const spawnSparkle = (x, y) => {
       if (!layerEl) return
-      const s = makeStar(x, y, 4 + Math.random() * 7)
+      const s = makeStar(4 + Math.random() * 7)
       gsap.set(s, { x: x + (Math.random() * 16 - 8), y: y + (Math.random() * 16 - 8), scale: 1, opacity: 1, rotation: Math.random() * 90 })
       gsap.to(s, {
         x: `+=${Math.random() * 40 - 20}`,
@@ -55,7 +49,7 @@ export default function Cursor() {
       if (!layerEl) return
       const n = 12
       for (let i = 0; i < n; i++) {
-        const s = makeStar(x, y, 5 + Math.random() * 8)
+        const s = makeStar(5 + Math.random() * 8)
         const ang = (Math.PI * 2 * i) / n + Math.random() * 0.4
         const dist = 34 + Math.random() * 42
         gsap.set(s, { x, y, scale: 1, opacity: 1, rotation: Math.random() * 120 })
@@ -76,8 +70,8 @@ export default function Cursor() {
     let last = 0
     let hovering = false
     const move = (e) => {
-      if (!shown) { gsap.to([arrowEl, ringEl], { opacity: 1, duration: 0.3 }); shown = true }
-      xArrow(e.clientX); yArrow(e.clientY); xRing(e.clientX); yRing(e.clientY)
+      if (!shown) { gsap.to(arrowEl, { opacity: 1, duration: 0.3 }); shown = true }
+      xArrow(e.clientX); yArrow(e.clientY)
       const now = performance.now()
       const gap = hovering ? 40 : 26
       if (now - last > gap) { last = now; spawnSparkle(e.clientX, e.clientY) }
@@ -86,27 +80,22 @@ export default function Cursor() {
     const over = (e) => {
       if (e.target.closest('[data-cursor]') || e.target.closest('a,button,[role="button"]')) {
         hovering = true
-        // ring expands into a soft highlight, arrow tucks away
-        gsap.to(ringEl, { scale: 2.1, opacity: 1, borderColor: 'rgba(248,231,176,0.95)', backgroundColor: 'rgba(248,231,176,0.12)', duration: 0.35, ease: 'power3' })
-        gsap.to(arrowEl, { scale: 0.55, rotation: -8, opacity: 0.85, duration: 0.35, ease: 'power3' })
+        gsap.to(arrowEl, { scale: 1.45, rotation: -12, duration: 0.3, ease: 'power3' })
       }
     }
     const out = (e) => {
       if (e.target.closest('[data-cursor]') || e.target.closest('a,button,[role="button"]')) {
         hovering = false
-        gsap.to(ringEl, { scale: 1, opacity: 1, borderColor: 'rgba(233,196,106,0.7)', backgroundColor: 'rgba(248,231,176,0)', duration: 0.35, ease: 'power3' })
-        gsap.to(arrowEl, { scale: 1, rotation: 0, opacity: 1, duration: 0.35, ease: 'power3' })
+        gsap.to(arrowEl, { scale: 1, rotation: 0, duration: 0.3, ease: 'power3' })
       }
     }
 
     const down = (e) => {
-      gsap.to(ringEl, { scale: hovering ? 1.5 : 0.7, duration: 0.12, ease: 'power2.out' })
-      gsap.to(arrowEl, { scale: hovering ? 0.45 : 0.8, duration: 0.12, ease: 'power2.out' })
+      gsap.to(arrowEl, { scale: hovering ? 1.1 : 0.75, duration: 0.12, ease: 'power2.out' })
       burst(e.clientX, e.clientY)
     }
     const up = () => {
-      gsap.to(ringEl, { scale: hovering ? 2.1 : 1, duration: 0.35, ease: 'elastic.out(1,0.5)' })
-      gsap.to(arrowEl, { scale: hovering ? 0.55 : 1, duration: 0.35, ease: 'elastic.out(1,0.5)' })
+      gsap.to(arrowEl, { scale: hovering ? 1.45 : 1, duration: 0.4, ease: 'elastic.out(1,0.5)' })
     }
 
     window.addEventListener('mousemove', move)
@@ -126,13 +115,6 @@ export default function Cursor() {
   return (
     <>
       <div ref={layer} className="pointer-events-none fixed inset-0 z-[9998]" aria-hidden="true" />
-      {/* soft trailing halo / hover highlight */}
-      <div
-        ref={ring}
-        className="pointer-events-none fixed left-0 top-0 z-[9998] h-8 w-8 rounded-full border"
-        style={{ borderColor: 'rgba(233,196,106,0.7)', boxShadow: '0 0 14px rgba(233,196,106,0.45)' }}
-        aria-hidden="true"
-      />
       {/* primary gold arrow cursor */}
       <div ref={arrow} className="pointer-events-none fixed left-0 top-0 z-[9999]" style={{ transformOrigin: '2px 2px' }} aria-hidden="true">
         <svg width="27" height="27" viewBox="0 0 24 24" style={{ display: 'block', filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.5)) drop-shadow(0 0 9px rgba(248,231,176,0.7))' }}>
