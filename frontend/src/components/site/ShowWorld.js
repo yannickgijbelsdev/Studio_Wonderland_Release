@@ -201,7 +201,7 @@ export default function ShowWorld() {
       {/* HET VERHAAL — tekst met Sinterklaas ernaast (gestapeld op mobiel) */}
       <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-reddeep" />
-        <div className="mx-auto flex max-w-[1360px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-12">
+        <div className="mx-auto flex max-w-[1360px] flex-col items-center gap-8 lg:flex-row-reverse lg:items-end lg:gap-12">
           <div className="w-full max-w-[720px] pb-12 text-center lg:max-w-none lg:flex-1 lg:pb-28 lg:text-left">
             <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">Het verhaal</Eyebrow>
             <TitleReveal lines={["Eén grote talentenshow"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
