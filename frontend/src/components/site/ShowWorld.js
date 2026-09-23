@@ -198,21 +198,27 @@ export default function ShowWorld() {
       {/* NIEUWS — bovenaan, met boog omhoog in de hero (zoals de hoofdsite) */}
       <ShowNews />
 
-      {/* HET VERHAAL — voluit, zonder foto */}
-      <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
+      {/* HET VERHAAL — tekst met Sinterklaas ernaast (gestapeld op mobiel) */}
+      <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-reddeep" />
-        <div className="mx-auto max-w-[820px] text-center">
-          <Eyebrow className="text-show-gold [&]:justify-center">Het verhaal</Eyebrow>
-          <TitleReveal lines={["Eén grote talentenshow"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
-          <div data-fade className="mx-auto mt-8 max-w-[720px] space-y-5 text-left text-lg leading-relaxed text-show-cream/85 md:text-center">
-            <p>In <em>De Grote Sinterklaasshow</em> nemen verschillende kandidaten het tegen elkaar op met hun meest originele Sinterklaasact. Muziek, humor, dans en magie wisselen elkaar af, terwijl het publiek via de applausmeter mee bepaalt wie doorgaat.</p>
-            <p>Rob Vanoudenhoven volgt als backstagereporter alles van dichtbij en neemt het publiek mee achter de schermen van deze bijzondere tv-show.</p>
-            <p>Maar daar loopt niet alles volgens plan. Barones Boterkoek en haar dochters willen koste wat het kost winnen en spelen daarbij niet bepaald eerlijk. Acts lopen mis, kandidaten verdwijnen en zelfs de applausmeter lijkt gemanipuleerd.</p>
-            <p>De Pieten gaan op onderzoek uit en tijdens de grote finale komt de waarheid aan het licht. Sinterklaas grijpt in, waarna de show eindigt zoals het hoort: met muziek, feest en het hele publiek op de dansvloer.</p>
+        <div className="mx-auto flex max-w-[1150px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-16">
+          <div className="w-full max-w-[720px] pb-12 text-center lg:max-w-none lg:flex-1 lg:pb-28 lg:text-left">
+            <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">Het verhaal</Eyebrow>
+            <TitleReveal lines={["Eén grote talentenshow"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
+            <div data-fade className="mx-auto mt-8 max-w-[720px] space-y-5 text-left text-lg leading-relaxed text-show-cream/85 md:text-center lg:mx-0 lg:text-left">
+              <p>In <em>De Grote Sinterklaasshow</em> nemen verschillende kandidaten het tegen elkaar op met hun meest originele Sinterklaasact. Muziek, humor, dans en magie wisselen elkaar af, terwijl het publiek via de applausmeter mee bepaalt wie doorgaat.</p>
+              <p>Rob Vanoudenhoven volgt als backstagereporter alles van dichtbij en neemt het publiek mee achter de schermen van deze bijzondere tv-show.</p>
+              <p>Maar daar loopt niet alles volgens plan. Barones Boterkoek en haar dochters willen koste wat het kost winnen en spelen daarbij niet bepaald eerlijk. Acts lopen mis, kandidaten verdwijnen en zelfs de applausmeter lijkt gemanipuleerd.</p>
+              <p>De Pieten gaan op onderzoek uit en tijdens de grote finale komt de waarheid aan het licht. Sinterklaas grijpt in, waarna de show eindigt zoals het hoort: met muziek, feest en het hele publiek op de dansvloer.</p>
+            </div>
+            <div className="mt-9 flex flex-col items-center gap-4 lg:items-start">
+              <span className="inline-flex items-center gap-2 rounded-full bg-black/25 px-4 py-2 text-sm text-show-cream/80"><MapPin className="h-4 w-4 text-show-gold" /> Schouwburg — Stadhuis Genk</span>
+              <TicketButton className="rounded-full bg-show-gold px-8 py-4 font-semibold text-show-bg hover:scale-[1.03] hover:bg-white">Bestel je tickets</TicketButton>
+            </div>
           </div>
-          <div className="mt-9 flex flex-col items-center gap-4">
-            <span className="inline-flex items-center gap-2 rounded-full bg-black/25 px-4 py-2 text-sm text-show-cream/80"><MapPin className="h-4 w-4 text-show-gold" /> Schouwburg — Stadhuis Genk</span>
-            <TicketButton className="rounded-full bg-show-gold px-8 py-4 font-semibold text-show-bg hover:scale-[1.03] hover:bg-white">Bestel je tickets</TicketButton>
+
+          <div className="w-full max-w-[380px] sm:max-w-[440px] lg:w-[460px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
+            <img src="/sinterklaas.png" alt="Sinterklaas — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
           </div>
         </div>
       </section>
@@ -283,21 +289,27 @@ export default function ShowWorld() {
       </section>
 
       {/* FAQ — verticaal gecentreerd */}
-      <section id="faq" className="relative z-10 flex min-h-[85vh] flex-col justify-center bg-show-bg px-6 py-24 md:px-10 md:py-28">
+      <section id="faq" className="relative z-10 bg-show-bg px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-bg" flip />
-        <div className="mx-auto w-full max-w-[820px]">
-          <div className="mb-12 text-center">
-            <Eyebrow className="text-show-gold [&]:justify-center">Praktisch</Eyebrow>
-            <TitleReveal lines={["Veelgestelde vragen"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+        <div className="mx-auto flex w-full max-w-[1150px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-16">
+          <div className="w-full max-w-[820px] pb-12 lg:flex-1 lg:pb-28">
+            <div className="mb-12 text-center lg:text-left">
+              <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">Praktisch</Eyebrow>
+              <TitleReveal lines={["Veelgestelde vragen"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-3">
+              {FAQ.map((f, i) => (
+                <AccordionItem key={i} value={`item-${i}`} className="overflow-hidden rounded-2xl border border-show-gold/15 bg-black/20 px-5 transition-colors data-[state=open]:border-show-gold/45 data-[state=open]:bg-black/30">
+                  <AccordionTrigger className="py-5 text-left text-base font-medium text-show-cream hover:text-show-gold hover:no-underline md:text-lg">{f.q}</AccordionTrigger>
+                  <AccordionContent className="pb-5 text-show-cream/75">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
-          <Accordion type="single" collapsible className="w-full space-y-3">
-            {FAQ.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="overflow-hidden rounded-2xl border border-show-gold/15 bg-black/20 px-5 transition-colors data-[state=open]:border-show-gold/45 data-[state=open]:bg-black/30">
-                <AccordionTrigger className="py-5 text-left text-base font-medium text-show-cream hover:text-show-gold hover:no-underline md:text-lg">{f.q}</AccordionTrigger>
-                <AccordionContent className="pb-5 text-show-cream/75">{f.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+
+          <div className="w-full max-w-[380px] sm:max-w-[440px] lg:w-[460px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
+            <img src="/presentator.png" alt="Presentator — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
+          </div>
         </div>
       </section>
 
