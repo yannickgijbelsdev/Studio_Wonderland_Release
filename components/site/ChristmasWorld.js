@@ -235,7 +235,7 @@ export default function ChristmasWorld() {
             </div>
           </div>
           <div className="mt-10 text-center">
-            <TicketButton className="rounded-full bg-xmas-red px-8 py-4 font-semibold text-white hover:scale-[1.03] hover:bg-white hover:text-xmas-green">Bestel je Golden Ticket</TicketButton>
+            <TicketButton className="rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] hover:bg-white">Bestel je Golden Ticket</TicketButton>
           </div>
         </div>
       </section>
