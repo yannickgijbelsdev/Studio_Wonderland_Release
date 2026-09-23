@@ -94,15 +94,7 @@ export default function Footer() {
           <a href="mailto:info@studiowonderland.eu" data-cursor="hover" className="mt-6 inline-block font-medium text-wonder-gold underline-offset-4 hover:underline">info@studiowonderland.eu</a>
         </div>
         <div>
-          <h4 className="text-xs uppercase tracking-[0.3em] text-wonder-muted">Belevenissen</h4>
-          <ul className="mt-4 space-y-3">
-            <li><button onClick={() => navigate('show')} data-cursor="hover" className="hover:text-wonder-gold">De Grote Sinterklaasshow</button></li>
-            <li><button onClick={() => navigate('xmas')} data-cursor="hover" className="hover:text-wonder-gold">Huis van de Kerstman 2026</button></li>
-            <li><button onClick={() => navigate('productions')} data-cursor="hover" className="hover:text-wonder-gold">Eerder te beleven</button></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-xs uppercase tracking-[0.3em] text-wonder-muted">Studio</h4>
+          <h4 className="text-xs uppercase tracking-[0.3em] text-wonder-muted">Studio Wonderland</h4>
           <ul className="mt-4 space-y-3">
             <li><button onClick={() => navigate('about')} data-cursor="hover" className="hover:text-wonder-gold">Over ons</button></li>
             <li><button onClick={() => navigate('contact')} data-cursor="hover" className="hover:text-wonder-gold">Contact</button></li>
