@@ -38,7 +38,7 @@ const WORLDS = {
 const SECTION_LINKS = {
   show: [
     { label: 'Verhaal', a: 'verhaal' },
-    { label: 'FAQ', a: 'faq' },
+    { label: 'Veelgestelde Vragen', a: 'faq' },
     { label: "Foto's", a: 'fotos' },
   ],
   xmas: [
