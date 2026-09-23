@@ -247,14 +247,12 @@ export default function ShowWorld() {
             <TitleReveal lines={["De finalisten van de show"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           {stars.length > 0 ? (
-            <div className="space-y-8">
+            <div className="mx-auto max-w-3xl space-y-10">
               {stars.map((s, idx) => (
-                <div key={idx} data-fade className="overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 transition-all duration-300 hover:border-show-gold/40 md:grid md:grid-cols-[minmax(0,340px)_1fr]">
+                <div key={idx} data-fade className="overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 transition-all duration-300 hover:border-show-gold/40">
                   {s.image && (
-                    <figure className="m-0 self-start">
-                      <div className="w-full overflow-hidden">
-                        <img src={s.image} alt={s.title} className="h-auto w-full object-contain" />
-                      </div>
+                    <figure className="m-0 flex justify-center bg-black/20">
+                      <img src={s.image} alt={s.title} className="max-h-[560px] w-auto max-w-full object-contain" />
                     </figure>
                   )}
                   <div className="p-7 md:p-9">
