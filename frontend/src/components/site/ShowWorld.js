@@ -32,12 +32,17 @@ const CHARACTERS = [
 ]
 
 const FAQ = [
-  { q: 'Hoe lang duurt de voorstelling?', a: 'De show duurt ongeveer 75 minuten, zonder pauze.' },
-  { q: 'Vanaf welke leeftijd is de voorstelling aan te raden?', a: 'De voorstelling is aanbevolen vanaf 3 jaar.' },
-  { q: 'Zijn de plaatsen genummerd?', a: 'Ja, alle plaatsen zijn genummerd. Je kiest je zone bij het boeken.' },
-  { q: 'Is de zaal toegankelijk voor rolstoelgebruikers?', a: 'Zeker. Laat het ons weten bij je reservatie zodat we een plek voorzien.' },
-  { q: 'Kan ik mijn tickets omruilen of laten terugbetalen?', a: 'Tickets kunnen tot enkele dagen vooraf omgeruild worden naar een ander tijdslot.' },
-  { q: 'Delen Sint en de pieten nadien nog cadeautjes uit?', a: 'Na de show is er tijd voor een groet en een klein presentje voor de kinderen.' },
+  { q: 'Hoe lang duurt de voorstelling?', a: 'De voorstelling duurt ongeveer een uur. Het is een afwisseling tussen live theater, filmbeelden, liedjes en animatie. Na de voorstelling kan je nog een drankje drinken in de Foyer en delen de Pieten snoepzakjes uit aan de kinderen.' },
+  { q: 'Is de voorstelling bereikbaar voor mensen met een rolstoel?', a: 'Ja, het stadhuis is toegankelijk voor iedereen. Bent u slecht te been of gebruikt u een rolstoel: kom dan langs het hellend vlak aan de hoofdingang. Op het Balieplein vind je een lift voor personen met een beperking die toegang geeft tot de schouwburg. Druk op 1 B. Kom op tijd en verwittig het personeel aan de zaal dan helpen we u ook in de zaal om een plekje te verzekeren.' },
+  { q: 'Zijn de plaatsen genummerd?', a: 'Neen, we werken niet met genummerde plaatsen. Een half uur voor iedere voorstelling gaan de deuren van de Foyer open en kan je al een drankje drinken. Tien minuten voor iedere voorstelling gaan de deuren van de zaal open.' },
+  { q: 'Delen de Sint en de Pieten na de voorstelling snoep uit?', a: 'De Sint gaat na de voorstelling even rusten. De pieten delen snoep uit aan de kinderen na de voorstelling. Ieder kind met een ticket heeft recht op 1 snoepzakje. Deze snoepzakjes worden u aangeboden door het centrummanagement van Stad Genk.' },
+  { q: 'Vanaf welke leeftijd moet een kind betalen?', a: 'Kinderen onder de 2 jaar hoeven geen ticket te betalen en kunnen mee op de schoot. Ze hebben geen recht op een stoel. Indien dit toch wenselijk is, koopt u best toch een ticket. Kinderen ouder dan 2 jaar moeten dus een ticket kopen.' },
+  { q: 'Vanaf welke leeftijd is de voorstelling aangeraden?', a: 'De voorstelling is een mix tussen film, live theater, animatie en muziek. Op die manier is het ook voor kleine kinderen een feest. We adviseren de leeftijd vanaf 3 jaar.' },
+  { q: 'Hoe komt het dat jullie de kost zo laag kunnen houden?', a: 'We weten dat andere Sinterklaasvoorstellingen vaak het dubbele of meer kosten. VZW Studio Wonderland werkt hoofdzakelijk met vrijwilligers en met partners zoals Stad Genk. De voorstelling is ook beperkt tot een uur. Op die manier kunnen we de ticketprijs laag houden.' },
+  { q: 'Vanaf wanneer moet ik een ticket kopen als volwassene?', a: 'Vanaf 18 jaar betaal je een ticket voor een volwassene. Kinderen tot 12 jaar hebben recht op een snoepzakje na de voorstelling.' },
+  { q: 'Wat moet ik doen als ik het ticket niet heb ontvangen of kwijt ben?', a: 'Je kan dan best de tickets nog eens opnieuw laten versturen. Dit doe je door op de knop te drukken die je begeleidt naar de support pagina van onze partner Flextickets.' },
+  { q: 'Waarom betaal ik boekingskosten op mijn ticket?', a: 'We werken met een externe ticketverdeler flextickets. In de boekingskost zitten zowel de prijs van de handeling van de tickets als de kosten die de bank aanrekent voor het afrekenen van de tickets. Terwijl je bij de meeste ticketverdelers een bedrag betaalt per ticket werken we hier met één prijs per boeking. Je betaalt dus 2 euro boekingskost voor het bestellen van 1 ticket, maar evenveel als je bijvoorbeeld 10 tickets boekt. Het is dus aan te raden om in grote groep tickets te bestellen.' },
+  { q: 'Zijn er parkeermogelijkheden voorzien?', a: 'Parkeren kan op verschillende plaatsen rondom het Stadhuis van Genk. Voor meer informatie raadpleeg je de website van Stad Genk.' },
 ]
 
 const PHOTOS = [IMG.showNeon, IMG.showSpot, IMG.showGuitar, IMG.showCrowd, IMG.showAudience, IMG.showCurtain, IMG.showSeats, IMG.showTile]
