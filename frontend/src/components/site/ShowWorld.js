@@ -251,9 +251,9 @@ export default function ShowWorld() {
               {stars.map((s, idx) => (
                 <div key={idx} data-fade className="overflow-hidden rounded-3xl border border-show-gold/15 bg-black/25 transition-all duration-300 hover:border-show-gold/40 md:grid md:grid-cols-[minmax(0,340px)_1fr]">
                   {s.image && (
-                    <figure className="m-0">
-                      <div className="aspect-[4/3] w-full overflow-hidden md:h-full">
-                        <img src={s.image} alt={s.title} className="h-full w-full object-cover" />
+                    <figure className="m-0 self-start">
+                      <div className="w-full overflow-hidden">
+                        <img src={s.image} alt={s.title} className="h-auto w-full object-contain" />
                       </div>
                       {s.caption && (
                         <figcaption className="px-5 pt-2 text-xs text-show-cream/45 [&_p]:m-0" dangerouslySetInnerHTML={{ __html: s.caption }} />
