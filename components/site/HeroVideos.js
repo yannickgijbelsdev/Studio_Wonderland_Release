@@ -33,8 +33,7 @@ export default function HeroVideos({ webm, mp4 }) {
   return (
     <>
       <video ref={a} className={`hero-img absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${active === 0 ? 'opacity-100' : 'opacity-0'}`} autoPlay muted playsInline preload="auto">
-        <source src="/hero-1.webm" type="video/webm" />
-        <source src={IMG.heroVideo} type="video/mp4" />
+        <source src="/sinterklaas-trailer.mp4" type="video/mp4" />
       </video>
       <video ref={b} className={`hero-img absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${active === 1 ? 'opacity-100' : 'opacity-0'}`} muted playsInline preload="auto">
         <source src="/hero-2.webm" type="video/webm" />
