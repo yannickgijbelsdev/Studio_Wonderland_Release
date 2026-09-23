@@ -25,6 +25,10 @@ export default function Article() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
+  const isProductions = articleOrigin === 'productions'
+  const backLabel = isProductions ? 'Terug naar eerder te beleven' : 'Terug naar nieuws'
+  const goBack = () => navigate(articleOrigin, isProductions ? undefined : 'nieuws')
+
   useEffect(() => {
     if (!articleId) return
     let mounted = true
@@ -41,8 +45,8 @@ export default function Article() {
   return (
     <div className="spotlight-bg min-h-screen">
       <div className="mx-auto max-w-[820px] px-6 pb-28 pt-32 md:pt-36">
-        <button onClick={() => navigate(articleOrigin, 'nieuws')} data-cursor="hover" className="mb-8 inline-flex items-center gap-2 text-sm text-show-cream/80 hover:text-show-gold">
-          <ArrowLeft className="h-4 w-4" /> Terug naar nieuws
+        <button onClick={goBack} data-cursor="hover" className="mb-8 inline-flex items-center gap-2 text-sm text-show-cream/80 hover:text-show-gold">
+          <ArrowLeft className="h-4 w-4" /> {backLabel}
         </button>
 
         {loading && (
@@ -58,7 +62,7 @@ export default function Article() {
           <div className="rounded-3xl border border-show-gold/20 bg-black/25 p-10 text-center">
             <Newspaper className="mx-auto h-10 w-10 text-show-gold/50" />
             <p className="mt-4 text-show-cream/80">Dit artikel kon niet geladen worden.</p>
-            <button onClick={() => navigate(articleOrigin, 'nieuws')} className="mt-6 rounded-full bg-show-gold px-6 py-3 font-semibold text-show-bg hover:bg-white">Terug naar nieuws</button>
+            <button onClick={goBack} className="mt-6 rounded-full bg-show-gold px-6 py-3 font-semibold text-show-bg hover:bg-white">{backLabel}</button>
           </div>
         )}
 
