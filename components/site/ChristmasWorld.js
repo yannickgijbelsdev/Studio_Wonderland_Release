@@ -41,6 +41,8 @@ const GOLDEN_DATES = [
   { day: 'Dinsdag 22 december', slots: ['10u–11u', '11u–12u', '12u–13u'] },
 ]
 
+const GOLDEN_SLOTS = [...new Set(GOLDEN_DATES.flatMap((g) => g.slots))]
+
 const PHOTOS = [IMG.xmasBaubles, IMG.xmasStars, IMG.xmasTrees, IMG.xmasSanta, IMG.xmasHouse, IMG.xmasStatue, IMG.xmasFamily1, IMG.xmasWalk]
 
 function TicketButton({ className = '', children }) {
@@ -216,21 +218,13 @@ export default function ChristmasWorld() {
           <div className="grid gap-6 md:grid-cols-2">
             <div data-fade className="rounded-3xl border border-xmas-gold/15 bg-xmas-panel p-7">
               <div className="flex items-center gap-2 text-xmas-gold"><CalendarDays className="h-5 w-5" /><h3 className="font-display text-2xl text-xmas-cream">Gratis toegankelijk</h3></div>
-              <p className="mt-1 flex items-center gap-1.5 text-sm text-xmas-cream/60"><Clock className="h-3.5 w-3.5" /> Telkens van 14u tot 17u</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {FREE_DATES.map((d, i) => (<span key={i} className="rounded-full bg-black/25 px-3.5 py-1.5 text-sm text-xmas-cream/85">{d}</span>))}
-              </div>
+              <p className="mt-4 flex items-center gap-2 text-lg text-xmas-cream/90"><Clock className="h-5 w-5 text-xmas-gold" /> Telkens van 14u tot 17u</p>
             </div>
             <div data-fade className="rounded-3xl border border-xmas-gold/30 bg-xmas-gold/10 p-7">
               <div className="flex items-center gap-2 text-xmas-gold"><Gift className="h-5 w-5" /><h3 className="font-display text-2xl text-xmas-cream">Golden Ticket</h3></div>
               <p className="mt-1 text-sm text-xmas-cream/60">Tijdslot 45 min · beperkt aantal per voormiddag</p>
-              <div className="mt-5 space-y-3">
-                {GOLDEN_DATES.map((g, i) => (
-                  <div key={i} className="flex flex-col gap-2 border-b border-xmas-gold/15 pb-3 last:border-0 sm:flex-row sm:items-center sm:justify-between">
-                    <span className="text-xmas-cream/90">{g.day}</span>
-                    <span className="flex flex-wrap gap-1.5">{g.slots.map((s, j) => (<span key={j} className="rounded-full bg-black/25 px-2.5 py-1 text-xs text-xmas-cream/80">{s}</span>))}</span>
-                  </div>
-                ))}
+              <div className="mt-5 flex flex-wrap gap-2">
+                {GOLDEN_SLOTS.map((s, j) => (<span key={j} className="rounded-full bg-black/25 px-3.5 py-1.5 text-sm text-xmas-cream/85">{s}</span>))}
               </div>
             </div>
           </div>
