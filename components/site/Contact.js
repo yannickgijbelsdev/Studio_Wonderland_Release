@@ -7,7 +7,7 @@ import { PageHeader, ArchDivider } from './ui'
 const EMAILS = [
   { label: 'Studio Wonderland', email: 'info@studiowonderland.eu' },
   { label: 'De Grote Sinterklaasshow', email: 'info@sinterklaasgenk.be' },
-  { label: 'Het Huis van de Kerstman', email: 'info@huisvandekerstman.be' },
+  { label: 'Het Huis van de Kerstman', email: 'info@hethuisvandekerstman.be' },
 ]
 
 export default function Contact() {

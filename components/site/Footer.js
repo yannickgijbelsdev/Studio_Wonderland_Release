@@ -52,7 +52,7 @@ export default function Footer() {
           <div className="md:col-span-2">
             <button onClick={() => navigate('xmas')} data-cursor="hover" className="font-display text-3xl text-xmas-gold md:text-4xl">Huis van de Kerstman</button>
             <p className="mt-6 max-w-md text-xmas-cream/70">Stap zelf het verhaal binnen en maak de magische reis naar Het Huis van de Kerstman — een warme kerstbeleving voor het hele gezin in Genk.</p>
-            <a href="mailto:info@huisvandekerstman.be" data-cursor="hover" className="mt-6 inline-block font-medium text-xmas-gold underline-offset-4 hover:underline">info@huisvandekerstman.be</a>
+            <a href="mailto:info@hethuisvandekerstman.be" data-cursor="hover" className="mt-6 inline-block font-medium text-xmas-gold underline-offset-4 hover:underline">info@hethuisvandekerstman.be</a>
           </div>
           <div>
             <h4 className="text-xs uppercase tracking-[0.3em] text-xmas-cream/50">De beleving</h4>
