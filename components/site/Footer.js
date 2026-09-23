@@ -1,6 +1,5 @@
 'use client'
 import { useSite } from './ctx'
-import { ArchDivider } from './ui'
 
 export default function Footer() {
   const { route, navigate } = useSite()
@@ -8,8 +7,7 @@ export default function Footer() {
 
   if (isShow) {
     return (
-      <footer className="relative z-20 border-t-2 border-show-gold/40 bg-show-reddeep px-6 py-24 text-show-cream md:px-10 md:py-28">
-        <ArchDivider color="fill-show-gold" />
+      <footer className="relative border-t-2 border-show-gold/40 bg-show-reddeep px-6 py-24 text-show-cream md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
             <img src="/sinterklaas-show-logo.png" alt="De Grote Sinterklaasshow" className="h-28 w-auto md:h-36" />
@@ -46,8 +44,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative z-20 border-t border-wonder-gold/20 bg-wonder-bg px-6 py-16 text-wonder-ink md:px-10">
-      <ArchDivider color="fill-xmas-gold" />
+    <footer className="relative border-t border-wonder-gold/30 bg-wonder-bg px-6 py-16 text-wonder-ink md:px-10">
       <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-16 w-auto md:h-20" />
