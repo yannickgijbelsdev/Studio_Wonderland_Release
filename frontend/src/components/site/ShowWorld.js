@@ -40,7 +40,7 @@ const FAQ = [
   { q: 'Vanaf welke leeftijd is de voorstelling aangeraden?', a: 'De voorstelling is een mix tussen film, live theater, animatie en muziek. Op die manier is het ook voor kleine kinderen een feest. We adviseren de leeftijd vanaf 3 jaar.' },
   { q: 'Hoe komt het dat jullie de kost zo laag kunnen houden?', a: 'We weten dat andere Sinterklaasvoorstellingen vaak het dubbele of meer kosten. VZW Studio Wonderland werkt hoofdzakelijk met vrijwilligers en met partners zoals Stad Genk. De voorstelling is ook beperkt tot een uur. Op die manier kunnen we de ticketprijs laag houden.' },
   { q: 'Vanaf wanneer moet ik een ticket kopen als volwassene?', a: 'Vanaf 18 jaar betaal je een ticket voor een volwassene. Kinderen tot 12 jaar hebben recht op een snoepzakje na de voorstelling.' },
-  { q: 'Wat moet ik doen als ik het ticket niet heb ontvangen of kwijt ben?', a: 'Je kan dan best de tickets nog eens opnieuw laten versturen. Dit doe je door op de knop te drukken die je begeleidt naar de support pagina van onze partner Flextickets.' },
+  { q: 'Wat moet ik doen als ik het ticket niet heb ontvangen of kwijt ben?', a: 'Je kan dan best de tickets nog eens opnieuw laten versturen. Dit doe je door op de knop te drukken die je begeleidt naar de support pagina van onze partner Flextickets.', link: 'https://events.flextickets.nl/Ticketing/lostticket', linkLabel: 'Ticket opnieuw versturen' },
   { q: 'Waarom betaal ik boekingskosten op mijn ticket?', a: 'We werken met een externe ticketverdeler flextickets. In de boekingskost zitten zowel de prijs van de handeling van de tickets als de kosten die de bank aanrekent voor het afrekenen van de tickets. Terwijl je bij de meeste ticketverdelers een bedrag betaalt per ticket werken we hier met één prijs per boeking. Je betaalt dus 2 euro boekingskost voor het bestellen van 1 ticket, maar evenveel als je bijvoorbeeld 10 tickets boekt. Het is dus aan te raden om in grote groep tickets te bestellen.' },
   { q: 'Zijn er parkeermogelijkheden voorzien?', a: 'Parkeren kan op verschillende plaatsen rondom het Stadhuis van Genk. Voor meer informatie raadpleeg je de website van Stad Genk.' },
 ]
@@ -306,7 +306,14 @@ export default function ShowWorld() {
               {FAQ.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="overflow-hidden rounded-2xl border border-show-gold/15 bg-black/20 px-5 transition-colors data-[state=open]:border-show-gold/45 data-[state=open]:bg-black/30">
                   <AccordionTrigger className="py-5 text-left text-base font-medium text-show-cream hover:text-show-gold hover:no-underline md:text-lg">{f.q}</AccordionTrigger>
-                  <AccordionContent className="pb-5 text-show-cream/75">{f.a}</AccordionContent>
+                  <AccordionContent className="pb-5 text-show-cream/75">
+                    <p className="m-0">{f.a}</p>
+                    {f.link && (
+                      <a href={f.link} target="_blank" rel="noopener noreferrer" data-cursor="hover" className="mt-4 inline-flex items-center gap-2 rounded-full bg-show-gold px-5 py-2.5 text-sm font-semibold text-show-bg transition-all duration-300 hover:scale-[1.03] hover:bg-white">
+                        <Ticket className="h-4 w-4" /> {f.linkLabel || 'Naar Flextickets'}
+                      </a>
+                    )}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
