@@ -229,22 +229,28 @@ export default function ShowWorld() {
       </section>
 
       {/* VIER WERELDEN — compact, 4 sterretjes */}
-      <section className="relative z-10 bg-show-bg px-6 py-24 md:px-10 md:py-28">
+      <section className="relative z-10 bg-show-bg px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-bg" flip />
         <Sparkles count={26} />
-        <div className="relative mx-auto max-w-[1000px] text-center">
-          <Eyebrow className="text-show-gold [&]:justify-center">De show</Eyebrow>
-          <p className="mt-5 font-display text-2xl text-show-cream md:text-3xl">
-            <span className="text-show-gold">Muziek</span> &bull; <span className="text-show-gold">Humor</span> &bull; <span className="text-show-gold">Dans</span> &bull; <span className="text-show-gold">Magie</span>
-          </p>
-          <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
-            {WORLDS4.map((w) => (
-              <div key={w.label} data-fade className="group flex cursor-default flex-col items-center">
-                <Star className="h-9 w-9 text-show-gold transition-transform duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:drop-shadow-[0_0_14px_rgba(248,231,176,0.8)]" />
-                <span className="mt-4 font-display text-xl text-show-cream">{w.label}</span>
-                <p className="mt-2 max-w-[190px] text-sm text-show-cream/55 transition-colors duration-300 group-hover:text-show-cream/85">{w.desc}</p>
-              </div>
-            ))}
+        <div className="relative mx-auto flex max-w-[1360px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-12">
+          <div className="w-full max-w-[1000px] pb-12 text-center lg:flex-1 lg:pb-28 lg:text-left">
+            <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">De show</Eyebrow>
+            <p className="mt-5 font-display text-2xl text-show-cream md:text-3xl">
+              <span className="text-show-gold">Muziek</span> &bull; <span className="text-show-gold">Humor</span> &bull; <span className="text-show-gold">Dans</span> &bull; <span className="text-show-gold">Magie</span>
+            </p>
+            <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
+              {WORLDS4.map((w) => (
+                <div key={w.label} data-fade className="group flex cursor-default flex-col items-center">
+                  <Star className="h-9 w-9 text-show-gold transition-transform duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:drop-shadow-[0_0_14px_rgba(248,231,176,0.8)]" />
+                  <span className="mt-4 font-display text-xl text-show-cream">{w.label}</span>
+                  <p className="mt-2 max-w-[190px] text-sm text-show-cream/55 transition-colors duration-300 group-hover:text-show-cream/85">{w.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full max-w-[520px] sm:max-w-[620px] lg:w-[640px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
+            <img src="/rob.png" alt="Rob Vanoudenhoven — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
           </div>
         </div>
       </section>
