@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { ArrowLeft, Ticket, MapPin } from 'lucide-react'
+import { ArrowLeft, Ticket, MapPin, Play, X } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { gsap, useSectionAnimations } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
@@ -66,16 +66,25 @@ function PartnerStrip() {
   )
 }
 
-function HeroPartners() {
+function HeroPartners({ onTrailer }) {
   return (
     <div className="absolute inset-x-0 bottom-[120px] z-10 md:bottom-[150px]">
       <div className="mx-auto flex max-w-[1600px] items-center gap-6 px-5 md:gap-10 md:px-10">
         <PartnerStrip />
-        <div className="hero-cue flex shrink-0 flex-col items-center gap-2 text-white">
-          <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
-          <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
-            <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
-          </span>
+        <div className="hero-cue flex shrink-0 flex-col items-center gap-4 text-white">
+          <button
+            onClick={onTrailer}
+            data-cursor="hover"
+            className="pointer-events-auto inline-flex items-center gap-2.5 whitespace-nowrap rounded-full bg-show-gold px-6 py-3 text-sm font-semibold text-show-bg shadow-[0_8px_30px_rgba(0,0,0,0.35)] transition-transform hover:scale-105"
+          >
+            <Play className="h-4 w-4 fill-current" /> Bekijk de trailer
+          </button>
+          <div className="flex flex-col items-center gap-2">
+            <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
+            <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+              <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+            </span>
+          </div>
         </div>
         <PartnerStrip />
       </div>
@@ -89,6 +98,7 @@ export default function ShowWorld() {
   const { navigate } = useSite()
   const [galleryPhotos, setGalleryPhotos] = useState([])
   const [stars, setStars] = useState([])
+  const [trailerOpen, setTrailerOpen] = useState(false)
   useSectionAnimations(scope, [galleryPhotos.length, stars.length])
 
   // Foto's uit de Clara/koodh galerij (categorie "galerij"); valt terug op de
@@ -151,14 +161,39 @@ export default function ShowWorld() {
       {/* HERO — enkel de Sinterklaas-video, partners flankeren de scroll-cue */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
         <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
-          <source src="/hero-1.webm" type="video/webm" />
-          <source src={IMG.heroVideo} type="video/mp4" />
+          <source src="/sinterklaas-trailer.mp4" type="video/mp4" />
         </video>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
 
         {/* Bottom: one continuous partner marquee floating over the video, cue below it */}
-        <HeroPartners />
+        <HeroPartners onTrailer={() => setTrailerOpen(true)} />
       </section>
+
+      {/* TRAILER MODAL */}
+      {trailerOpen && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          onClick={() => setTrailerOpen(false)}
+        >
+          <button
+            onClick={() => setTrailerOpen(false)}
+            data-cursor="hover"
+            aria-label="Sluiten"
+            className="absolute right-5 top-5 z-10 text-white/80 transition-colors hover:text-white"
+          >
+            <X className="h-8 w-8" />
+          </button>
+          <div className="relative w-full max-w-[1100px]" onClick={(e) => e.stopPropagation()}>
+            <video
+              src="/sinterklaas-trailer.mp4"
+              controls
+              autoPlay
+              playsInline
+              className="w-full rounded-2xl shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
 
       {/* NIEUWS — bovenaan, met boog omhoog in de hero (zoals de hoofdsite) */}
       <ShowNews />
