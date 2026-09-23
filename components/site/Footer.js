@@ -26,7 +26,6 @@ export default function Footer() {
             <h4 className="text-xs uppercase tracking-[0.3em] text-show-cream/50">Tickets</h4>
             <ul className="mt-4 space-y-3">
               <li><a href="https://events.flextickets.nl/event/de-grote-sinterklaasshow" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="hover:text-show-gold">Bestel je tickets</a></li>
-              <li><button onClick={() => navigate('home')} data-cursor="hover" className="text-show-cream/60 hover:text-show-gold">Studio Wonderland</button></li>
             </ul>
           </div>
         </div>

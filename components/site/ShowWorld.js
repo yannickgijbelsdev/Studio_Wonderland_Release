@@ -200,7 +200,6 @@ export default function ShowWorld() {
               </div>
             ))}
           </div>
-          <p className="mt-14 text-lg text-show-cream/80">En het publiek bepaalt wie wint.</p>
         </div>
       </section>
 
@@ -248,7 +247,6 @@ export default function ShowWorld() {
                   </div>
                 ))}
               </div>
-              <p className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-show-cream/40">Portretten volgen binnenkort</p>
             </>
           )}
         </div>
