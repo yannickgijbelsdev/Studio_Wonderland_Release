@@ -89,7 +89,7 @@ export default function Footer() {
     <footer className="relative border-t border-wonder-gold/30 bg-wonder-bg px-6 py-16 text-wonder-ink md:px-10">
       <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
-          <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-16 w-auto md:h-20" />
+          <img src="/studio-wonderland-badge.png" alt="Studio Wonderland" className="h-28 w-auto md:h-32" />
           <p className="mt-4 max-w-md text-wonder-muted">Wij maken werelden waar families samen in kunnen stappen. Bijzondere livebelevingen voor jong en oud.</p>
           <a href="mailto:info@studiowonderland.eu" data-cursor="hover" className="mt-6 inline-block font-medium text-wonder-gold underline-offset-4 hover:underline">info@studiowonderland.eu</a>
         </div>

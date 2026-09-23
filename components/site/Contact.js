@@ -31,12 +31,12 @@ export default function Contact() {
                 href={`mailto:${e.email}`}
                 data-cursor="hover"
                 data-fade
-                className="flex flex-col gap-3 rounded-2xl border border-wonder-pink/40 bg-wonder-panel p-6 transition-colors hover:border-wonder-pinkdeep/60"
+                className="flex flex-col gap-3 rounded-2xl border border-wonder-pink/40 bg-wonder-panel p-5 transition-colors hover:border-wonder-pinkdeep/60"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-wonder-pinkdeep/15 text-wonder-pinkdeep"><Mail className="h-5 w-5" /></span>
                 <span>
                   <span className="block text-xs uppercase tracking-[0.22em] text-wonder-muted">{e.label}</span>
-                  <span className="mt-1.5 block break-words text-base text-wonder-ink">{e.email}</span>
+                  <span className="mt-1.5 block whitespace-nowrap text-sm text-wonder-ink">{e.email}</span>
                 </span>
               </a>
             ))}
