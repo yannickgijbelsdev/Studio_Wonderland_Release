@@ -255,9 +255,6 @@ export default function ShowWorld() {
                       <div className="w-full overflow-hidden">
                         <img src={s.image} alt={s.title} className="h-auto w-full object-contain" />
                       </div>
-                      {s.caption && (
-                        <figcaption className="px-5 pt-2 text-xs text-show-cream/45 [&_p]:m-0" dangerouslySetInnerHTML={{ __html: s.caption }} />
-                      )}
                     </figure>
                   )}
                   <div className="p-7 md:p-9">
