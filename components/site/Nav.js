@@ -65,12 +65,13 @@ function WorldNav({ route }) {
 
   const go = (a) => { setOpen(false); navigate(route, a) }
   const home = () => { setOpen(false); navigate('home') }
+  const toTop = () => { setOpen(false); navigate(route) }
 
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-[80] px-4 pt-4 md:px-6 md:pt-5">
         <div className={`mx-auto flex items-center justify-between rounded-full px-4 py-2 shadow-xl shadow-black/25 backdrop-blur-md transition-all duration-500 md:px-6 md:py-2.5 ${w.pill} ${scrolled ? 'max-w-[1120px]' : 'max-w-[1320px]'}`}>
-          <button onClick={home} data-cursor="hover" className="flex items-center">
+          <button onClick={toTop} data-cursor="hover" className="flex items-center">
             {w.logo ? (
               <img src={w.logo} alt={w.logoAlt} className="h-9 w-auto md:h-11" />
             ) : (
@@ -113,11 +114,13 @@ function WorldNav({ route }) {
       {/* Mobile overlay */}
       <div className={`fixed inset-0 z-[90] flex flex-col ${w.overlay} transition-all duration-500 md:hidden ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="flex items-center justify-between px-6 py-6">
-          {w.logo ? (
-            <img src={w.logo} alt={w.logoAlt} className="h-10 w-auto" />
-          ) : (
-            <span className={`font-display text-xl ${w.active}`}>{w.logoText}</span>
-          )}
+          <button onClick={toTop} className="flex items-center">
+            {w.logo ? (
+              <img src={w.logo} alt={w.logoAlt} className="h-10 w-auto" />
+            ) : (
+              <span className={`font-display text-xl ${w.active}`}>{w.logoText}</span>
+            )}
+          </button>
           <button onClick={() => setOpen(false)} className={w.active}><X className="h-7 w-7" /></button>
         </div>
         <nav className="flex flex-1 flex-col justify-center gap-2 px-8">

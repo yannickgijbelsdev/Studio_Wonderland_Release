@@ -57,6 +57,7 @@ function App() {
   const navigate = useCallback((next, anchor) => {
     if (next === route) {
       if (anchor && lenisRef.current) lenisRef.current.scrollTo(`#${anchor}`, { offset: -80, duration: 1.2 })
+      else if (lenisRef.current) lenisRef.current.scrollTo(0, { duration: 1.1 })
       return
     }
     // Update the browser URL for real routes (articles keep the world's URL)
