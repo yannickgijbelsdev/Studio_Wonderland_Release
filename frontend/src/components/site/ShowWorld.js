@@ -18,9 +18,9 @@ const PARTNERS = [
 ]
 
 const WORLDS4 = [
-  { label: 'Muziek', desc: 'Live band en meezingers die de zaal laten swingen.' },
-  { label: 'Humor', desc: 'Slapstick, verrassingen en gags voor jong en oud.' },
-  { label: 'Dans', desc: 'Adembenemende choreografieën en een decor dat leeft.' },
+  { label: 'Muziek', desc: 'Meezingen met Sint en pieten en alle kandidaten.' },
+  { label: 'Humor', desc: 'Ook de Sint houdt van grappen. Hou je klaar voor verrassingen.' },
+  { label: 'Dans', desc: 'Je kan niet blijven stilzitten met onze topdansers.' },
   { label: 'Magie', desc: 'Spektakel en verwondering tot de laatste noot.' },
 ]
 

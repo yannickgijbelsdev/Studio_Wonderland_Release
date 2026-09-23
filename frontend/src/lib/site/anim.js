@@ -18,9 +18,9 @@ export function useSectionAnimations(scopeRef, deps = []) {
       const q = self.selector
 
       q('[data-fade]').forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 70,
+        gsap.fromTo(el, { opacity: 0, y: 70 }, {
+          opacity: 1,
+          y: 0,
           duration: 1.2,
           ease: 'power2.out',
           scrollTrigger: { trigger: el, start: 'top 92%', invalidateOnRefresh: true },
@@ -28,9 +28,9 @@ export function useSectionAnimations(scopeRef, deps = []) {
       })
 
       q('[data-reveal]').forEach((el) => {
-        gsap.from(el, {
-          yPercent: 118,
-          opacity: 0,
+        gsap.fromTo(el, { yPercent: 118, opacity: 0 }, {
+          yPercent: 0,
+          opacity: 1,
           duration: 1.3,
           ease: 'expo.out',
           scrollTrigger: { trigger: el, start: 'top 94%', invalidateOnRefresh: true },

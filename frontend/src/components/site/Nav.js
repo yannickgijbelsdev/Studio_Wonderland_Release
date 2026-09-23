@@ -79,7 +79,7 @@ function WorldNav({ route }) {
             )}
           </button>
 
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {links.map((l) => (
               <button
                 key={l.a}
@@ -105,14 +105,14 @@ function WorldNav({ route }) {
             )}
           </nav>
 
-          <button onClick={() => setOpen(true)} data-cursor="hover" className={`${w.active} md:hidden`}>
+          <button onClick={() => setOpen(true)} data-cursor="hover" className={`${w.active} lg:hidden`}>
             <Menu className="h-7 w-7" />
           </button>
         </div>
       </header>
 
       {/* Mobile overlay */}
-      <div className={`fixed inset-0 z-[90] flex flex-col ${w.overlay} transition-all duration-500 md:hidden ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
+      <div className={`fixed inset-0 z-[90] flex flex-col ${w.overlay} transition-all duration-500 lg:hidden ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="flex items-center justify-between px-6 py-6">
           <button onClick={toTop} className="flex items-center">
             {w.logo ? (
@@ -175,7 +175,7 @@ function MainNav() {
             <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-8 w-auto md:h-9" />
           </button>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {links.map((l) => (
               <button
                 key={l.label}
@@ -191,14 +191,14 @@ function MainNav() {
             </Magnetic>
           </nav>
 
-          <button onClick={() => setOpen(true)} data-cursor="hover" className="text-wonder-ink md:hidden">
+          <button onClick={() => setOpen(true)} data-cursor="hover" className="text-wonder-ink lg:hidden">
             <Menu className="h-7 w-7" />
           </button>
         </div>
       </header>
 
       {/* Mobile overlay */}
-      <div className={`fixed inset-0 z-[90] flex flex-col bg-wonder-bg transition-all duration-500 md:hidden ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
+      <div className={`fixed inset-0 z-[90] flex flex-col bg-wonder-bg transition-all duration-500 lg:hidden ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}>
         <div className="flex items-center justify-between px-6 py-6">
           <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-7 w-auto" />
           <button onClick={() => setOpen(false)} className="text-wonder-ink"><X className="h-7 w-7" /></button>
