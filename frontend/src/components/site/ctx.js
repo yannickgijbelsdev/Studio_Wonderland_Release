@@ -12,6 +12,7 @@ export const ROUTE_TO_PATH = {
   productions: '/eerder-te-beleven',
   about: '/over-ons',
   contact: '/contact',
+  applausmeter: '/applausmeter',
   privacy: '/privacybeleid',
   cookies: '/cookiebeleid',
 }

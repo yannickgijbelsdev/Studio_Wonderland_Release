@@ -1,7 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { Menu, X, Ticket, ArrowUpRight } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Menu, X, Ticket, ArrowUpRight, Gauge } from 'lucide-react'
 import { useSite } from './ctx'
+import { gsap } from '@/lib/site/anim'
 import { Magnetic } from './ui'
 
 const WORLDS = {
@@ -49,6 +50,85 @@ const SECTION_LINKS = {
   ],
 }
 
+// A playful nav button for the applausmeter: every few seconds it puffs smoke
+// and shoots little parts (bolts / gold bits) as if the meter is overheating.
+function ApplausmeterButton({ variant = 'desktop', dividerClass = '', onNavigate }) {
+  const wrapRef = useRef(null)
+  const fxRef = useRef(null)
+
+  useEffect(() => {
+    let alive = true
+    let timer
+    const emit = () => {
+      const layer = fxRef.current
+      if (!layer) return
+      // smoke puffs rising up
+      for (let i = 0; i < 4; i++) {
+        const s = document.createElement('div')
+        const sz = 8 + Math.random() * 9
+        Object.assign(s.style, {
+          position: 'absolute', left: `${38 + Math.random() * 32}%`, top: '6%',
+          width: `${sz}px`, height: `${sz}px`, borderRadius: '50%',
+          background: 'rgba(210,210,210,0.5)', filter: 'blur(3px)', willChange: 'transform,opacity',
+        })
+        layer.appendChild(s)
+        gsap.fromTo(s, { y: 0, opacity: 0.7, scale: 0.5 }, {
+          y: -24 - Math.random() * 18, x: Math.random() * 22 - 11, opacity: 0, scale: 1.7 + Math.random(),
+          duration: 1 + Math.random() * 0.7, ease: 'power1.out', onComplete: () => s.remove(),
+        })
+      }
+      // flying parts (bolts / gold shards)
+      const colors = ['#F8E7B0', '#f5c542', '#c9a24a', '#9aa0a6']
+      for (let i = 0; i < 5; i++) {
+        const p = document.createElement('div')
+        const sz = 3 + Math.random() * 3
+        Object.assign(p.style, {
+          position: 'absolute', left: '55%', top: '32%',
+          width: `${sz}px`, height: `${sz}px`, background: colors[i % colors.length],
+          borderRadius: Math.random() > 0.5 ? '50%' : '1px', willChange: 'transform,opacity',
+        })
+        layer.appendChild(p)
+        const ang = -Math.PI / 2 + (Math.random() * 1.7 - 0.85)
+        const dist = 26 + Math.random() * 44
+        gsap.fromTo(p, { x: 0, y: 0, opacity: 1, rotation: 0 }, {
+          x: Math.cos(ang) * dist, y: Math.sin(ang) * dist + 22, rotation: Math.random() * 620 - 310,
+          opacity: 0, duration: 0.9 + Math.random() * 0.5, ease: 'power2.out', onComplete: () => p.remove(),
+        })
+      }
+      // tiny rattle
+      if (wrapRef.current) {
+        gsap.fromTo(wrapRef.current, { x: 0 }, {
+          x: 'random(-1.5,1.5)', y: 'random(-1,1)', duration: 0.05, repeat: 6, yoyo: true,
+          repeatRefresh: true, ease: 'none', onComplete: () => gsap.set(wrapRef.current, { x: 0, y: 0 }),
+        })
+      }
+    }
+    const loop = () => {
+      if (!alive) return
+      emit()
+      timer = setTimeout(loop, 3500 + Math.random() * 3500)
+    }
+    timer = setTimeout(loop, 1600 + Math.random() * 1800)
+    return () => { alive = false; clearTimeout(timer) }
+  }, [])
+
+  const isMobile = variant === 'mobile'
+  return (
+    <div ref={wrapRef} className={`relative ${isMobile ? 'w-full' : ''}`}>
+      <div ref={fxRef} className="pointer-events-none absolute inset-0 z-10 overflow-visible" />
+      {isMobile ? (
+        <button onClick={onNavigate} className={`flex w-full items-center gap-3 border-b ${dividerClass} py-5 text-left font-display text-3xl text-show-gold`}>
+          <Gauge className="h-7 w-7" /> Applausmeter
+        </button>
+      ) : (
+        <button onClick={onNavigate} data-cursor="hover" className="relative inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-show-gold/40 bg-show-gold/10 px-3.5 py-1.5 text-sm font-semibold text-show-gold transition-colors hover:bg-show-gold hover:text-show-bg">
+          <Gauge className="h-4 w-4" /> Applausmeter
+        </button>
+      )}
+    </div>
+  )
+}
+
 function WorldNav({ route }) {
   const { navigate } = useSite()
   const [scrolled, setScrolled] = useState(false)
@@ -64,6 +144,7 @@ function WorldNav({ route }) {
   }, [])
 
   const go = (a) => { setOpen(false); navigate(route, a) }
+  const goApplaus = () => { setOpen(false); navigate('applausmeter') }
   const home = () => { setOpen(false); navigate('home') }
   const toTop = () => { setOpen(false); navigate(route) }
 
@@ -90,6 +171,7 @@ function WorldNav({ route }) {
                 {l.label}
               </button>
             ))}
+            {route === 'show' && <ApplausmeterButton onNavigate={goApplaus} />}
             <span className={`h-4 w-px ${w.divider} border-l`} />
             <button onClick={home} data-cursor="hover" className={`inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium ${w.text} ${w.textHover}`}>
               Studio Wonderland <ArrowUpRight className="h-3.5 w-3.5" />
@@ -129,6 +211,7 @@ function WorldNav({ route }) {
               {l.label}
             </button>
           ))}
+          {route === 'show' && <ApplausmeterButton variant="mobile" dividerClass={w.divider} onNavigate={goApplaus} />}
           {w.ticketUrl ? (
             <a href={w.ticketUrl} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full py-4 text-center font-semibold ${w.cta}`}>
               <Ticket className="h-5 w-5" /> {w.ctaLabel}

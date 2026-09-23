@@ -12,6 +12,7 @@ import ChristmasWorld from '@/components/site/ChristmasWorld'
 import Productions from '@/components/site/Productions'
 import About from '@/components/site/About'
 import Contact from '@/components/site/Contact'
+import Applausmeter from '@/components/site/Applausmeter'
 import Article from '@/components/site/Article'
 import Legal from '@/components/site/Legal'
 import CookieConsent from '@/components/site/CookieConsent'
@@ -21,6 +22,7 @@ const WORLD_CLASS = {
   productions: 'bg-wonder-bg text-wonder-ink',
   about: 'bg-wonder-bg text-wonder-ink',
   contact: 'bg-wonder-bg text-wonder-ink',
+  applausmeter: 'bg-show-reddeep text-show-cream',
   show: 'bg-show-bg text-show-cream',
   xmas: 'bg-xmas-bg text-xmas-cream',
   article: 'bg-show-bg text-show-cream',
@@ -85,7 +87,7 @@ function App() {
     <SiteContext.Provider value={{ route, navigate, articleId, articleOrigin, openArticle }}>
       <div className={`grain min-h-screen transition-colors duration-500 ${worldClass}`}>
         <Cursor />
-        <Nav />
+        {route !== 'applausmeter' && <Nav />}
         <main>
           {route === 'home' && <Home />}
           {route === 'show' && <ShowWorld />}
@@ -93,11 +95,12 @@ function App() {
           {route === 'productions' && <Productions />}
           {route === 'about' && <About />}
           {route === 'contact' && <Contact />}
+          {route === 'applausmeter' && <Applausmeter />}
           {route === 'article' && <Article />}
           {route === 'privacy' && <Legal type="privacy" />}
           {route === 'cookies' && <Legal type="cookies" />}
         </main>
-        <Footer />
+        {route !== 'applausmeter' && <Footer />}
       </div>
 
       <CookieConsent />
