@@ -280,10 +280,6 @@ export default function ShowWorld() {
             <TitleReveal lines={["Beleef de magie"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           <PhotoGallery images={galleryPhotos.length ? galleryPhotos : PHOTOS} accent="text-white" ringClass="ring-show-gold/20" />
-
-          <div className="mt-16 flex flex-col items-center justify-center gap-6 border-t border-show-gold/20 pt-10">
-            <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-show-cream/80 hover:text-show-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
-          </div>
         </div>
         <ArchDivider color="fill-show-reddeep" position="bottom" />
       </section>
