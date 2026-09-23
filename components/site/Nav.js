@@ -70,7 +70,7 @@ function WorldNav({ route }) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-[80] px-4 pt-4 md:px-6 md:pt-5">
-        <div className={`mx-auto flex items-center justify-between rounded-full px-4 py-2 shadow-xl shadow-black/25 backdrop-blur-md transition-all duration-500 md:px-6 md:py-2.5 ${w.pill} ${scrolled ? 'max-w-[1120px]' : 'max-w-[1320px]'}`}>
+        <div className={`mx-auto flex items-center justify-between rounded-full px-4 py-2 shadow-xl shadow-black/25 backdrop-blur-md transition-all duration-500 md:px-6 md:py-2.5 ${w.pill} ${scrolled ? 'max-w-[1280px]' : 'max-w-[1460px]'}`}>
           <button onClick={toTop} data-cursor="hover" className="flex items-center">
             {w.logo ? (
               <img src={w.logo} alt={w.logoAlt} className="h-9 w-auto md:h-11" />
@@ -79,27 +79,27 @@ function WorldNav({ route }) {
             )}
           </button>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-6 md:flex">
             {links.map((l) => (
               <button
                 key={l.a}
                 onClick={() => go(l.a)}
                 data-cursor="hover"
-                className={`text-sm font-medium tracking-wide transition-colors ${w.text} ${w.textHover}`}
+                className={`whitespace-nowrap text-sm font-medium tracking-wide transition-colors ${w.text} ${w.textHover}`}
               >
                 {l.label}
               </button>
             ))}
             <span className={`h-4 w-px ${w.divider} border-l`} />
-            <button onClick={home} data-cursor="hover" className={`inline-flex items-center gap-1 text-sm font-medium ${w.text} ${w.textHover}`}>
+            <button onClick={home} data-cursor="hover" className={`inline-flex items-center gap-1 whitespace-nowrap text-sm font-medium ${w.text} ${w.textHover}`}>
               Studio Wonderland <ArrowUpRight className="h-3.5 w-3.5" />
             </button>
             {w.ticketUrl ? (
-              <a href={w.ticketUrl} target="_blank" rel="noopener noreferrer" data-cursor="hover" onClick={() => setOpen(false)} className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${w.cta}`}>
+              <a href={w.ticketUrl} target="_blank" rel="noopener noreferrer" data-cursor="hover" onClick={() => setOpen(false)} className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-sm font-semibold transition-colors ${w.cta}`}>
                 <Ticket className="h-4 w-4" /> {w.ctaLabel}
               </a>
             ) : (
-              <Magnetic as="button" onClick={() => go(w.ticketAnchor)} className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${w.cta}`}>
+              <Magnetic as="button" onClick={() => go(w.ticketAnchor)} className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-sm font-semibold transition-colors ${w.cta}`}>
                 <Ticket className="h-4 w-4" /> {w.ctaLabel}
               </Magnetic>
             )}
