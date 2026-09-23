@@ -201,7 +201,7 @@ export default function ShowWorld() {
       {/* HET VERHAAL — tekst met Sinterklaas ernaast (gestapeld op mobiel) */}
       <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-reddeep" />
-        <div className="mx-auto flex max-w-[1150px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-16">
+        <div className="mx-auto flex max-w-[1280px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-14">
           <div className="w-full max-w-[720px] pb-12 text-center lg:max-w-none lg:flex-1 lg:pb-28 lg:text-left">
             <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">Het verhaal</Eyebrow>
             <TitleReveal lines={["Eén grote talentenshow"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
@@ -217,7 +217,7 @@ export default function ShowWorld() {
             </div>
           </div>
 
-          <div className="w-full max-w-[380px] sm:max-w-[440px] lg:w-[460px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
+          <div className="w-full max-w-[500px] sm:max-w-[600px] lg:w-[620px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
             <img src="/sinterklaas.png" alt="Sinterklaas — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
           </div>
         </div>
@@ -291,7 +291,7 @@ export default function ShowWorld() {
       {/* FAQ — verticaal gecentreerd */}
       <section id="faq" className="relative z-10 bg-show-bg px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-show-bg" flip />
-        <div className="mx-auto flex w-full max-w-[1150px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-16">
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-8 lg:flex-row lg:items-end lg:gap-14">
           <div className="w-full max-w-[820px] pb-12 lg:flex-1 lg:pb-28">
             <div className="mb-12 text-center lg:text-left">
               <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">Praktisch</Eyebrow>
@@ -307,7 +307,7 @@ export default function ShowWorld() {
             </Accordion>
           </div>
 
-          <div className="w-full max-w-[380px] sm:max-w-[440px] lg:w-[460px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
+          <div className="w-full max-w-[500px] sm:max-w-[600px] lg:w-[620px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
             <img src="/presentator.png" alt="Presentator — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
           </div>
         </div>
