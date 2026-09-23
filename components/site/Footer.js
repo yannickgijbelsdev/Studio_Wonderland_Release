@@ -1,4 +1,5 @@
 'use client'
+import { Heart } from 'lucide-react'
 import { useSite } from './ctx'
 
 export default function Footer() {
@@ -35,9 +36,12 @@ export default function Footer() {
           <div className="flex items-center gap-5">
             <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
             <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
-            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block">
-              <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
-            </a>
+            <span className="inline-flex items-center gap-1.5">
+              Website gemaakt met <Heart className="h-3.5 w-3.5 fill-current text-show-red" /> door
+              <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex items-center">
+                <img src="/koodh-logo.png" alt="Koodh" className="h-3.5 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
+              </a>
+            </span>
           </div>
         </div>
       </footer>
@@ -75,9 +79,12 @@ export default function Footer() {
           <div className="flex items-center gap-5">
             <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-xmas-gold">Privacybeleid</button>
             <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-xmas-gold">Cookiebeleid</button>
-            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block">
-              <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
-            </a>
+            <span className="inline-flex items-center gap-1.5">
+              Website gemaakt met <Heart className="h-3.5 w-3.5 fill-current text-xmas-red" /> door
+              <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex items-center">
+                <img src="/koodh-logo.png" alt="Koodh" className="h-3.5 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
+              </a>
+            </span>
           </div>
         </div>
       </footer>
@@ -106,9 +113,12 @@ export default function Footer() {
         <div className="flex items-center gap-5">
           <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
           <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
-          <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-block">
-            <img src="/koodh-logo.png" alt="Koodh" className="h-5 w-auto" />
-          </a>
+          <span className="inline-flex items-center gap-1.5">
+            Website gemaakt met <Heart className="h-3.5 w-3.5 fill-current text-wonder-pinkdeep" /> door
+            <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex items-center">
+              <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" />
+            </a>
+          </span>
         </div>
       </div>
     </footer>
