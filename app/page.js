@@ -80,9 +80,13 @@ function App() {
     navigate('article')
   }, [navigate])
 
+  const worldClass = route === 'article'
+    ? (articleOrigin === 'xmas' ? WORLD_CLASS.xmas : articleOrigin === 'productions' ? WORLD_CLASS.home : WORLD_CLASS.show)
+    : (WORLD_CLASS[route] || WORLD_CLASS.home)
+
   return (
     <SiteContext.Provider value={{ route, navigate, articleId, articleOrigin, openArticle }}>
-      <div className={`grain min-h-screen transition-colors duration-500 ${WORLD_CLASS[route] || WORLD_CLASS.home}`}>
+      <div className={`grain min-h-screen transition-colors duration-500 ${worldClass}`}>
         <Cursor />
         <Nav />
         <main>
