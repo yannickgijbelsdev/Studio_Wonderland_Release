@@ -192,7 +192,7 @@ export default function Applausmeter() {
         <div className="mt-12 flex min-h-[120px] flex-col items-center">
           {phase === 'boom' ? (
             <>
-              <div className="animate-pulse font-display text-3xl text-red-400 md:text-5xl">💥 TE LUID! 💥</div>
+              <div className="animate-pulse text-3xl font-extrabold uppercase tracking-wide text-red-400 md:text-5xl">💥 TE LUID! 💥</div>
               <p className="mt-2 text-show-cream/70">De meter is ontploft van het applaus!</p>
               <button
                 onClick={() => setRound((r) => r + 1)}
