@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { IMG } from '@/lib/site/media'
 
-// Crossfading dual-video hero, identical to the Studio Wonderland homepage hero.
-// Includes the gradient overlay and the "scroll om te ontdekken" cue.
-export default function HeroVideos() {
+// Crossfading dual-video hero (Studio Wonderland homepage) OR, when a single
+// source is passed via props, one looping video (used by the Christmas world).
+export default function HeroVideos({ webm, mp4 }) {
   const a = useRef(null)
   const b = useRef(null)
   const [active, setActive] = useState(0)
@@ -19,6 +19,17 @@ export default function HeroVideos() {
     vb.addEventListener('ended', onEndB)
     return () => { va.removeEventListener('ended', onEndA); vb.removeEventListener('ended', onEndB) }
   }, [])
+
+  // Single looping video mode
+  if (mp4) {
+    return (
+      <video className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
+        {webm && <source src={webm} type="video/webm" />}
+        <source src={mp4} type="video/mp4" />
+      </video>
+    )
+  }
+
   return (
     <>
       <video ref={a} className={`hero-img absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${active === 0 ? 'opacity-100' : 'opacity-0'}`} autoPlay muted playsInline preload="auto">

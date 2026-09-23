@@ -100,7 +100,7 @@ export default function ChristmasWorld() {
     <div ref={scope} className="aurora-xmas">
       {/* HERO — identiek aan de Studio Wonderland-hoofdsite (crossfade video's) */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
-        <HeroVideos />
+        <HeroVideos webm="/hero-2.webm" mp4={IMG.heroVideoAlt} />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
         <HeroScrollCue />
       </section>
@@ -136,10 +136,8 @@ export default function ChristmasWorld() {
           <div data-fade className="mt-8 space-y-5 text-left text-lg leading-relaxed text-xmas-cream/85">
             <p>Ergens in Genk bevindt zich een bijzondere snoepwinkel. Achter de toonbank vind je potten vol kleurrijke snoepjes, vreemde recepten en wonderlijke uitvindingen. Hier woont en werkt <strong className="text-xmas-cream">Mr. Bonbonetti</strong>, een excentrieke snoepmaker en uitvinder die ervan overtuigd is dat een beetje magie en teamwork bijna ieder probleem kunnen oplossen.</p>
             <p>Maar achter in zijn winkel staat iets wat bijna niemand kent… <strong className="text-xmas-gold">De Magische Kast.</strong> En die kast kan vliegen.</p>
-          </div>
-          <div data-fade className="mx-auto mt-12 max-w-[720px] rounded-3xl border border-xmas-gold/20 bg-black/20 p-8 text-left">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-xmas-red">Een magisch kerstavontuur</span>
-            <p className="mt-3 text-xmas-cream/85">Dit jaar nodigt Studio Wonderland gezinnen uit om zélf op reis te gaan naar het Huis van de Kerstman. Je avontuur begint in de magische snoepwinkel van Mr. Bonbonetti. Daar ontdek je dat er een probleem is: de Magische Kast, waarmee de elfen naar de Kerstman reizen, wil niet meer vliegen. Zoek, puzzel en werk samen om de kast weer te doen werken.</p>
+            <h3 className="pt-3 font-display text-2xl text-xmas-gold md:text-3xl">Een magisch kerstavontuur</h3>
+            <p>Dit jaar nodigt Studio Wonderland gezinnen uit om zélf op reis te gaan naar het Huis van de Kerstman. Je avontuur begint in de magische snoepwinkel van Mr. Bonbonetti. Daar ontdek je dat er een probleem is: de Magische Kast, waarmee de elfen naar de Kerstman reizen, wil niet meer vliegen. Zoek, puzzel en werk samen om de kast weer te doen werken.</p>
           </div>
         </div>
       </section>
@@ -237,7 +235,7 @@ export default function ChristmasWorld() {
             </div>
           </div>
           <div className="mt-10 text-center">
-            <TicketButton className="rounded-full bg-xmas-red px-8 py-4 font-semibold text-white hover:scale-[1.03] hover:bg-white hover:text-xmas-green">Bestel je tickets via FlexTickets</TicketButton>
+            <TicketButton className="rounded-full bg-xmas-red px-8 py-4 font-semibold text-white hover:scale-[1.03] hover:bg-white hover:text-xmas-green">Bestel je Golden Ticket</TicketButton>
           </div>
         </div>
       </section>
