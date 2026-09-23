@@ -7,7 +7,7 @@ export default function Footer() {
 
   if (isShow) {
     return (
-      <footer className="relative z-20 border-t-2 border-show-gold/70 bg-show-reddeep px-6 py-24 text-show-cream md:px-10 md:py-28">
+      <footer className="relative z-20 border-t border-show-gold/60 bg-show-reddeep px-6 py-24 text-show-cream md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
             <img src="/sinterklaas-show-logo.png" alt="De Grote Sinterklaasshow" className="h-28 w-auto md:h-36" />
