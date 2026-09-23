@@ -30,7 +30,7 @@ const WORLDS = {
     divider: 'border-xmas-gold/20',
     cta: 'bg-xmas-gold text-xmas-bg hover:bg-white shadow-[0_0_18px_rgba(248,231,176,0.5)]',
     overlay: 'bg-xmas-bg',
-    ctaLabel: 'Golden Ticket',
+    ctaLabel: 'Bestel je Golden Ticket',
     ticketAnchor: 'golden',
   },
 }
@@ -43,7 +43,7 @@ const SECTION_LINKS = {
   ],
   xmas: [
     { label: 'Verhaal', a: 'verhaal' },
-    { label: 'Golden Ticket', a: 'golden' },
+    { label: 'Info over het Golden Ticket', a: 'golden' },
     { label: 'Gratis Toegang', a: 'tickets' },
     { label: "Foto's", a: 'fotos' },
   ],
