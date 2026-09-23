@@ -23,7 +23,15 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 3001,
+    port: 3000,
+    strictPort: false,
+    // Allow the Emergent preview proxy host (and any host) to reach the dev server.
+    allowedHosts: true,
+    // HMR websocket travels through the https preview proxy on 443.
+    hmr: {
+      clientPort: 443,
+      protocol: 'wss',
+    },
     proxy: {
       // In dev, proxy API calls to the FastAPI backend.
       '/api': {
