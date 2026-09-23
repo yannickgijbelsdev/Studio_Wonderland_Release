@@ -121,7 +121,7 @@ function ApplausmeterButton({ variant = 'desktop', dividerClass = '', onNavigate
           <Gauge className="h-7 w-7" /> Applausmeter
         </button>
       ) : (
-        <button onClick={onNavigate} data-cursor="hover" className="relative inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-show-gold/40 bg-show-gold/10 px-3.5 py-1.5 text-sm font-semibold text-show-gold transition-colors hover:bg-show-gold hover:text-show-bg">
+        <button onClick={onNavigate} data-cursor="hover" className="relative inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-show-gold/35 bg-[#5c0810] px-3.5 py-1.5 text-sm font-semibold text-show-gold shadow-[inset_0_1px_6px_rgba(0,0,0,0.4)] transition-colors hover:border-show-gold hover:bg-show-gold hover:text-show-bg">
           <Gauge className="h-4 w-4" /> Applausmeter
         </button>
       )}
