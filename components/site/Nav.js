@@ -44,7 +44,7 @@ const SECTION_LINKS = {
   xmas: [
     { label: 'Verhaal', a: 'verhaal' },
     { label: 'Golden Ticket', a: 'golden' },
-    { label: 'Data', a: 'tickets' },
+    { label: 'Gratis Toegang', a: 'tickets' },
     { label: "Foto's", a: 'fotos' },
   ],
 }
