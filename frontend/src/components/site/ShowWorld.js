@@ -244,7 +244,7 @@ export default function ShowWorld() {
         <div className="mx-auto max-w-[1050px]">
           <div className="mb-14 text-center">
             <Eyebrow className="text-show-gold [&]:justify-center">Wie is wie</Eyebrow>
-            <TitleReveal lines={["De sterren van de show"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
+            <TitleReveal lines={["De finalisten van de show"]} starClass="text-show-gold" className="mt-4 text-4xl text-show-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center" />
           </div>
           {stars.length > 0 ? (
             <div className="space-y-8">
