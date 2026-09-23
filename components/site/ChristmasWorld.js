@@ -250,11 +250,6 @@ export default function ChristmasWorld() {
             <TitleReveal lines={["Sfeerbeelden"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
           </div>
           <PhotoGallery images={galleryPhotos.length ? galleryPhotos : PHOTOS} accent="text-white" ringClass="ring-xmas-gold/20" />
-
-          <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-xmas-gold/20 pt-10 md:flex-row">
-            <button onClick={() => navigate('home')} data-cursor="hover" className="inline-flex items-center gap-2 text-xmas-cream/80 hover:text-xmas-gold"><ArrowLeft className="h-4 w-4" /> Terug naar Studio Wonderland</button>
-            <Magnetic as="button" onClick={() => navigate('show')} className="rounded-full border border-xmas-gold/40 px-5 py-2.5 text-sm text-xmas-gold hover:bg-xmas-gold hover:text-xmas-bg">Naar De Grote Sinterklaasshow</Magnetic>
-          </div>
         </div>
         <ArchDivider color="fill-xmas-green" position="bottom" />
       </section>
