@@ -14,7 +14,7 @@ const PARTNERS = [
   { name: 'Stad Genk', logo: '/partners/genk.png', cls: '' },
   { name: 'Balls & Glory', logo: '/partners/ballsglory.webp', cls: 'brightness-0 invert' },
   { name: 'Hotel Bonka', logo: '/partners/hotelbonka.png', cls: 'brightness-0 invert' },
-  { name: 'Rotary Club Genk', logo: '/partners/rotary.webp', cls: 'brightness-0 invert' },
+  { name: 'Rotary Genk-Noord', logo: '/partners/rotary-genk-noord.png', cls: 'brightness-0 invert' },
 ]
 
 const WORLDS4 = [
