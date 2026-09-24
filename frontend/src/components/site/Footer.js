@@ -44,10 +44,10 @@ export default function Footer() {
         </div>
         <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50 md:flex-row">
           <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780</span>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-show-gold">Privacybeleid</button>
             <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-show-gold">Cookiebeleid</button>
-            <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
               Website gemaakt met <Heart className="h-3.5 w-3.5 fill-current text-show-red" /> door
               <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex items-center">
                 <img src="/koodh-logo.png" alt="Koodh" className="h-3.5 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
@@ -87,10 +87,10 @@ export default function Footer() {
         </div>
         <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-xmas-gold/20 pt-8 text-xs text-xmas-cream/50 md:flex-row">
           <span>&copy; {new Date().getFullYear()} Het Huis van de Kerstman &middot; Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780</span>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-xmas-gold">Privacybeleid</button>
             <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-xmas-gold">Cookiebeleid</button>
-            <span className="inline-flex items-center gap-1.5">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
               Website gemaakt met <Heart className="h-3.5 w-3.5 fill-current text-xmas-red" /> door
               <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex items-center">
                 <img src="/koodh-logo.png" alt="Koodh" className="h-3.5 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
@@ -121,10 +121,10 @@ export default function Footer() {
       </div>
       <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-wonder-gold/20 pt-8 text-xs text-wonder-muted md:flex-row">
         <span>&copy; {new Date().getFullYear()} Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780 &middot; Alle rechten voorbehouden.</span>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
           <button onClick={() => navigate('privacy')} data-cursor="hover" className="hover:text-wonder-gold">Privacybeleid</button>
           <button onClick={() => navigate('cookies')} data-cursor="hover" className="hover:text-wonder-gold">Cookiebeleid</button>
-          <span className="inline-flex items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
             Website gemaakt met <Heart className="h-3.5 w-3.5 fill-current text-wonder-pinkdeep" /> door
             <a href="https://koodh.com" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex items-center">
               <img src="/koodh-logo.png" alt="Koodh" className="h-4 w-auto" />
