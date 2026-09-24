@@ -1,17 +1,28 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/site/anim'
 
 export default function Cursor() {
   const arrow = useRef(null)
   const layer = useRef(null)
+  const [enabled, setEnabled] = useState(false)
 
+  // Only enable the custom cursor on real pointer (mouse) devices — not on
+  // touch tablets/phones, where a fake static cursor would otherwise appear.
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const update = () => setEnabled(mq.matches)
+    update()
+    mq.addEventListener?.('change', update)
+    return () => mq.removeEventListener?.('change', update)
+  }, [])
 
+  useEffect(() => {
+    if (!enabled) return
     const arrowEl = arrow.current
     const layerEl = layer.current
+    if (!arrowEl || !layerEl) return
     gsap.set(arrowEl, { opacity: 0 })
 
     const xArrow = gsap.quickTo(arrowEl, 'x', { duration: 0.07, ease: 'power3' })
@@ -110,7 +121,9 @@ export default function Cursor() {
       window.removeEventListener('mousedown', down)
       window.removeEventListener('mouseup', up)
     }
-  }, [])
+  }, [enabled])
+
+  if (!enabled) return null
 
   return (
     <>

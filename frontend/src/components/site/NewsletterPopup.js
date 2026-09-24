@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Mail, X } from 'lucide-react'
 
-const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr__nRph2QMKLeJzDwMWtXbUuSoF0-thK5f'
+const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr_WcRPtVz4nCzPYvTD5dSQE6iqA351oJPC'
 const KEY = 'sw_newsletter_seen'
 
 export default function NewsletterPopup() {

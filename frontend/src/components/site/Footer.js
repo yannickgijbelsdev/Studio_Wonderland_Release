@@ -2,7 +2,7 @@
 import { Heart, Mail } from 'lucide-react'
 import { useSite } from './ctx'
 
-const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr__nRph2QMKLeJzDwMWtXbUuSoF0-thK5f'
+const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr_WcRPtVz4nCzPYvTD5dSQE6iqA351oJPC'
 
 export default function Footer() {
   const { route, articleOrigin = 'show', navigate } = useSite()
