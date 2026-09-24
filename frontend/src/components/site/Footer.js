@@ -1,8 +1,33 @@
 'use client'
-import { Heart, Mail } from 'lucide-react'
+import { Heart, Mail, Facebook, Instagram } from 'lucide-react'
 import { useSite } from './ctx'
 
 const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr_WcRPtVz4nCzPYvTD5dSQE6iqA351oJPC'
+
+const SOCIALS = [
+  { href: 'https://www.facebook.com/wonderlandgenk', Icon: Facebook, label: 'Facebook' },
+  { href: 'https://www.instagram.com/studio.wonderland.show/', Icon: Instagram, label: 'Instagram' },
+]
+
+function Socials({ className = '', ring = '' }) {
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      {SOCIALS.map(({ href, Icon, label }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="hover"
+          aria-label={label}
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 hover:scale-110 ${ring}`}
+        >
+          <Icon className="h-5 w-5" />
+        </a>
+      ))}
+    </div>
+  )
+}
 
 export default function Footer() {
   const { route, articleOrigin = 'show', navigate } = useSite()
@@ -17,6 +42,7 @@ export default function Footer() {
             <img src="/sinterklaas-show-logo.png" alt="De Grote Sinterklaasshow" className="h-28 w-auto md:h-36" />
             <p className="mt-6 max-w-md text-show-cream/70">De Grote Sinterklaasshow — een spectaculaire liveshow vol muziek, humor, dans en magie. Schouwburg, Stadhuis Genk.</p>
             <a href="mailto:info@sinterklaasgenk.be" data-cursor="hover" className="mt-6 inline-block font-medium text-show-gold underline-offset-4 hover:underline">info@sinterklaasgenk.be</a>
+            <Socials className="mt-6" ring="border-show-gold/40 text-show-gold hover:border-show-gold hover:bg-show-gold hover:text-show-bg" />
           </div>
           <div>
             <h4 className="text-xs uppercase tracking-[0.3em] text-show-cream/50">De show</h4>
@@ -68,6 +94,7 @@ export default function Footer() {
             <button onClick={() => navigate('xmas')} data-cursor="hover" className="font-display text-3xl text-xmas-gold md:text-4xl">Huis van de Kerstman</button>
             <p className="mt-6 max-w-md text-xmas-cream/70">Stap zelf het verhaal binnen en maak de magische reis naar Het Huis van de Kerstman — een warme kerstbeleving voor het hele gezin in Genk.</p>
             <a href="mailto:info@hethuisvandekerstman.be" data-cursor="hover" className="mt-6 inline-block font-medium text-xmas-gold underline-offset-4 hover:underline">info@hethuisvandekerstman.be</a>
+            <Socials className="mt-6" ring="border-xmas-gold/40 text-xmas-gold hover:border-xmas-gold hover:bg-xmas-gold hover:text-xmas-green" />
           </div>
           <div>
             <h4 className="text-xs uppercase tracking-[0.3em] text-xmas-cream/50">De beleving</h4>
@@ -110,6 +137,7 @@ export default function Footer() {
           <img src="/studio-wonderland-badge.png" alt="Studio Wonderland" className="h-28 w-auto md:h-32" />
           <p className="mt-4 max-w-md text-wonder-muted">Wij maken werelden waar families samen in kunnen stappen. Bijzondere livebelevingen voor jong en oud.</p>
           <a href="mailto:info@studiowonderland.eu" data-cursor="hover" className="mt-6 inline-block font-medium text-wonder-gold underline-offset-4 hover:underline">info@studiowonderland.eu</a>
+          <Socials className="mt-6" ring="border-wonder-gold/40 text-wonder-gold hover:border-wonder-gold hover:bg-wonder-gold hover:text-white" />
         </div>
         <div>
           <h4 className="text-xs uppercase tracking-[0.3em] text-wonder-muted">Studio Wonderland</h4>
