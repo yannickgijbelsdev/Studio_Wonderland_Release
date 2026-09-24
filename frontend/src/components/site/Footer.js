@@ -1,6 +1,8 @@
 'use client'
-import { Heart } from 'lucide-react'
+import { Heart, Mail } from 'lucide-react'
 import { useSite } from './ctx'
+
+const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr__nRph2QMKLeJzDwMWtXbUuSoF0-thK5f'
 
 export default function Footer() {
   const { route, articleOrigin = 'show', navigate } = useSite()
@@ -30,6 +32,15 @@ export default function Footer() {
               <li><a href="https://events.flextickets.nl/event/de-grote-sinterklaasshow" target="_blank" rel="noopener noreferrer" data-cursor="hover" className="hover:text-show-gold">Bestel je tickets</a></li>
             </ul>
           </div>
+        </div>
+        <div className="mx-auto mt-12 flex max-w-[1400px] flex-col items-center gap-5 rounded-2xl border border-show-gold/25 bg-black/25 p-8 text-center md:flex-row md:justify-between md:text-left">
+          <div>
+            <h4 className="font-display text-2xl text-show-cream md:text-3xl">Blijf op de hoogte</h4>
+            <p className="mt-1 text-show-cream/70">Schrijf je in op onze nieuwsbrief en mis niets van De Grote Sinterklaasshow.</p>
+          </div>
+          <a href={NEWSLETTER_URL} target="_blank" rel="noopener noreferrer" data-cursor="hover" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-show-gold px-7 py-3.5 font-semibold text-show-bg transition-all duration-300 hover:scale-[1.03] hover:bg-white">
+            <Mail className="h-5 w-5" /> Abonneer op de nieuwsbrief
+          </a>
         </div>
         <div className="mx-auto mt-14 flex max-w-[1400px] flex-col items-center justify-between gap-4 border-t border-show-gold/20 pt-8 text-xs text-show-cream/50 md:flex-row">
           <span>&copy; {new Date().getFullYear()} De Grote Sinterklaasshow &middot; Studio Wonderland &middot; Ondernemingsnummer: BE1008.607.780</span>

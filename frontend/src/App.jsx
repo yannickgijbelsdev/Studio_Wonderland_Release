@@ -16,6 +16,7 @@ import Applausmeter from '@/components/site/Applausmeter'
 import Article from '@/components/site/Article'
 import Legal from '@/components/site/Legal'
 import CookieConsent from '@/components/site/CookieConsent'
+import NewsletterPopup from '@/components/site/NewsletterPopup'
 
 const WORLD_CLASS = {
   home: 'bg-wonder-bg text-wonder-ink',
@@ -104,6 +105,7 @@ function App() {
       </div>
 
       <CookieConsent />
+      {route === 'show' && <NewsletterPopup />}
 
       <Toaster position="top-center" theme="light" />
     </SiteContext.Provider>
