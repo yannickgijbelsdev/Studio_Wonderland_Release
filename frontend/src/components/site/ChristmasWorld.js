@@ -120,10 +120,10 @@ export default function ChristmasWorld() {
         titleStar="text-xmas-gold"
         cardBorder="border-xmas-gold/15"
         cardHover="hover:border-xmas-gold/50 hover:shadow-[0_20px_50px_-20px_rgba(232,180,80,0.35)]"
-        dateCls="text-xmas-cream/50"
         headingCls="text-xmas-cream group-hover:text-xmas-gold"
         excerptCls="text-xmas-cream/70"
-        linkCls="text-xmas-gold"
+        btnCls="bg-xmas-gold text-xmas-bg hover:bg-white"
+        imageBg="bg-xmas-green"
         fallbackBg="bg-xmas-green"
         iconCls="text-xmas-gold/50"
       />

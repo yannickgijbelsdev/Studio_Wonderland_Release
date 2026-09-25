@@ -96,8 +96,8 @@ export default function Article() {
           <article>
             {article.image_url && (
               <figure className="m-0">
-                <div className="aspect-[16/9] w-full overflow-hidden rounded-3xl">
-                  <img src={article.image_url} alt={article.title} className="h-full w-full object-cover" />
+                <div className="w-full overflow-hidden rounded-3xl">
+                  <img src={article.image_url} alt={article.title} className="block h-auto w-full object-contain" />
                 </div>
                 {article.image_caption_html && (
                   <figcaption

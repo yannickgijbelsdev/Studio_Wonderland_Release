@@ -5,15 +5,6 @@ import { useSectionAnimations } from '@/lib/site/anim'
 import { useSite } from './ctx'
 import { PageHeader, ArchDivider } from './ui'
 
-function formatDate(iso) {
-  if (!iso) return ''
-  try {
-    return new Date(iso).toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' })
-  } catch {
-    return ''
-  }
-}
-
 const WONDER_SITE = 'studio-wonderland'
 const CATEGORY = 'eerder-te-beleven'
 
@@ -59,7 +50,7 @@ export default function Productions() {
               <p className="mt-4 text-wonder-ink/80">Binnenkort delen we hier de herinneringen aan onze eerdere belevenissen.</p>
             </div>
           ) : (
-            <div className="grid gap-8 py-16 md:grid-cols-2">
+            <div className="grid items-start gap-8 py-16 md:grid-cols-2">
               {items.map((it) => (
                 <button
                   key={it.id}
@@ -68,18 +59,17 @@ export default function Productions() {
                   data-cursor="hover"
                   className="group flex flex-col overflow-hidden rounded-3xl border border-wonder-pink/40 bg-wonder-panel text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-wonder-pinkdeep/60 hover:shadow-[0_24px_60px_-24px_rgba(192,72,104,0.35)]"
                 >
-                  <div className="relative aspect-[16/9] overflow-hidden">
+                  <div className="relative w-full overflow-hidden bg-wonder-rose">
                     {it.image_url ? (
-                      <img src={it.image_url} alt={it.title} className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                      <img src={it.image_url} alt={it.title} className="block h-auto w-full object-contain transition-transform duration-1000 group-hover:scale-[1.03]" />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-wonder-rose"><Newspaper className="h-12 w-12 text-wonder-pinkdeep/40" /></div>
+                      <div className="flex aspect-[16/9] w-full items-center justify-center bg-wonder-rose"><Newspaper className="h-12 w-12 text-wonder-pinkdeep/40" /></div>
                     )}
                   </div>
                   <div className="flex flex-1 flex-col p-7 md:p-8">
-                    <span className="text-xs uppercase tracking-[0.2em] text-wonder-muted">{formatDate(it.published_at)}</span>
-                    <h3 className="mt-3 font-display text-3xl leading-tight text-wonder-ink transition-colors group-hover:text-wonder-pinkdeep md:text-4xl">{it.title}</h3>
+                    <h3 className="font-display text-3xl leading-tight text-wonder-ink transition-colors group-hover:text-wonder-pinkdeep md:text-4xl">{it.title}</h3>
                     {it.excerpt && <p className="mt-4 line-clamp-3 text-base text-wonder-ink/70">{it.excerpt}</p>}
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-wonder-pinkdeep">Lees meer <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                    <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-wonder-pinkdeep px-6 py-3 text-sm font-semibold text-white transition-all duration-300 group-hover:scale-[1.03] group-hover:bg-wonder-plum">Lees meer <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
                   </div>
                 </button>
               ))}
