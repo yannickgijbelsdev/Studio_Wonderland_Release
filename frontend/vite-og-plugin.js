@@ -16,6 +16,72 @@ const WORLD_BASE = {
 }
 const CMS = 'https://clr.koodh.com/api/news'
 
+// Public canonical domain (used for absolute URLs in the sitemap).
+const SITE_ORIGIN = 'https://studiowonderland.eu'
+
+// Static routes that should always be in the sitemap.
+const STATIC_PATHS = [
+  { path: '/', priority: '1.0', changefreq: 'weekly' },
+  { path: '/degrotesinterklaasshow', priority: '0.9', changefreq: 'weekly' },
+  { path: '/hethuisvandekerstman', priority: '0.9', changefreq: 'weekly' },
+  { path: '/eerder-te-beleven', priority: '0.6', changefreq: 'monthly' },
+  { path: '/over-ons', priority: '0.5', changefreq: 'monthly' },
+  { path: '/contact', priority: '0.7', changefreq: 'monthly' },
+  { path: '/applausmeter', priority: '0.4', changefreq: 'monthly' },
+  { path: '/privacybeleid', priority: '0.2', changefreq: 'yearly' },
+  { path: '/cookiebeleid', priority: '0.2', changefreq: 'yearly' },
+]
+
+// Where each world's articles live in the CMS + how their URL is built.
+const ARTICLE_SOURCES = [
+  { site: 'sinterklaas-genk', category: 'homepagina', prefix: '/degrotesinterklaasshow/nieuws/' },
+  { site: 'het-huis-van-de-kerstman', category: 'nieuws', prefix: '/hethuisvandekerstman/nieuws/' },
+  { site: 'studio-wonderland', category: 'eerder-te-beleven', prefix: '/eerder-te-beleven/' },
+]
+
+async function fetchNewsList(site, category) {
+  try {
+    const r = await fetch(`${CMS}/${site}/${category}`, { headers: { Accept: 'application/json' } })
+    if (!r.ok) return []
+    const data = await r.json()
+    return Array.isArray(data?.items) ? data.items : []
+  } catch {
+    return []
+  }
+}
+
+const xmlEsc = (s) =>
+  String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;')
+
+async function buildSitemap() {
+  const urls = []
+  const today = new Date().toISOString().slice(0, 10)
+
+  for (const s of STATIC_PATHS) {
+    urls.push(
+      `  <url>\n    <loc>${xmlEsc(SITE_ORIGIN + s.path)}</loc>\n    <changefreq>${s.changefreq}</changefreq>\n    <priority>${s.priority}</priority>\n  </url>`
+    )
+  }
+
+  const lists = await Promise.all(ARTICLE_SOURCES.map((src) => fetchNewsList(src.site, src.category)))
+  ARTICLE_SOURCES.forEach((src, i) => {
+    for (const it of lists[i]) {
+      const slug = it.slug || it.id
+      if (!slug) continue
+      const loc = xmlEsc(SITE_ORIGIN + src.prefix + slug)
+      const lastmod = (it.published_at || '').slice(0, 10) || today
+      const imageTag = it.image_url
+        ? `\n    <image:image>\n      <image:loc>${xmlEsc(it.image_url)}</image:loc>\n      <image:title>${xmlEsc(it.title || '')}</image:title>\n    </image:image>`
+        : ''
+      urls.push(
+        `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>${imageTag}\n  </url>`
+      )
+    }
+  })
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`
+}
+
 // Mirror of ctx.parseArticlePath — returns { origin, slug } or null.
 function parseArticlePath(rawUrl) {
   const pathname = (rawUrl || '/').split('?')[0]
@@ -142,11 +208,25 @@ export default function articleOgPlugin() {
     }
   }
 
+  const sitemapMiddleware = async (req, res, next) => {
+    try {
+      const pathname = (req.url || '').split('?')[0].replace(/\/+$/, '') || '/'
+      if (pathname !== '/sitemap.xml') return next()
+      const xml = await buildSitemap()
+      res.statusCode = 200
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+      res.end(xml)
+    } catch {
+      next()
+    }
+  }
+
   return {
     name: 'article-og-tags',
     // DEV server (vite): read source index.html + run vite's html transform.
     configureServer(server) {
       const indexPath = path.resolve(root, 'index.html')
+      server.middlewares.use(sitemapMiddleware)
       server.middlewares.use(
         handle(
           () => fs.readFileSync(indexPath, 'utf-8'),
@@ -156,6 +236,7 @@ export default function articleOgPlugin() {
     },
     // PREVIEW server (vite preview): serve the built index.html.
     configurePreviewServer(server) {
+      server.middlewares.use(sitemapMiddleware)
       const builtIndex = path.resolve(root, 'build', 'index.html')
       if (!fs.existsSync(builtIndex)) return
       server.middlewares.use(handle(() => fs.readFileSync(builtIndex, 'utf-8'), null))
