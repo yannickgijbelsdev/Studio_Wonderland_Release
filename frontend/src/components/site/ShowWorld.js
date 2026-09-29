@@ -166,7 +166,7 @@ export default function ShowWorld() {
       {/* HERO — enkel de Sinterklaas-video, partners flankeren de scroll-cue */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
         <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
-          <source src="/sinterklaas-trailer.mp4" type="video/mp4" />
+          <source src="/sinterklaas-hero.mp4" type="video/mp4" />
         </video>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
 

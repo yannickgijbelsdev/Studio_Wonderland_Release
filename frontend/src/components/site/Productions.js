@@ -54,7 +54,7 @@ export default function Productions() {
               {items.map((it) => (
                 <button
                   key={it.id}
-                  onClick={() => openArticle(it.id, 'productions')}
+                  onClick={() => openArticle(it.slug || it.id, 'productions')}
                   data-fade
                   data-cursor="hover"
                   className="group flex flex-col overflow-hidden rounded-3xl border border-wonder-pink/40 bg-wonder-panel text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-wonder-pinkdeep/60 hover:shadow-[0_24px_60px_-24px_rgba(192,72,104,0.35)]"

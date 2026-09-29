@@ -62,7 +62,12 @@ export default function Article() {
     setError(false)
     fetch(`/api/news/${articleId}`)
       .then((r) => { if (!r.ok) throw new Error('nok'); return r.json() })
-      .then((data) => { if (mounted) setArticle(data) })
+      .then((data) => {
+        if (mounted) {
+          setArticle(data)
+          if (data?.title) document.title = `${data.title} · Studio Wonderland`
+        }
+      })
       .catch(() => { if (mounted) setError(true) })
       .finally(() => { if (mounted) setLoading(false) })
     return () => { mounted = false }

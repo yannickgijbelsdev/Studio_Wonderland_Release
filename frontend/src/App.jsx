@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { Toaster } from '@/components/ui/sonner'
 import { gsap, ScrollTrigger } from '@/lib/site/anim'
-import { SiteContext, pathForRoute, routeForPath } from '@/components/site/ctx'
+import { SiteContext, pathForRoute, resolveLocation, articlePath } from '@/components/site/ctx'
 import Cursor from '@/components/site/Cursor'
 import Nav from '@/components/site/Nav'
 import Footer from '@/components/site/Footer'
@@ -49,10 +49,17 @@ function App() {
 
   // Sync route with browser URL (initial load + back/forward buttons)
   useEffect(() => {
-    setRoute(routeForPath(window.location.pathname))
-    const onPop = () => setRoute(routeForPath(window.location.pathname))
-    window.addEventListener('popstate', onPop)
-    return () => window.removeEventListener('popstate', onPop)
+    const apply = () => {
+      const loc = resolveLocation(window.location.pathname)
+      setRoute(loc.route)
+      if (loc.route === 'article') {
+        setArticleId(loc.articleId)
+        setArticleOrigin(loc.articleOrigin)
+      }
+    }
+    apply()
+    window.addEventListener('popstate', apply)
+    return () => window.removeEventListener('popstate', apply)
   }, [])
 
   const navigate = useCallback((next, anchor) => {
@@ -77,8 +84,13 @@ function App() {
   const openArticle = useCallback((id, origin = 'show') => {
     setArticleId(id)
     setArticleOrigin(origin)
-    navigate('article')
-  }, [navigate])
+    const path = articlePath(origin, id)
+    if (window.location.pathname !== path) window.history.pushState({ route: 'article' }, '', path)
+    setRoute('article')
+    if (lenisRef.current) lenisRef.current.scrollTo(0, { immediate: true })
+    window.scrollTo(0, 0)
+    requestAnimationFrame(() => ScrollTrigger.refresh())
+  }, [])
 
   const worldClass = route === 'article'
     ? (articleOrigin === 'xmas' ? WORLD_CLASS.xmas : articleOrigin === 'productions' ? WORLD_CLASS.home : WORLD_CLASS.show)
