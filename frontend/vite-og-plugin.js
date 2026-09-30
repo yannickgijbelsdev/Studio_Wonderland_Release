@@ -167,8 +167,18 @@ function injectMeta(html, { title, description, image, url }) {
   return html
 }
 
+// Build a clean, share-friendly description from an article object.
+function articleDescription(article) {
+  const cleanBody = String(article.body || '').replace(
+    /^\s*<p[^>]*class="[^"]*clara-image-credit[^"]*"[^>]*>[\s\S]*?<\/p>/i,
+    ''
+  )
+  return stripHtml(article.excerpt) || stripHtml(cleanBody).slice(0, 200)
+}
+
 export default function articleOgPlugin() {
   const root = process.cwd()
+  let outDir = path.resolve(root, 'build')
 
   const handle = (readTemplate, transform) => async (req, res, next) => {
     try {
@@ -186,16 +196,9 @@ export default function articleOgPlugin() {
       const host = req.headers['x-forwarded-host'] || req.headers.host || 'studiowonderland.eu'
       const fullUrl = `${proto}://${host}${req.url}`
 
-      const cleanBody = String(article.body || '').replace(
-        /^\s*<p[^>]*class="[^"]*clara-image-credit[^"]*"[^>]*>[\s\S]*?<\/p>/i,
-        ''
-      )
-      const description =
-        stripHtml(article.excerpt) || stripHtml(cleanBody).slice(0, 200)
-
       const html = injectMeta(template, {
         title: article.title,
-        description,
+        description: articleDescription(article),
         image: article.image_url,
         url: fullUrl,
       })
@@ -223,6 +226,59 @@ export default function articleOgPlugin() {
 
   return {
     name: 'article-og-tags',
+    // Capture the resolved build output dir (defaults to /build).
+    configResolved(config) {
+      outDir = path.resolve(config.root, config.build?.outDir || 'build')
+    },
+    // BUILD (vite build): prerender a static HTML file per article with the
+    // correct OG tags, and write a real static sitemap.xml. This is what makes
+    // social sharing + fast indexing work on a static build served by nginx.
+    async closeBundle() {
+      try {
+        const indexFile = path.join(outDir, 'index.html')
+        if (!fs.existsSync(indexFile)) return
+        const baseHtml = fs.readFileSync(indexFile, 'utf-8')
+
+        // 1) Static sitemap.xml
+        try {
+          const xml = await buildSitemap()
+          fs.writeFileSync(path.join(outDir, 'sitemap.xml'), xml, 'utf-8')
+          console.log('[article-og] wrote sitemap.xml')
+        } catch (e) {
+          console.warn('[article-og] sitemap generation failed:', e?.message || e)
+        }
+
+        // 2) Per-article prerendered HTML with OG tags
+        const lists = await Promise.all(
+          ARTICLE_SOURCES.map((s) => fetchNewsList(s.site, s.category))
+        )
+        let count = 0
+        for (let i = 0; i < ARTICLE_SOURCES.length; i++) {
+          const src = ARTICLE_SOURCES[i]
+          for (const item of lists[i]) {
+            const slug = item.slug || item.id
+            if (!slug) continue
+            // Fetch the full article to get an accurate description (body).
+            const full = (await fetchArticle(slug)) || item
+            const url = SITE_ORIGIN + src.prefix + slug
+            const html = injectMeta(baseHtml, {
+              title: full.title || item.title,
+              description: articleDescription(full),
+              image: full.image_url || item.image_url,
+              url,
+            })
+            const relDir = (src.prefix.replace(/^\/+|\/+$/g, '') + '/' + slug).split('/')
+            const dir = path.join(outDir, ...relDir)
+            fs.mkdirSync(dir, { recursive: true })
+            fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf-8')
+            count++
+          }
+        }
+        console.log(`[article-og] prerendered ${count} article page(s)`) 
+      } catch (e) {
+        console.warn('[article-og] prerender failed:', e?.message || e)
+      }
+    },
     // DEV server (vite): read source index.html + run vite's html transform.
     configureServer(server) {
       const indexPath = path.resolve(root, 'index.html')
@@ -237,7 +293,7 @@ export default function articleOgPlugin() {
     // PREVIEW server (vite preview): serve the built index.html.
     configurePreviewServer(server) {
       server.middlewares.use(sitemapMiddleware)
-      const builtIndex = path.resolve(root, 'build', 'index.html')
+      const builtIndex = path.resolve(outDir, 'index.html')
       if (!fs.existsSync(builtIndex)) return
       server.middlewares.use(handle(() => fs.readFileSync(builtIndex, 'utf-8'), null))
     },
