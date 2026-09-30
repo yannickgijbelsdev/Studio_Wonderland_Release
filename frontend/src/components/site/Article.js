@@ -65,7 +65,7 @@ export default function Article() {
       .then((data) => {
         if (mounted) {
           setArticle(data)
-          if (data?.title) document.title = `${data.title} · Studio Wonderland`
+          if (data?.title) document.title = `Studio Wonderland | ${data.title}`
         }
       })
       .catch(() => { if (mounted) setError(true) })

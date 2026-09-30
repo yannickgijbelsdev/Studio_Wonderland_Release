@@ -141,7 +141,7 @@ async function fetchArticle(slug) {
 
 function injectMeta(html, { title, description, image, url }) {
   const SITE = 'Studio Wonderland'
-  const t = esc(title ? `${title} · ${SITE}` : SITE)
+  const t = esc(title ? `${SITE} | ${title}` : SITE)
   const d = esc(description || '')
   const img = esc(image || '')
   const u = esc(url || '')

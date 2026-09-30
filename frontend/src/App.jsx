@@ -31,6 +31,21 @@ const WORLD_CLASS = {
   cookies: 'bg-wonder-bg text-wonder-ink',
 }
 
+const SITE_NAME = 'Studio Wonderland'
+
+const ROUTE_TITLES = {
+  home: 'Familie-entertainment in Genk',
+  show: 'De Grote Sinterklaasshow',
+  xmas: 'Het Huis van de Kerstman',
+  productions: 'Eerder te beleven',
+  about: 'Over ons',
+  contact: 'Contact',
+  applausmeter: 'Applausmeter',
+  privacy: 'Privacybeleid',
+  cookies: 'Cookiebeleid',
+  article: 'Nieuws',
+}
+
 function App() {
   const [route, setRoute] = useState('home')
   const [articleId, setArticleId] = useState(null)
@@ -61,6 +76,14 @@ function App() {
     window.addEventListener('popstate', apply)
     return () => window.removeEventListener('popstate', apply)
   }, [])
+
+  // Keep the browser tab title in sync with the current page:
+  // "Studio Wonderland | <page>". For articles, Article.js refines it with the
+  // real article title once loaded (same format).
+  useEffect(() => {
+    const label = ROUTE_TITLES[route]
+    document.title = label ? `${SITE_NAME} | ${label}` : SITE_NAME
+  }, [route])
 
   const navigate = useCallback((next, anchor) => {
     if (next === route) {
