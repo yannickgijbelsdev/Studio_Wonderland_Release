@@ -200,12 +200,9 @@ export default function ShowWorld() {
         </div>
       )}
 
-      {/* NIEUWS — bovenaan, met boog omhoog in de hero (zoals de hoofdsite) */}
-      <ShowNews />
-
-      {/* HET VERHAAL — tekst met Sinterklaas ernaast (gestapeld op mobiel) */}
-      <section id="verhaal" className="relative z-10 bg-show-reddeep px-6 pt-24 md:px-10 md:pt-28">
-        <ArchDivider color="fill-show-reddeep" />
+      {/* HET VERHAAL — eerst, met boog omhoog in de hero */}
+      <section id="verhaal" className="relative z-10 bg-show-bg px-6 pt-24 md:px-10 md:pt-28">
+        <ArchDivider color="fill-show-bg" />
         <div className="mx-auto flex max-w-[1360px] flex-col items-center gap-8 lg:flex-row-reverse lg:items-end lg:gap-12">
           <div className="w-full max-w-[720px] pb-12 text-center lg:max-w-none lg:flex-1 lg:pb-28 lg:text-left">
             <Eyebrow className="text-show-gold [&]:justify-center lg:[&]:justify-start">Het verhaal</Eyebrow>
@@ -227,6 +224,9 @@ export default function ShowWorld() {
           </div>
         </div>
       </section>
+
+      {/* NIEUWS — daarna, in donkerrood */}
+      <ShowNews sectionBg="bg-show-reddeep" archColor="fill-show-reddeep" />
 
       {/* VIER WERELDEN — compact, 4 sterretjes */}
       <section className="relative z-10 bg-show-bg px-6 pt-24 md:px-10 md:pt-28">
