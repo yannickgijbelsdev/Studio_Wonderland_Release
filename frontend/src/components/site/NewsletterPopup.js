@@ -1,12 +1,23 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { Mail, X } from 'lucide-react'
+import { useScrollLock } from '@/lib/site/anim'
 
 const NEWSLETTER_URL = 'https://campaigns.koodh.com/subscribe/clr_WcRPtVz4nCzPYvTD5dSQE6iqA351oJPC'
 const KEY = 'sw_newsletter_seen'
 
 export default function NewsletterPopup() {
   const [show, setShow] = useState(false)
+  useScrollLock(show)
+
+  // Freeze background videos while the popup is open — re-blurring a playing
+  // full-screen video every frame is very heavy. Resume them on close.
+  useEffect(() => {
+    if (!show) return
+    const paused = [...document.querySelectorAll('video')].filter((v) => !v.paused)
+    paused.forEach((v) => v.pause())
+    return () => paused.forEach((v) => { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) })
+  }, [show])
 
   useEffect(() => {
     let seen = false

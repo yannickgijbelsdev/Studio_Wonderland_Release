@@ -151,7 +151,7 @@ function WorldNav({ route }) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-[80] px-4 pt-4 md:px-6 md:pt-5">
-        <div className={`mx-auto flex items-center justify-between rounded-full px-4 py-2 shadow-xl shadow-black/25 backdrop-blur-md transition-all duration-500 md:px-6 md:py-2.5 ${w.pill} ${scrolled ? 'max-w-[1280px]' : 'max-w-[1460px]'}`}>
+        <div className={`mx-auto flex items-center justify-between rounded-full px-4 py-2 shadow-xl shadow-black/25 transition-all duration-500 md:px-6 md:py-2.5 ${w.pill} ${scrolled ? 'max-w-[1280px]' : 'max-w-[1460px]'}`}>
           <button onClick={toTop} data-cursor="hover" className="flex items-center">
             {w.logo ? (
               <img src={w.logo} alt={w.logoAlt} className="h-9 w-auto md:h-11" />
@@ -253,7 +253,7 @@ function MainNav() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-[80] px-4 pt-4 md:px-6 md:pt-5">
-        <div className={`mx-auto flex items-center justify-between rounded-full bg-white/95 px-5 py-2.5 shadow-xl shadow-black/10 backdrop-blur-md transition-all duration-500 md:px-7 md:py-3 ${scrolled ? 'max-w-[1120px]' : 'max-w-[1320px]'}`}>
+        <div className={`mx-auto flex items-center justify-between rounded-full bg-white/95 px-5 py-2.5 shadow-xl shadow-black/10 transition-all duration-500 md:px-7 md:py-3 ${scrolled ? 'max-w-[1120px]' : 'max-w-[1320px]'}`}>
           <button onClick={() => go('home')} data-cursor="hover" className="flex items-center">
             <img src="/studio-wonderland-logo.png" alt="Studio Wonderland" className="h-8 w-auto md:h-9" />
           </button>

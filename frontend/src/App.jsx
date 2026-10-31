@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { Toaster } from '@/components/ui/sonner'
-import { gsap, ScrollTrigger } from '@/lib/site/anim'
+import { gsap, ScrollTrigger, registerLenis } from '@/lib/site/anim'
 import { SiteContext, pathForRoute, resolveLocation, articlePath } from '@/components/site/ctx'
 import Cursor from '@/components/site/Cursor'
 import Nav from '@/components/site/Nav'
@@ -53,8 +53,11 @@ function App() {
   const lenisRef = useRef(null)
 
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true, wheelMultiplier: 0.9, syncTouch: true })
+    // Native touch scrolling on phones/tablets (smoother than syncing touch through JS).
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 0.9, syncTouch: false })
     lenisRef.current = lenis
+    registerLenis(lenis)
+    ScrollTrigger.config({ ignoreMobileResize: true })
     lenis.on('scroll', ScrollTrigger.update)
     const raf = (time) => lenis.raf(time * 1000)
     gsap.ticker.add(raf)

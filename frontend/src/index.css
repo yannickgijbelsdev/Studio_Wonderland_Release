@@ -67,7 +67,7 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 /* Custom cursor: hide native on precise pointers */
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   html, body { cursor: none; }
   *, *::before, *::after { cursor: none !important; }
   input, textarea, select, [contenteditable="true"], [data-native-cursor], [data-native-cursor] * { cursor: auto !important; }
@@ -96,8 +96,13 @@ html.lenis, html.lenis body { height: auto; }
   inset: 0;
   pointer-events: none;
   z-index: 60;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  /* Pre-rendered noise tile (cheap) instead of a live SVG turbulence filter,
+     promoted to its own GPU layer so it never repaints while scrolling. */
+  background-image: url('/grain.png');
+  background-size: 160px 160px;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Spotlight radial for show world */

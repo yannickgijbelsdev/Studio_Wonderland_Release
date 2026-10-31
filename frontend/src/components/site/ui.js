@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { gsap } from '@/lib/site/anim'
+import { gsap, useScrollLock } from '@/lib/site/anim'
 
 export function Magnetic({ children, className = '', as = 'button', strength, onClick, ...rest }) {
   const Tag = as
@@ -63,7 +63,7 @@ export function Sparkles({ count = 60, className = '' }) {
     })))
   }, [count])
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
+    <div className={`pointer-events-none absolute inset-0 overflow-hidden [contain:strict] ${className}`}>
       {dots.map((d) => (
         <span key={d.key} className="sparkle" style={{ top: `${d.top}%`, left: `${d.left}%`, width: d.size, height: d.size, background: d.color, animationDelay: `${d.delay}s`, animationDuration: `${d.dur}s` }} />
       ))}
@@ -112,6 +112,7 @@ export function PhotoGallery({ images = [], accent = 'text-white', ringClass = '
   const prev = useCallback(() => setIdx((i) => (i === null ? i : (i - 1 + items.length) % items.length)), [items.length])
   const next = useCallback(() => setIdx((i) => (i === null ? i : (i + 1) % items.length)), [items.length])
 
+  useScrollLock(open)
   useEffect(() => {
     if (!open) return
     const onKey = (e) => {
@@ -120,8 +121,7 @@ export function PhotoGallery({ images = [], accent = 'text-white', ringClass = '
       if (e.key === 'ArrowRight') next()
     }
     window.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+    return () => { window.removeEventListener('keydown', onKey) }
   }, [open, close, prev, next])
 
   return (

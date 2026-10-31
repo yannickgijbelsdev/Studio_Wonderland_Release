@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, Ticket, MapPin, Play, X } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
-import { gsap, useSectionAnimations } from '@/lib/site/anim'
+import { gsap, useSectionAnimations, useScrollLock } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
 import { Magnetic, Eyebrow, Star, TitleReveal, ArchDivider, Sparkles, PhotoGallery } from './ui'
@@ -104,6 +104,14 @@ export default function ShowWorld() {
   const [galleryPhotos, setGalleryPhotos] = useState([])
   const [stars, setStars] = useState([])
   const [trailerOpen, setTrailerOpen] = useState(false)
+  useScrollLock(trailerOpen)
+  // Pause the hero video while the trailer plays.
+  useEffect(() => {
+    const v = heroVid.current
+    if (!v) return
+    if (trailerOpen) v.pause?.()
+    else { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) }
+  }, [trailerOpen])
   useSectionAnimations(scope, [galleryPhotos.length, stars.length])
 
   // Foto's uit de Clara/koodh galerij (categorie "galerij"); valt terug op de
@@ -158,14 +166,23 @@ export default function ShowWorld() {
       gsap.to('.hero-img', { scale: 1.1, ease: 'none', scrollTrigger: { trigger: '.hero-sec', start: 'top top', end: 'bottom top', scrub: true } })
       gsap.from('.hero-cue', { opacity: 0, y: 12, duration: 1, delay: 0.8, ease: 'power3.out' })
     }, scope)
-    return () => ctx.revert()
+    // Stop decoding the hero video while it's off-screen (big win while scrolling the rest of the page).
+    let io
+    if (v && typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) }
+        else v.pause?.()
+      }, { threshold: 0 })
+      io.observe(v)
+    }
+    return () => { if (io) io.disconnect(); ctx.revert() }
   }, [])
 
   return (
     <div ref={scope} className="spotlight-bg">
       {/* HERO — enkel de Sinterklaas-video, partners flankeren de scroll-cue */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden">
-        <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto">
+        <video ref={heroVid} className="hero-img absolute inset-0 h-full w-full object-cover will-change-transform" autoPlay muted loop playsInline preload="auto">
           <source src="/sinterklaas-hero.mp4" type="video/mp4" />
         </video>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
@@ -220,7 +237,7 @@ export default function ShowWorld() {
           </div>
 
           <div className="w-full max-w-[440px] sm:max-w-[520px] lg:w-[600px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
-            <img src="/sinterklaas.png" alt="Sinterklaas — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
+            <img src="/sinterklaas.png" alt="Sinterklaas — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
           </div>
         </div>
       </section>
@@ -250,7 +267,7 @@ export default function ShowWorld() {
           </div>
 
           <div className="w-full max-w-[520px] sm:max-w-[620px] lg:w-[640px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
-            <img src="/rob.png" alt="Rob Vanoudenhoven — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
+            <img src="/rob.png" alt="Rob Vanoudenhoven — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
           </div>
         </div>
       </section>
@@ -326,7 +343,7 @@ export default function ShowWorld() {
           </div>
 
           <div className="w-full max-w-[440px] sm:max-w-[520px] lg:w-[600px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
-            <img src="/presentator.png" alt="Presentator — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)]" />
+            <img src="/presentator.png" alt="Presentator — De Grote Sinterklaasshow" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
           </div>
         </div>
       </section>

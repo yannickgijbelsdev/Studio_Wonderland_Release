@@ -28,7 +28,7 @@ export default function CookieConsent() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[9000] p-4 md:p-6">
-      <div className="mx-auto flex max-w-[1100px] flex-col gap-4 rounded-2xl border border-black/10 bg-white/95 p-5 shadow-2xl backdrop-blur-md md:flex-row md:items-center md:gap-6 md:p-6">
+      <div className="mx-auto flex max-w-[1100px] flex-col gap-4 rounded-2xl border border-black/10 bg-white/95 p-5 shadow-2xl md:flex-row md:items-center md:gap-6 md:p-6">
         <div className="flex items-start gap-3">
           <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-wonder-pink/40 text-wonder-pinkdeep"><Cookie className="h-5 w-5" /></span>
           <p className="text-sm leading-relaxed text-wonder-ink/80">
