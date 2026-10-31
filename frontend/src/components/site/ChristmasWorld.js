@@ -2,9 +2,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Ticket, CalendarDays, Clock, MapPin, Play, X } from 'lucide-react'
 import { gsap, useSectionAnimations, useScrollLock } from '@/lib/site/anim'
-import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
-import { Eyebrow, Star, TitleReveal, ArchDivider, PhotoGallery } from './ui'
+import { Eyebrow, Star, TitleReveal, ArchDivider } from './ui'
 import ShowNews from './ShowNews'
 
 const XMAS_SITE = 'het-huis-van-de-kerstman'
@@ -38,8 +37,6 @@ const GOLDEN_INFO = [
   { label: 'Leeftijd', value: 'Geschikt voor alle leeftijden' },
 ]
 
-const PHOTOS = [IMG.xmasBaubles, IMG.xmasStars, IMG.xmasTrees, IMG.xmasSanta, IMG.xmasHouse, IMG.xmasStatue, IMG.xmasFamily1, IMG.xmasWalk]
-
 function TicketButton({ className = '', children }) {
   return (
     <a href={TICKETS_URL} target="_blank" rel="noopener noreferrer" data-cursor="hover" className={`inline-flex items-center justify-center gap-2 transition-all duration-300 ${className}`}>
@@ -66,7 +63,6 @@ export default function ChristmasWorld() {
   const scope = useRef(null)
   const heroVid = useRef(null)
   const { navigate } = useSite()
-  const [galleryPhotos, setGalleryPhotos] = useState([])
   const [trailerOpen, setTrailerOpen] = useState(false)
   useScrollLock(trailerOpen)
   // Hero-video pauzeren zolang de trailer (met geluid) openstaat.
@@ -76,24 +72,7 @@ export default function ChristmasWorld() {
     if (trailerOpen) v.pause?.()
     else { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) }
   }, [trailerOpen])
-  useSectionAnimations(scope, [galleryPhotos.length])
-
-  // Foto's uit de Clara/koodh galerij van het Huis van de Kerstman; valt terug op
-  // de vaste sfeerbeelden wanneer de galerij nog leeg is.
-  useEffect(() => {
-    let mounted = true
-    fetch(`/api/news?site=${XMAS_SITE}&category=galerij`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (!mounted || !data) return
-        const imgs = (data.items || [])
-          .map((i) => ({ src: i.image_url, caption: i.image_caption_html }))
-          .filter((i) => i.src)
-        if (imgs.length) setGalleryPhotos(imgs)
-      })
-      .catch(() => {})
-    return () => { mounted = false }
-  }, [])
+  useSectionAnimations(scope, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -310,20 +289,6 @@ export default function ChristmasWorld() {
         </div>
       </section>
 
-      {/* FOTO'S */}
-      <section id="fotos" className="relative z-10 bg-xmas-green px-6 pb-40 pt-24 md:px-10 md:pb-48 md:pt-28">
-        <ArchDivider color="fill-xmas-green" />
-        <Snow />
-        <div className="relative mx-auto max-w-[1300px]">
-          <div className="mb-12 text-center">
-            <Eyebrow className="text-xmas-gold [&]:justify-center">Foto's</Eyebrow>
-            <TitleReveal lines={["Sfeerbeelden"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
-            <p data-fade className="mt-4 text-xmas-cream/70">Sfeerbeelden van Kerst 2024 en Kerst 2025</p>
-          </div>
-          <PhotoGallery images={galleryPhotos.length ? galleryPhotos : PHOTOS} accent="text-white" ringClass="ring-xmas-gold/20" />
-        </div>
-        <ArchDivider color="fill-xmas-green" position="bottom" />
-      </section>
     </div>
   )
 }

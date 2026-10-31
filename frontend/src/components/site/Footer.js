@@ -102,7 +102,6 @@ export default function Footer() {
               <li><button onClick={() => navigate('xmas', 'verhaal')} data-cursor="hover" className="hover:text-xmas-gold">Het verhaal</button></li>
               <li><button onClick={() => navigate('xmas', 'golden')} data-cursor="hover" className="hover:text-xmas-gold">Golden Ticket</button></li>
               <li><button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="hover:text-xmas-gold">Data</button></li>
-              <li><button onClick={() => navigate('xmas', 'fotos')} data-cursor="hover" className="hover:text-xmas-gold">Foto's</button></li>
             </ul>
           </div>
           <div>

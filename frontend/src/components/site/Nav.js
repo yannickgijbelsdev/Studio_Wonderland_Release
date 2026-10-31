@@ -46,7 +46,6 @@ const SECTION_LINKS = {
     { label: 'Verhaal', a: 'verhaal' },
     { label: 'Info over het Golden Ticket', a: 'golden' },
     { label: 'Gratis Toegang', a: 'tickets' },
-    { label: "Foto's", a: 'fotos' },
   ],
 }
 
