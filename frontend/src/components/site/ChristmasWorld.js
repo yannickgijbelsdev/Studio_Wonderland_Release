@@ -1,11 +1,10 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Ticket, CalendarDays, Clock, MapPin } from 'lucide-react'
-import { gsap, useSectionAnimations } from '@/lib/site/anim'
+import { Ticket, CalendarDays, Clock, MapPin, Play, X } from 'lucide-react'
+import { gsap, useSectionAnimations, useScrollLock } from '@/lib/site/anim'
 import { IMG } from '@/lib/site/media'
 import { useSite } from './ctx'
 import { Eyebrow, Star, TitleReveal, ArchDivider, PhotoGallery } from './ui'
-import { HeroScrollCue } from './HeroVideos'
 import ShowNews from './ShowNews'
 
 const XMAS_SITE = 'het-huis-van-de-kerstman'
@@ -68,6 +67,15 @@ export default function ChristmasWorld() {
   const heroVid = useRef(null)
   const { navigate } = useSite()
   const [galleryPhotos, setGalleryPhotos] = useState([])
+  const [trailerOpen, setTrailerOpen] = useState(false)
+  useScrollLock(trailerOpen)
+  // Hero-video pauzeren zolang de trailer (met geluid) openstaat.
+  useEffect(() => {
+    const v = heroVid.current
+    if (!v) return
+    if (trailerOpen) v.pause?.()
+    else { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) }
+  }, [trailerOpen])
   useSectionAnimations(scope, [galleryPhotos.length])
 
   // Foto's uit de Clara/koodh galerij van het Huis van de Kerstman; valt terug op
@@ -111,7 +119,7 @@ export default function ChristmasWorld() {
           video gecentreerd op een vervaagde still van hetzelfde decor. */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden bg-xmas-bg">
         <img src={XMAS_HERO_BG} alt="" aria-hidden="true" className="hero-img absolute inset-0 hidden h-full w-full object-cover will-change-transform md:block" />
-        <div className="absolute inset-0 flex items-center justify-center md:pb-[210px] md:pt-[96px]">
+        <div className="absolute inset-0 flex items-center justify-center md:pb-[270px] md:pt-[96px]">
           <video
             ref={heroVid}
             className="h-full w-full object-cover md:aspect-[9/16] md:w-auto md:rounded-3xl md:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] md:ring-1 md:ring-xmas-gold/30"
@@ -127,8 +135,50 @@ export default function ChristmasWorld() {
           </video>
         </div>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
-        <HeroScrollCue />
+        {/* Trailer-knop + scroll-cue — zelfde opbouw als bij De Grote Sinterklaasshow */}
+        <div className="hero-cue absolute bottom-[112px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-4 text-white md:bottom-[132px]">
+          <button
+            onClick={() => setTrailerOpen(true)}
+            data-cursor="hover"
+            className="pointer-events-auto inline-flex items-center gap-2.5 whitespace-nowrap rounded-full bg-xmas-gold px-6 py-3 text-sm font-semibold text-xmas-bg shadow-[0_8px_30px_rgba(0,0,0,0.35)] transition-transform hover:scale-105"
+          >
+            <Play className="h-4 w-4 fill-current" /> Bekijk de trailer
+          </button>
+          <div className="flex flex-col items-center gap-2">
+            <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.3em] [text-shadow:_0_1px_10px_rgba(0,0,0,0.6)]">Scroll om te ontdekken</span>
+            <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/80 p-1.5 [box-shadow:_0_1px_10px_rgba(0,0,0,0.35)]">
+              <span className="h-2 w-1 animate-bounce rounded-full bg-white" />
+            </span>
+          </div>
+        </div>
       </section>
+
+      {/* TRAILER MODAL */}
+      {trailerOpen && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          onClick={() => setTrailerOpen(false)}
+        >
+          <button
+            onClick={() => setTrailerOpen(false)}
+            data-cursor="hover"
+            aria-label="Sluiten"
+            className="absolute right-5 top-5 z-10 text-white/80 transition-colors hover:text-white"
+          >
+            <X className="h-8 w-8" />
+          </button>
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <video
+              src={XMAS_TRAILER}
+              poster={XMAS_TRAILER_POSTER}
+              controls
+              autoPlay
+              playsInline
+              className="block max-h-[86vh] w-auto max-w-[92vw] rounded-2xl shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
 
       {/* NIEUWS — bovenaan, met boog omhoog in de hero */}
       <ShowNews
