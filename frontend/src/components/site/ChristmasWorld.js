@@ -180,24 +180,30 @@ export default function ChristmasWorld() {
         iconCls="text-xmas-gold/50"
       />
 
-      {/* HET VERHAAL */}
-      <section id="verhaal" className="relative z-10 bg-xmas-green px-6 pb-28 pt-24 md:px-10 md:pb-32 md:pt-28">
+      {/* HET VERHAAL — met Mr. Bonbonetti ernaast, zoals de Sint bij De Grote Sinterklaasshow */}
+      <section id="verhaal" className="relative z-10 bg-xmas-green px-6 pt-24 md:px-10 md:pt-28">
         <ArchDivider color="fill-xmas-green" />
         <Snow />
-        <div className="relative mx-auto max-w-[820px] text-center">
-          <Eyebrow className="text-xmas-gold [&]:justify-center">Het verhaal</Eyebrow>
-          <TitleReveal lines={["De reis begint", "in een snoepwinkel"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
-          <div data-fade className="mt-8 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
-            <button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="inline-flex items-center justify-center gap-2 rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] transition-all duration-300 hover:bg-white">
-              <CalendarDays className="h-5 w-5" /> Bezoek het Huis van de Kerstman
-            </button>
-            <button onClick={() => navigate('xmas', 'golden')} data-cursor="hover" className="inline-flex items-center justify-center gap-2 rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] transition-all duration-300 hover:bg-white">
-              <Ticket className="h-5 w-5" /> Golden Ticket - Kerstvertelling
-            </button>
+        <div className="relative mx-auto flex max-w-[1360px] flex-col items-center gap-8 lg:flex-row-reverse lg:items-end lg:gap-12">
+          <div className="w-full max-w-[820px] pb-12 text-center lg:max-w-none lg:flex-1 lg:pb-28 lg:text-left">
+            <Eyebrow className="text-xmas-gold [&]:justify-center lg:[&]:justify-start">Het verhaal</Eyebrow>
+            <TitleReveal lines={["De reis begint", "in een snoepwinkel"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
+            <div data-fade className="mt-8 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center lg:justify-start">
+              <button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="inline-flex items-center justify-center gap-2 rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] transition-all duration-300 hover:bg-white">
+                <CalendarDays className="h-5 w-5" /> Bezoek het Huis van de Kerstman
+              </button>
+              <button onClick={() => navigate('xmas', 'golden')} data-cursor="hover" className="inline-flex items-center justify-center gap-2 rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] transition-all duration-300 hover:bg-white">
+                <Ticket className="h-5 w-5" /> Golden Ticket - Kerstvertelling
+              </button>
+            </div>
+            <div data-fade className="mt-10 max-w-[820px] space-y-5 text-left text-lg leading-relaxed text-xmas-cream/85">
+              <p>Ergens in Genk bevindt zich een bijzondere snoepwinkel. Achter de toonbank vind je potten vol kleurrijke snoepjes, vreemde recepten en wonderlijke uitvindingen. Hier woont en werkt Mr. Bonbonetti, een excentrieke snoepmaker en uitvinder die ervan overtuigd is dat een beetje magie en teamwork bijna ieder probleem kunnen oplossen.</p>
+              <p>Maar achter in zijn winkel staat iets wat bijna niemand kent… <strong className="text-xmas-gold">De Magische Kast</strong>. En die kast kan vliegen naar <strong className="text-xmas-gold">het Huis van de Kerstman</strong>.</p>
+            </div>
           </div>
-          <div data-fade className="mt-10 space-y-5 text-left text-lg leading-relaxed text-xmas-cream/85">
-            <p>Ergens in Genk bevindt zich een bijzondere snoepwinkel. Achter de toonbank vind je potten vol kleurrijke snoepjes, vreemde recepten en wonderlijke uitvindingen. Hier woont en werkt Mr. Bonbonetti, een excentrieke snoepmaker en uitvinder die ervan overtuigd is dat een beetje magie en teamwork bijna ieder probleem kunnen oplossen.</p>
-            <p>Maar achter in zijn winkel staat iets wat bijna niemand kent… <strong className="text-xmas-gold">De Magische Kast</strong>. En die kast kan vliegen naar <strong className="text-xmas-gold">het Huis van de Kerstman</strong>.</p>
+
+          <div className="w-full max-w-[340px] sm:max-w-[400px] lg:w-[440px] lg:max-w-none lg:flex-shrink-0 lg:self-end">
+            <img src="/bonbonetti.png" alt="Mr. Bonbonetti — Het Huis van de Kerstman" className="mx-auto block h-auto w-full object-contain drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
           </div>
         </div>
       </section>
@@ -216,11 +222,10 @@ export default function ChristmasWorld() {
             <p>Zeker zijn van je bezoek én liever niet wachten? Kies dan voor de <a href={TICKETS_URL} target="_blank" rel="noopener noreferrer" data-cursor="hover" className="font-semibold text-xmas-gold underline underline-offset-4 hover:text-white">Golden Ticket-beleving</a>. Met een Golden Ticket reserveer je vooraf je tijdstip en hoef je niet aan te schuiven. Per voormiddag is slechts een beperkt aantal Golden Tickets beschikbaar.</p>
           </div>
 
-          <div className="grid items-start gap-6 lg:grid-cols-[1fr_340px]">
-            <div className="grid gap-6">
+          <div className="grid items-start gap-6 md:grid-cols-2">
               <div data-fade className="rounded-3xl border border-xmas-gold/15 bg-xmas-panel p-7">
                 <div className="flex items-center gap-2 text-xmas-gold"><CalendarDays className="h-5 w-5" /><h3 className="font-display text-2xl text-xmas-cream">Data</h3></div>
-                <ul className="mt-4 grid gap-x-6 gap-y-1.5 text-lg text-xmas-cream/90 sm:grid-cols-2">
+                <ul className="mt-4 space-y-1.5 text-lg text-xmas-cream/90">
                   {DATES.map((d) => (
                     <li key={d} className="flex items-center gap-2"><Star className="h-3.5 w-3.5 shrink-0 text-xmas-gold" /> {d}</li>
                   ))}
@@ -230,10 +235,6 @@ export default function ChristmasWorld() {
                 <p className="flex items-center gap-2 text-lg text-xmas-cream/90"><Clock className="h-5 w-5 shrink-0 text-xmas-gold" /> Telkens van 14u tot 17u</p>
                 <p className="mt-4 flex items-start gap-2 text-lg text-xmas-cream/90"><MapPin className="mt-1 h-5 w-5 shrink-0 text-xmas-gold" /> <span>Locatie: Sint-Martinusplein Genk (de precieze locatie houden we nog geheim)</span></p>
               </div>
-            </div>
-            <div data-fade className="mx-auto w-full max-w-[340px] overflow-hidden rounded-3xl border border-xmas-gold/20 bg-black/30">
-              <video src={XMAS_TRAILER} poster={XMAS_TRAILER_POSTER} controls playsInline preload="metadata" className="block aspect-[9/16] w-full object-cover" aria-label="Trailer Het Huis van de Kerstman" />
-            </div>
           </div>
 
           {/* GOLDEN TICKET (doel van knop 2) */}
