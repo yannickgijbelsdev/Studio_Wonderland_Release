@@ -105,7 +105,7 @@ export default function Home() {
           </div>
           <div className="grid gap-8 md:grid-cols-2">
             <PortalTile image={IMG.showTile} alt="De Grote Sinterklaasshow" cta="Ontdek de show" onClick={() => navigate('show')} />
-            <PortalTile image={IMG.xmasLandscape} alt="Huis van de Kerstman 2026" locked ribbon="Je hebt nog geen toegang tot deze wereld" />
+            <PortalTile image="/huis-kerstman-etalage.webp" alt="Huis van de Kerstman 2026" cta="Ontdek de kerstwereld" onClick={() => navigate('xmas')} />
           </div>
         </div>
       </section>
