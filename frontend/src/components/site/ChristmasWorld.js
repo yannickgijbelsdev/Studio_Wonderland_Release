@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Ticket, CalendarDays, Clock, MapPin, Play, X } from 'lucide-react'
 import { gsap, useSectionAnimations, useScrollLock } from '@/lib/site/anim'
 import { useSite } from './ctx'
-import { Eyebrow, Star, TitleReveal, ArchDivider } from './ui'
+import { Eyebrow, Star, TitleReveal, ArchDivider, PhotoGallery } from './ui'
 import ShowNews from './ShowNews'
 
 const XMAS_SITE = 'het-huis-van-de-kerstman'
@@ -64,6 +64,23 @@ export default function ChristmasWorld() {
   const heroVid = useRef(null)
   const { navigate } = useSite()
   const [trailerOpen, setTrailerOpen] = useState(false)
+  const [galleryPhotos, setGalleryPhotos] = useState([])
+
+  // Foto's uit de Clara/koodh galerij (clr.koodh.com/api/news/het-huis-van-de-kerstman/galerij).
+  useEffect(() => {
+    let mounted = true
+    fetch('/api/news?site=het-huis-van-de-kerstman&category=galerij')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!mounted || !data) return
+        const imgs = (data.items || [])
+          .map((i) => ({ src: i.image_url, caption: i.image_caption_html }))
+          .filter((i) => i.src)
+        if (imgs.length) setGalleryPhotos(imgs)
+      })
+      .catch(() => {})
+    return () => { mounted = false }
+  }, [])
   useScrollLock(trailerOpen)
   // Hero-video pauzeren zolang de trailer (met geluid) openstaat.
   useEffect(() => {
@@ -72,7 +89,7 @@ export default function ChristmasWorld() {
     if (trailerOpen) v.pause?.()
     else { const p = v.play?.(); if (p && p.catch) p.catch(() => {}) }
   }, [trailerOpen])
-  useSectionAnimations(scope, [])
+  useSectionAnimations(scope, [galleryPhotos.length])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -209,7 +226,7 @@ export default function ChristmasWorld() {
       </section>
 
       {/* DATA & TICKETS + GOLDEN TICKET — samengevoegd (doel van beide knoppen) */}
-      <section id="tickets" className="relative z-10 bg-xmas-bg px-6 py-24 md:px-10 md:py-28">
+      <section id="tickets" className="relative z-10 bg-xmas-bg px-6 pt-24 md:px-10 md:pt-28 xl:pb-28">
         <ArchDivider color="fill-xmas-bg" flip />
         <div className="mx-auto max-w-[1000px]">
           <div className="text-center">
@@ -222,7 +239,7 @@ export default function ChristmasWorld() {
             <p>Zeker zijn van je bezoek én liever niet wachten? Kies dan voor de <a href={TICKETS_URL} target="_blank" rel="noopener noreferrer" data-cursor="hover" className="font-semibold text-xmas-gold underline underline-offset-4 hover:text-white">Golden Ticket-beleving</a>. Met een Golden Ticket reserveer je vooraf je tijdstip en hoef je niet aan te schuiven. Per voormiddag is slechts een beperkt aantal Golden Tickets beschikbaar.</p>
           </div>
 
-          <div className="grid items-start gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
               <div data-fade className="rounded-3xl border border-xmas-gold/15 bg-xmas-panel p-7">
                 <div className="flex items-center gap-2 text-xmas-gold"><CalendarDays className="h-5 w-5" /><h3 className="font-display text-2xl text-xmas-cream">Data</h3></div>
                 <ul className="mt-4 space-y-1.5 text-lg text-xmas-cream/90">
@@ -231,9 +248,10 @@ export default function ChristmasWorld() {
                   ))}
                 </ul>
               </div>
-              <div data-fade className="rounded-3xl border border-xmas-gold/30 bg-xmas-gold/10 p-7">
+              <div data-fade className="flex flex-col overflow-hidden rounded-3xl border border-xmas-gold/30 bg-xmas-gold/10 p-7 pb-0">
                 <p className="flex items-center gap-2 text-lg text-xmas-cream/90"><Clock className="h-5 w-5 shrink-0 text-xmas-gold" /> Telkens van 14u tot 17u</p>
                 <p className="mt-4 flex items-start gap-2 text-lg text-xmas-cream/90"><MapPin className="mt-1 h-5 w-5 shrink-0 text-xmas-gold" /> <span>Locatie: Sint-Martinusplein Genk (de precieze locatie houden we nog geheim)</span></p>
+                <img src="/peperkoek.webp" alt="Peperkoekmannetje" loading="lazy" className="mt-auto block w-[170px] self-end pt-6 drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)] md:w-[200px]" />
               </div>
           </div>
 
@@ -288,7 +306,32 @@ export default function ChristmasWorld() {
             </div>
           </div>
         </div>
+
+        {/* Elfen — staan op de onderrand van de sectie, zoals de figuren bij De Grote Sinterklaasshow.
+            Desktop (xl+): links en rechts naast de inhoud. Kleiner scherm: naast elkaar onder de inhoud. */}
+        <img src="/elf-cadeau.webp" alt="Kerstelf met cadeau" loading="lazy" className="pointer-events-none absolute bottom-0 left-0 hidden w-[min(360px,calc((100vw-1000px)/2-16px))] xl:block drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
+        <img src="/elf-snoep.webp" alt="Kerstelf met snoepgoed" loading="lazy" className="pointer-events-none absolute bottom-0 right-0 hidden w-[min(360px,calc((100vw-1000px)/2-16px))] xl:block drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
+        <div className="mx-auto mt-12 flex max-w-[620px] items-end justify-center gap-2 sm:gap-6 xl:hidden">
+          <img src="/elf-cadeau.webp" alt="Kerstelf met cadeau" loading="lazy" className="block w-1/2 max-w-[280px] drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
+          <img src="/elf-snoep.webp" alt="Kerstelf met snoepgoed" loading="lazy" className="block w-1/2 max-w-[280px] drop-shadow-[0_-6px_36px_rgba(0,0,0,0.35)] [transform:translateZ(0)]" />
+        </div>
       </section>
+
+      {/* FOTO'S — uit de Clara/koodh galerij van het Huis van de Kerstman.
+          Verschijnt automatisch zodra er foto's in de galerij staan. */}
+      {galleryPhotos.length > 0 && (
+        <section id="fotos" className="relative z-10 bg-xmas-green px-6 py-24 md:px-10 md:py-28">
+          <ArchDivider color="fill-xmas-green" />
+          <Snow />
+          <div className="relative mx-auto max-w-[1300px]">
+            <div className="mb-12 text-center">
+              <Eyebrow className="text-xmas-gold [&]:justify-center">Foto's</Eyebrow>
+              <TitleReveal lines={["Sfeerbeelden"]} starClass="text-xmas-gold" className={CENTER_TITLE} />
+            </div>
+            <PhotoGallery images={galleryPhotos} accent="text-white" ringClass="ring-xmas-gold/20" />
+          </div>
+        </section>
+      )}
 
     </div>
   )
