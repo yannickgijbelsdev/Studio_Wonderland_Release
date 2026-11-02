@@ -62,8 +62,8 @@ function PortalTile({ image, cta, onClick, alt, locked = false, ribbon }) {
           </div>
         </>
       ) : (
-        <div className="relative flex h-full items-end justify-center p-8">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-7 py-4 font-semibold text-wonder-ink shadow-xl transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-wonder-pinkdeep group-hover:text-white">
+        <div className="relative flex h-full items-end justify-center p-5 sm:p-8">
+          <span className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white/95 px-4 py-3.5 text-sm font-semibold text-wonder-ink shadow-xl transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-wonder-pinkdeep group-hover:text-white sm:px-7 sm:py-4 sm:text-base">
             {cta}
             <ArrowUpRight className="h-5 w-5 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </span>
@@ -105,7 +105,7 @@ export default function Home() {
           </div>
           <div className="grid gap-8 md:grid-cols-2">
             <PortalTile image={IMG.showTile} alt="De Grote Sinterklaasshow" cta="Ontdek de show" onClick={() => navigate('show')} />
-            <PortalTile image="/huis-kerstman-etalage.webp" alt="Huis van de Kerstman 2026" cta="Ontdek de kerstwereld" onClick={() => navigate('xmas')} />
+            <PortalTile image="/huis-kerstman-etalage.webp" alt="Huis van de Kerstman 2026" cta="Ontdek het Huis van de Kerstman" onClick={() => navigate('xmas')} />
           </div>
         </div>
       </section>
