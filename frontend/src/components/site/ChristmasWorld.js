@@ -266,7 +266,7 @@ export default function ChristmasWorld() {
                 <Ticket className="h-9 w-9 shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]" />
                 <div className="border-l-2 border-dashed border-xmas-bg/40 pl-4 text-left">
                   <span className="block text-[10px] font-bold uppercase tracking-[0.35em]">Golden Ticket</span>
-                  <span className="block font-display text-xl leading-tight">Huis van de Kerstman</span>
+                  <img src="/huis-van-de-kerstman-logo-dark.png" alt="Huis van de Kerstman" className="mt-1 block h-9 w-auto" />
                 </div>
               </div>
             </div>
