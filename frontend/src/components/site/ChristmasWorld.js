@@ -289,7 +289,7 @@ export default function ChristmasWorld() {
                 ))}
               </ul>
               <div className="mt-10 text-center">
-                <TicketButton className="rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] hover:bg-white">Reserveer jullie magische vlucht</TicketButton>
+                <TicketButton className="rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] hover:bg-white">Reserveer je Golden Ticket</TicketButton>
               </div>
               <div data-fade className="mt-10 grid gap-6 rounded-3xl border border-xmas-gold/30 bg-xmas-gold/10 p-8 text-center sm:grid-cols-3">
                 {GOLDEN_INFO.map((g) => (
