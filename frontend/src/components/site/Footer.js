@@ -100,7 +100,6 @@ export default function Footer() {
             <h4 className="text-xs uppercase tracking-[0.3em] text-xmas-cream/50">De beleving</h4>
             <ul className="mt-4 space-y-3">
               <li><button onClick={() => navigate('xmas', 'verhaal')} data-cursor="hover" className="hover:text-xmas-gold">Het verhaal</button></li>
-              <li><button onClick={() => navigate('xmas', 'golden')} data-cursor="hover" className="hover:text-xmas-gold">Golden Ticket</button></li>
               <li><button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="hover:text-xmas-gold">Data</button></li>
             </ul>
           </div>
