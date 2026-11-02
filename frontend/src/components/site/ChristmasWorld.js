@@ -204,7 +204,7 @@ export default function ChristmasWorld() {
         <div className="relative mx-auto flex max-w-[1360px] flex-col items-center gap-8 lg:flex-row-reverse lg:items-end lg:gap-12">
           <div className="w-full max-w-[820px] pb-12 text-center lg:max-w-none lg:flex-1 lg:pb-28 lg:text-left">
             <Eyebrow className="text-xmas-gold [&]:justify-center lg:[&]:justify-start">Het verhaal</Eyebrow>
-            <TitleReveal lines={["De reis begint", "in een snoepwinkel"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
+            <TitleReveal lines={["De reis begint hier"]} starClass="text-xmas-gold" className="mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto [&>span>span]:flex [&>span>span]:items-center [&>span>span]:justify-center lg:[&>span]:mx-0 lg:[&>span>span]:justify-start" />
             <div data-fade className="mt-8 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center lg:justify-start">
               <button onClick={() => navigate('xmas', 'tickets')} data-cursor="hover" className="inline-flex items-center justify-center gap-2 rounded-full bg-xmas-gold px-8 py-4 font-semibold text-xmas-bg shadow-[0_0_18px_rgba(248,231,176,0.5)] transition-all duration-300 hover:bg-white">
                 <CalendarDays className="h-5 w-5" /> Bezoek het Huis van de Kerstman
