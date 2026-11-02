@@ -16,8 +16,8 @@ const CENTER_TITLE = 'mt-4 text-4xl text-xmas-cream md:text-5xl [&>span]:mx-auto
 // Gebruikt als hero (gedempt, in een lus) én met geluid in "Data & tickets".
 const XMAS_TRAILER = '/kerst-trailer.mp4'
 const XMAS_TRAILER_POSTER = '/kerst-trailer-poster.jpg'
-// Foto van de etalage: vult op desktop de ruimte achter de staande trailer.
-const XMAS_HERO_BG = '/huis-kerstman-etalage.webp'
+// Sfeerfoto kerstboom: vult op desktop de ruimte achter de staande trailer.
+const XMAS_HERO_BG = '/kerst-hero-boom.webp'
 
 const DATES = ['Zaterdag 12 december', 'Zondag 13 december', 'Woensdag 16 december', 'Zaterdag 19 december', 'Zondag 20 december', 'Maandag 21 december', 'Dinsdag 22 december', 'Woensdag 23 december', 'Donderdag 24 december']
 
@@ -114,7 +114,7 @@ export default function ChristmasWorld() {
       {/* HERO — trailer met Mr. Bonbonetti. Mobiel: schermvullend. Desktop: staande
           video gecentreerd op een vervaagde still van hetzelfde decor. */}
       <section className="hero-sec relative h-[100svh] w-full overflow-hidden bg-xmas-bg">
-        <img src={XMAS_HERO_BG} alt="Etalage van het Huis van de Kerstman" className="hero-img absolute inset-0 hidden h-full w-full object-cover will-change-transform md:block" />
+        <img src={XMAS_HERO_BG} alt="Kerstboom met lichtjes" className="hero-img absolute inset-0 hidden h-full w-full object-cover will-change-transform md:block" />
         <div className="pointer-events-none absolute inset-0 hidden bg-black/30 md:block" />
         <div className="absolute inset-0 flex items-center justify-center md:pb-[270px] md:pt-[96px]">
           <video
