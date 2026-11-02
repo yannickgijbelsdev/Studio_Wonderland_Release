@@ -91,7 +91,7 @@ export default function Footer() {
       <footer className="relative z-20 border-t border-xmas-gold/60 bg-xmas-green px-6 py-24 text-xmas-cream md:px-10 md:py-28">
         <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
-            <button onClick={() => navigate('xmas')} data-cursor="hover" className="font-display text-3xl text-xmas-gold md:text-4xl">Huis van de Kerstman</button>
+            <button onClick={() => navigate('xmas')} data-cursor="hover" className="block" aria-label="Huis van de Kerstman"><img src="/huis-van-de-kerstman-logo.png" alt="Huis van de Kerstman" className="h-16 w-auto md:h-20" /></button>
             <p className="mt-6 max-w-md text-xmas-cream/70">Stap zelf het verhaal binnen en maak de magische reis naar Het Huis van de Kerstman — een warme kerstbeleving voor het hele gezin in Genk.</p>
             <a href="mailto:info@hethuisvandekerstman.be" data-cursor="hover" className="mt-6 inline-block font-medium text-xmas-gold underline-offset-4 hover:underline">info@hethuisvandekerstman.be</a>
             <Socials className="mt-6" ring="border-xmas-gold/40 text-xmas-gold hover:border-xmas-gold hover:bg-xmas-gold hover:text-xmas-green" />

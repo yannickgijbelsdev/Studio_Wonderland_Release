@@ -21,7 +21,7 @@ const WORLDS = {
     ticketUrl: 'https://events.flextickets.nl/event/de-grote-sinterklaasshow',
   },
   xmas: {
-    logo: null,
+    logo: '/huis-van-de-kerstman-logo.png',
     logoText: 'Huis van de Kerstman',
     logoAlt: 'Huis van de Kerstman',
     pill: 'bg-xmas-green/95',
